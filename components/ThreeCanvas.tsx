@@ -1,20 +1,21 @@
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
 
-import Box from "./Box";
+import RotatingBox from "./RotatingBox";
+import ImagePlane from "./ImagePlane";
 
+/**
+ * React three fiber canvas with spectrogram drawing.
+ */
 export default function ThreeCanvas() {
   return (
-    <>
-      <Canvas camera={{ position: [0, 0, 35] }}>
-        <ambientLight intensity={2} />
-        <pointLight position={[40, 40, 40]} />
-        <Box position={[10, 0, 0]} />
-        <Box position={[-10, 0, 0]} />
-        <Box position={[0, 10, 0]} />
-        <Box position={[0, -10, 0]} />
-        <OrbitControls />
-      </Canvas>
-    </>
+    <Canvas camera={{ position: [0, 0, 35] }}>
+      <ambientLight intensity={2} />
+      <pointLight position={[40, 40, 40]} />
+      <ImagePlane url={"spectrogram_example.png"} />
+      <RotatingBox position={[-12, 0, 1]} />
+      <RotatingBox position={[-4, 0, 1]} />
+      <RotatingBox position={[4, 0, 1]} />
+      <RotatingBox position={[12, 0, 1]} />
+    </Canvas>
   );
 }
