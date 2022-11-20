@@ -36,6 +36,7 @@ export default function Home() {
           </div>
         </main>
 
+        {/* TODO(hayk): Convert into components. */}
         <button
           title="Settings"
           className="fixed z-90 top-8 right-8 bg-slate-100 w-14 h-14 rounded-full drop-shadow-lg
@@ -51,6 +52,14 @@ export default function Home() {
         >
           <FiPause />
         </button>
+
+        <input
+          className="fixed z-90 bottom-20 right-40 w-1/2 h-12 pl-3 text-xl text-black"
+          type="text"
+          id="prompt"
+          name="prompt"
+          placeholder="What do you want to hear?"
+        />
       </div>
     </>
   );
