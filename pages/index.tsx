@@ -1,9 +1,7 @@
 import Head from "next/head";
-import Image from "next/image";
 
 import ThreeCanvas from "../components/ThreeCanvas";
-
-// import styles from "../styles/Home.module.css";
+import { FiSliders, FiPause } from "react-icons/fi";
 
 export default function Home() {
   return (
@@ -23,13 +21,13 @@ export default function Home() {
         </div>
 
         <main className="w-2/3 min-h-screen p-4">
-          <h2 className="text-2xl text-center text-white text-right">
-            Riffusion
-          </h2>
-
-          <div className="pl-20">
-            <p className="pb-32 text-lg text-gray-400">A jazz pianist playing a classical concerto</p>
-            <p className="pb-32 text-xl text-gray-300">Taylor Swift with a tropical beat</p>
+          <div className="pl-20 pt-10">
+            <p className="pb-32 text-lg text-gray-400">
+              A jazz pianist playing a classical concerto
+            </p>
+            <p className="pb-32 text-xl text-gray-300">
+              Taylor Swift with a tropical beat
+            </p>
             <p className="pb-32 text-3xl text-white">Justin Bieber Anger Rap</p>
             <p className="pb-32 text-m text-gray-400">
               new york city rap, with a dust storm, cinematic score, dramatic,
@@ -38,7 +36,21 @@ export default function Home() {
           </div>
         </main>
 
-        {/* <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} /> */}
+        <button
+          title="Settings"
+          className="fixed z-90 top-8 right-8 bg-slate-100 w-14 h-14 rounded-full drop-shadow-lg
+          flex justify-center items-center text-black text-2xl hover:bg-sky-500 hover:drop-shadow-2xl"
+        >
+          <FiSliders />
+        </button>
+
+        <button
+          title="Pause"
+          className="fixed z-90 top-28 right-8 bg-slate-100 w-14 h-14 rounded-full drop-shadow-lg
+          flex justify-center items-center text-black text-2xl hover:bg-sky-500 hover:drop-shadow-2xl"
+        >
+          <FiPause />
+        </button>
       </div>
     </>
   );
