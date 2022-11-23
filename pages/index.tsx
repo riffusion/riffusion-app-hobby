@@ -1,7 +1,9 @@
 import Head from "next/head";
 
 import ThreeCanvas from "../components/ThreeCanvas";
-import { FiSliders, FiPause } from "react-icons/fi";
+import { FiPause } from "react-icons/fi";
+import Settings from '../components/Settings'
+import Pause from '../components/Pause'
 
 export default function Home() {
   return (
@@ -26,7 +28,7 @@ export default function Home() {
               A jazz pianist playing a classical concerto
             </p>
             <p className="pb-32 text-xl text-gray-300">
-              Taylor Swift with a tropical beat
+              Taylor Swift singing with a tropical beat
             </p>
             <p className="pb-32 text-3xl text-white">Justin Bieber Anger Rap</p>
             <p className="pb-32 text-m text-gray-400">
@@ -37,21 +39,9 @@ export default function Home() {
         </main>
 
         {/* TODO(hayk): Convert into components. */}
-        <button
-          title="Settings"
-          className="fixed z-90 top-8 right-8 bg-slate-100 w-14 h-14 rounded-full drop-shadow-lg
-          flex justify-center items-center text-black text-2xl hover:bg-sky-500 hover:drop-shadow-2xl"
-        >
-          <FiSliders />
-        </button>
 
-        <button
-          title="Pause"
-          className="fixed z-90 top-28 right-8 bg-slate-100 w-14 h-14 rounded-full drop-shadow-lg
-          flex justify-center items-center text-black text-2xl hover:bg-sky-500 hover:drop-shadow-2xl"
-        >
-          <FiPause />
-        </button>
+        <Settings />
+        <Pause />
 
         <input
           className="fixed z-90 bottom-20 right-40 w-1/2 h-12 pl-3 text-xl text-black"
