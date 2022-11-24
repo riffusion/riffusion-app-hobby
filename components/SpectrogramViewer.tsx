@@ -61,7 +61,7 @@ export default function SpectrogramViewer({
           start={[-3, 0, 1]} // Starting point, can be an array or a vec3
           end={[3, 0, 1]} // Ending point, can be an array or a vec3
           mid={[0, -0.8, 0.4]} // Optional control point, can be an array or a vec3
-          color="#aa3333" // Default
+          color="#DD1C1A" // Default
           lineWidth={5} // In pixels (default)
           dashed={false} // Default
         />
