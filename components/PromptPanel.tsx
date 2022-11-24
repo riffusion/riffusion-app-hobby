@@ -7,7 +7,7 @@ const PromptPanel: NextComponentType = () => {
         <>
             <main className="w-2/3 min-h-screen p-4">
                 <div className="pl-20 pt-10">
-                    <PromptEntry prompt={"yo"}/>
+                    <PromptEntry prompt={"A Jazz pianist playing a classical concreto"}/>
                     <p className="pb-32 text-xl text-gray-300">
                         Taylor Swift singing with a tropical beat
                     </p>
