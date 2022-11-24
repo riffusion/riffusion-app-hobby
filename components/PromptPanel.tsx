@@ -6,11 +6,13 @@ import {useRef} from 'react';
 interface PromptPanelProps {
     prompts: PromptInput[];
     addPrompt: (prompt: string) => void;
+    changeUpNextPrompt: (prompt: string) => void;
 }
 
 export default function PromptPanel({
     prompts,
     addPrompt,
+    changeUpNextPrompt,
 }: PromptPanelProps) {
 
     const inputPrompt = useRef(null);
@@ -28,7 +30,7 @@ export default function PromptPanel({
                     <form onSubmit={(e) => {
                         e.preventDefault();
                         const prompt = e.currentTarget.prompt.value;
-                        addPrompt(prompt);
+                        changeUpNextPrompt(prompt);
                         inputPrompt.current.value = '';
                     }}>
                         <input
@@ -48,7 +50,6 @@ export default function PromptPanel({
 }
 
 // WIP manner of passing ideal font of each promptEntry based on where it is in the promptPanel. Could be done better with a map or something.
-// option to use flexbox, but maybe want just static positioning instead <div className="h-screen flex flex-col justify-evenly">
 // need not just order, but some context of where we are in time, and when that prompt will be primary (some global step state)
 const promptEntryClassNames = {
     0: "font-light text-sm text-gray-400 text-opacity-40",

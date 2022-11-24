@@ -144,6 +144,11 @@ export default function Home() {
           addPrompt={(prompt: string) => {
             setPromptInputs([...promptInputs, { prompt: prompt }]);
           }}
+          changeUpNextPrompt={(prompt: string) => {
+            const newPromptInputs = [...promptInputs];
+            newPromptInputs[newPromptInputs.length - 1].prompt = prompt;
+            setPromptInputs(newPromptInputs);
+          }}
         />
 
         <Settings />
