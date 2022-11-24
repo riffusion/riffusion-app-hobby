@@ -13,7 +13,7 @@ interface CanvasProps {
  */
 export default function ThreeCanvas(props: CanvasProps) {
   return (
-    <Canvas camera={{ position: [0, 0, 7], rotation: [0.2, 0, 0] }}>
+    <Canvas camera={{ position: [0, 0, 7], rotation: [0.4, 0, 0] }}>
       <ambientLight intensity={2} />
       <pointLight position={[40, 40, 40]} />
       <SpectrogramViewer
