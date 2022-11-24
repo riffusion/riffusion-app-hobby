@@ -92,7 +92,7 @@ export default function Home() {
         Tone.Transport.pause();
       }
     }
-  }, [paused]);
+  }, [paused, tonePlayer]);
 
   // /////////////
 
