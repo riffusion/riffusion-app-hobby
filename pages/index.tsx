@@ -11,8 +11,8 @@ import { InferenceResult, PromptInput } from "../types";
 import * as Tone from "tone";
 
 const defaultPromptInputs = [
-  { prompt: "A jazz pianist playing a classical concerto"},
-  { prompt: "Taylor Swift singing with a tropical beat"},
+  { prompt: "A jazz pianist playing a classical concerto" },
+  { prompt: "Taylor Swift singing with a tropical beat" },
 ];
 
 const defaultInferenceResults = [
@@ -28,11 +28,12 @@ const defaultInferenceResults = [
   },
 ];
 
-const timeout = 5000;
+// TODO(hayk): Do this as soon as sample comes back
+const timeout = 5150;
 const maxLength = 10;
 
 export default function Home() {
-  const [paused, setPaused] = useState(false);
+  const [paused, setPaused] = useState(true);
 
   const [promptInputs, setPromptInputs] =
     useState<PromptInput[]>(defaultPromptInputs);
@@ -43,45 +44,75 @@ export default function Home() {
 
   // /////////////
 
-  const [tonePlayer, setTonePlayer] = useState(null);
+  const [tonePlayer, setTonePlayer] = useState<Tone.Player>(null);
 
   useEffect(() => {
-    setTonePlayer(
-      new Tone.Player(defaultInferenceResults[0].audio).toDestination()
-    );
-    // play as soon as the buffer is loaded
-    // player.autostart = true;
+    // HACK(hayk): Kill
+    if (tonePlayer) {
+      return;
+    }
+
+    if (inferenceResults.length == 0) {
+      return;
+    }
+    console.log(inferenceResults);
+
+    const player = new Tone.Player(
+      inferenceResults[inferenceResults.length - 1].audio,
+      () => {
+        console.log("New player loaded.");
+
+        player.sync().start(0);
+
+        // if (tonePlayer) {
+        //   tonePlayer.stop();
+        //   tonePlayer.dispose();
+        // }
+        setTonePlayer(player);
+      }
+    ).toDestination();
+    player.loop = true;
   }, [inferenceResults]);
 
   useEffect(() => {
-    if (tonePlayer && tonePlayer.loaded) {
-      if (!paused) {
-        tonePlayer.start();
-      } else {
-        tonePlayer.stop();
+    if (!paused) {
+      console.log("Play");
+
+      if (Tone.context.state == "suspended") {
+        Tone.context.resume();
+      }
+
+      if (tonePlayer) {
+        Tone.Transport.start();
+      }
+    } else {
+      console.log("Pause");
+
+      if (tonePlayer) {
+        Tone.Transport.pause();
       }
     }
-  }, [paused, tonePlayer]);
+  }, [paused]);
 
   // /////////////
 
   useEffect(() => {
-    setTimeout(() => {
-      const lastResult = inferenceResults[inferenceResults.length - 1];
-      const newResult = { ...lastResult, counter: lastResult.counter + 1 };
+    console.log("setInterval");
+    setInterval(() => {
+      setInferenceResults((prevResults) => {
+        const lastResult = prevResults[prevResults.length - 1];
+        const newResult = { ...lastResult, counter: lastResult.counter + 1 };
 
-      let results = [...inferenceResults, newResult];
+        let results = [...prevResults, newResult];
 
-      if (results.length > maxLength) {
-        results = results.slice(1);
-      }
+        if (results.length > maxLength) {
+          results = results.slice(1);
+        }
 
-      console.log("Adding to inference results");
-      console.log(results);
-
-      setInferenceResults(results);
+        return results;
+      });
     }, timeout);
-  });
+  }, []);
 
   return (
     <>
@@ -96,13 +127,18 @@ export default function Home() {
 
       <div className="bg-sky-900 flex flex-row min-h-screen text-white">
         <div className="w-1/3 min-h-screen">
-          <ThreeCanvas paused={paused} inferenceResults={inferenceResults} />
+          <ThreeCanvas
+            paused={paused}
+            getTime={() => Tone.Transport.seconds}
+            audioLength={tonePlayer ? tonePlayer.sampleTime * tonePlayer.buffer.length : 5}
+            inferenceResults={inferenceResults}
+          />
         </div>
 
         <PromptPanel
           prompts={promptInputs}
           addPrompt={(prompt: string) => {
-            setPromptInputs([...promptInputs, { prompt: prompt}]);
+            setPromptInputs([...promptInputs, { prompt: prompt }]);
           }}
         />
 
