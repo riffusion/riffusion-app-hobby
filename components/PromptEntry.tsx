@@ -5,14 +5,16 @@ interface PromptEntryProps {
     className: string
 }
 
-const PromptEntry = (props: PromptEntryProps) => {  
+export default function PromptEntry({
+    prompt,
+    className,
+}: PromptEntryProps) {  
+
     return (
       <>
-        <p className={props.className}>
-            {props.prompt}
+        <p className={className}>
+            {prompt}
         </p>
       </>
     )
   }
-  
-  export default PromptEntry

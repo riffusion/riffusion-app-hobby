@@ -11,8 +11,12 @@ import { InferenceResult, PromptInput } from "../types";
 import * as Tone from "tone";
 
 const defaultPromptInputs = [
-  { prompt: "A jazz pianist playing a classical concerto" },
-  { prompt: "Taylor Swift singing with a tropical beat" },
+  { prompt: "A jazz pianist playing a classical concerto"},
+  { prompt: "Taylor Swift singing with a tropical beat"},
+  { prompt: "A typewriter in the bahamas"},
+  { prompt: "Justin Bieber anger rap"},
+  { prompt: "New york city rap, with a dust storm, cinematic score, dramatic, composition"},
+  { prompt: "Jack Johnson playing a harmonica in the 1920s"},
 ];
 
 const defaultInferenceResults = [
@@ -125,7 +129,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="bg-sky-900 flex flex-row min-h-screen text-white">
+      <div className="bg-[#0A2342] flex flex-row min-h-screen text-white">
         <div className="w-1/3 min-h-screen">
           <ThreeCanvas
             paused={paused}
