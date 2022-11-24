@@ -17,22 +17,22 @@ const PromptPanel = (props: PromptPanelProps) => {
                     {prompts.map((prompt, index) => (
                         <PromptEntry prompt={prompt.prompt} className={promptEntryClassNames[index]} key={index} />
                     ))}
+
+                    <form onSubmit={(e) => {
+                        e.preventDefault();
+                        const prompt = e.currentTarget.prompt.value;
+                        addPrompt(prompt);
+                    }}>
+                        <input
+                            className="fixed z-90 bottom-20 w-1/2 h-12 pl-3 text-xl text-black rounded-lg border-sky-500 border-2"
+                            type="text"
+                            id="prompt"
+                            name="prompt"
+                            placeholder="What do you want to hear?"
+                        />
+                    </form>
                 </div>
             </main>
-
-            <form onSubmit={(e) => {
-                e.preventDefault();
-                const prompt = e.currentTarget.prompt.value;
-                addPrompt(prompt);
-            }}>
-                <input
-                    className="fixed z-90 bottom-20 right-1/4 w-1/2 h-12 pl-3 text-xl text-black rounded-lg border-sky-500 border-2"
-                    type="text"
-                    id="prompt"
-                    name="prompt"
-                    placeholder="What do you want to hear?"
-                />
-            </form>
         </>
     )
 }
