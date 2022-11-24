@@ -1,11 +1,15 @@
 import Head from "next/head";
+import { useState } from "react";
+
 
 import ThreeCanvas from "../components/ThreeCanvas";
-import { FiPause } from "react-icons/fi";
 import Settings from '../components/Settings'
 import Pause from '../components/Pause'
 
 export default function Home() {
+
+  const [paused, setPaused] = useState(false);
+
   return (
     <>
       <Head>
@@ -19,7 +23,7 @@ export default function Home() {
 
       <div className="bg-sky-900 flex flex-row min-h-screen text-white">
         <div className="w-1/3 min-h-screen">
-          <ThreeCanvas />
+          <ThreeCanvas paused={paused} />
         </div>
 
         <main className="w-2/3 min-h-screen p-4">
@@ -41,7 +45,7 @@ export default function Home() {
         {/* TODO(hayk): Convert into components. */}
 
         <Settings />
-        <Pause />
+        <Pause paused={paused} setPaused={setPaused} />
 
         <input
           className="fixed z-90 bottom-20 right-40 w-1/2 h-12 pl-3 text-xl text-black"
