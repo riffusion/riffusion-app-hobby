@@ -1,7 +1,14 @@
-import { NextComponentType } from 'next'
 import PromptEntry from './PromptEntry'
 
-const PromptPanel: NextComponentType = () => {
+import { PromptInput } from "../types";
+interface PromptPanelProps {
+    prompts: PromptInput[];
+    addPrompt: (prompt: string, seed: number) => void;
+}
+
+const PromptPanel = (props: PromptPanelProps) => {
+    const prompts = props.prompts;
+    const addPrompt = props.addPrompt;
 
     return (
         <>
