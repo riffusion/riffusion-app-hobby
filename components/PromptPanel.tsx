@@ -29,6 +29,7 @@ const PromptPanel = (props: PromptPanelProps) => {
                             id="prompt"
                             name="prompt"
                             placeholder="What do you want to hear?"
+                            autoComplete="off"
                         />
                     </form>
                 </div>
