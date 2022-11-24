@@ -1,6 +1,6 @@
 export interface PromptInput {
     prompt: string;
-    seed: number;
+    seed?: number;
     denoising?: number;
     guidance?: number;
 }

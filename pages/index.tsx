@@ -9,8 +9,8 @@ import Pause from "../components/Pause";
 import { InferenceResult, PromptInput } from "../types";
 
 const defaultPromptInputs = [
-  { prompt: "A jazz pianist playing a classical concerto", seed: 10 },
-  { prompt: "Taylor Swift singing with a tropical beat", seed: 10 },
+  { prompt: "A jazz pianist playing a classical concerto"},
+  { prompt: "Taylor Swift singing with a tropical beat"},
 ];
 
 export default function Home() {
@@ -37,8 +37,8 @@ export default function Home() {
 
         <PromptPanel
           prompts={promptInputs}
-          addPrompt={(prompt: string, seed: number) => {
-            setPromptInputs([...promptInputs, { prompt: prompt, seed: seed }]);
+          addPrompt={(prompt: string) => {
+            setPromptInputs([...promptInputs, { prompt: prompt}]);
           }}
         />
 
