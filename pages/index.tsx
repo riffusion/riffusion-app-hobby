@@ -94,14 +94,14 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="bg-sky-900 flex flex-row min-h-screen text-white">
+      <div className="bg-[#0A2342] flex flex-row min-h-screen text-white">
         <div className="w-1/3 min-h-screen">
           <ThreeCanvas paused={paused} inferenceResults={inferenceResults} />
         </div>
 
         <PromptPanel
           prompts={promptInputs}
-          addPrompt={(prompt: string) => {
+          addPrompt={(prompt: string) => {d
             setPromptInputs([...promptInputs, { prompt: prompt}]);
           }}
         />
