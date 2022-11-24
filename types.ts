@@ -17,6 +17,8 @@ export interface InferenceInput {
 export interface InferenceResult {
     input: InferenceInput;
 
+    counter: number;
+
     // URL of the image
     image: string;
 

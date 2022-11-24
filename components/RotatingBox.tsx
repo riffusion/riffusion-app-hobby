@@ -27,7 +27,7 @@ export default function RotatingBox(props: JSX.IntrinsicElements["mesh"]) {
       smoothness={4}
       {...props}
       ref={mesh}
-      scale={active ? [3, 3, 3] : [2, 2, 2]}
+      scale={active ? [.3, .3, .3] : [.2, .2, .2]}
       onClick={() => setActive(!active)}
       onPointerOver={() => setHover(true)}
       onPointerOut={() => setHover(false)}

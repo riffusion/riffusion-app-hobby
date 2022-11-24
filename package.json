@@ -9,16 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^1.5.0",
     "@react-three/drei": "^9.41.2",
     "@react-three/fiber": "^8.9.1",
     "eslint": "8.27.0",
     "eslint-config-next": "13.0.4",
-    "@headlessui/react": "^1.5.0",
     "next": "13.0.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.6.0",
-    "three": "^0.146.0"
+    "three": "^0.146.0",
+    "tone": "^14.7.77"
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
