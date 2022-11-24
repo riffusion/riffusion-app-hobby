@@ -1,11 +1,9 @@
-import { Dialog, Transition } from '@headlessui/react'
-import { NextComponentType } from 'next'
-import { Fragment, useState } from 'react'
+import { Dialog, Transition } from "@headlessui/react";
+import { Fragment, useState } from "react";
 import { FiSliders } from "react-icons/fi";
 
-
-const Modal: NextComponentType = () => {
-  const [open, setOpen] = useState(false)
+const Settings = () => {
+  const [open, setOpen] = useState(false);
 
   return (
     <>
@@ -80,7 +78,7 @@ const Modal: NextComponentType = () => {
         </Dialog>
       </Transition>
     </>
-  )
-}
+  );
+};
 
-export default Modal
+export default Settings;
