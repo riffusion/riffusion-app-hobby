@@ -67,7 +67,7 @@ export default function Home() {
 
   // On load, create a player synced to the tone transport
   useEffect(() => {
-    const audioUrl = inferenceResults[0].audio;
+    const audioUrl = defaultInferenceResults[0].audio;
 
     const player = new Tone.Player(audioUrl, () => {
       console.log("Created player.");
