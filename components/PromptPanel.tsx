@@ -68,6 +68,6 @@ const promptEntryClassNames = {
   1: "font-normal text-m text-gray-300 text-opacity-60",
   2: "font-medium text-xl text-gray-200 text-opacity-80",
   3: "font-bold text-5xl text-white", // This is the primary prompt
-  4: "font-medium text-2xl text-gray-200 text-opacity-80", // This is prompt it is transitioning to
-  5: "font-normal text-m text-gray-300 text-opacity-60", // This is the UP NEXT prompt
+  4: "font-medium text-3xl text-gray-100 text-opacity-80", // This is prompt it is transitioning to
+  5: "font-normal text-m text-gray-200 text-opacity-60", // This is the UP NEXT prompt
 };
