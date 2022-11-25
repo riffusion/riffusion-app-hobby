@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import ThreeCanvas from "../components/ThreeCanvas";
 import PromptPanel from "../components/PromptPanel";
@@ -11,12 +11,15 @@ import { InferenceResult, PromptInput } from "../types";
 import * as Tone from "tone";
 
 const defaultPromptInputs = [
-  { prompt: "A jazz pianist playing a classical concerto"},
-  { prompt: "Taylor Swift singing with a tropical beat"},
-  { prompt: "A typewriter in the bahamas"},
-  { prompt: "Justin Bieber anger rap"},
-  { prompt: "New york city rap, with a dust storm, cinematic score, dramatic, composition"},
-  { prompt: "Jack Johnson playing a harmonica in the 1920s"},
+  { prompt: "A jazz pianist playing a classical concerto" },
+  { prompt: "Taylor Swift singing with a tropical beat" },
+  { prompt: "A typewriter in the bahamas" },
+  { prompt: "Justin Bieber anger rap" },
+  {
+    prompt:
+      "New york city rap, with a dust storm, cinematic score, dramatic, composition",
+  },
+  { prompt: "Jack Johnson playing a harmonica in the 1920s" },
 ];
 
 const defaultInferenceResults = [
@@ -29,6 +32,16 @@ const defaultInferenceResults = [
     image: "rap_sample.jpg",
     audio: "rap_sample.mp3",
     counter: 0,
+  },
+  {
+    input: {
+      alpha: 0.0,
+      start: defaultPromptInputs[0],
+      end: defaultPromptInputs[1],
+    },
+    image: "pop_sample.jpg",
+    audio: "pop_sample.mp3",
+    counter: 1,
   },
 ];
 
@@ -50,34 +63,39 @@ export default function Home() {
 
   const [tonePlayer, setTonePlayer] = useState<Tone.Player>(null);
 
+  const [numClipsPlayed, setNumClipsPlayed] = useState(0);
+  const [prevNumClipsPlayed, setPrevNumClipsPlayed] = useState(0);
+
+  const [resultCounter, setResultCounter] = useState(0);
+
+  // On load, create a player synced to the tone transport
   useEffect(() => {
-    // HACK(hayk): Kill
-    if (tonePlayer) {
-      return;
-    }
+    const audioUrl = inferenceResults[0].audio;
 
-    if (inferenceResults.length == 0) {
-      return;
-    }
-    console.log(inferenceResults);
+    const player = new Tone.Player(audioUrl, () => {
+      console.log("Created player.");
 
-    const player = new Tone.Player(
-      inferenceResults[inferenceResults.length - 1].audio,
-      () => {
-        console.log("New player loaded.");
+      player.loop = true;
+      player.sync().start(0);
 
-        player.sync().start(0);
+      // Set up a callback to increment numClipsPlayed at the edge of each clip
+      const bufferLength = player.sampleTime * player.buffer.length;
+      Tone.Transport.scheduleRepeat((time) => {
+        console.log(
+          "Edge of clip, t = ",
+          Tone.Transport.getSecondsAtTime(time)
+        );
+        setNumClipsPlayed((n) => n + 1);
+      }, bufferLength);
 
-        // if (tonePlayer) {
-        //   tonePlayer.stop();
-        //   tonePlayer.dispose();
-        // }
-        setTonePlayer(player);
-      }
-    ).toDestination();
-    player.loop = true;
-  }, [inferenceResults]);
+      setTonePlayer(player);
 
+      // Make further load callbacks do nothing.
+      player.buffer.onload = () => {};
+    }).toDestination();
+  }, []);
+
+  // On play/pause button, play/pause the audio with the tone transport
   useEffect(() => {
     if (!paused) {
       console.log("Play");
@@ -98,20 +116,66 @@ export default function Home() {
     }
   }, [paused, tonePlayer]);
 
+  useEffect(() => {
+    if (numClipsPlayed == prevNumClipsPlayed) {
+      return;
+    }
+
+    const maxResultCounter = Math.max(
+      ...inferenceResults.map((r) => r.counter)
+    );
+
+    if (maxResultCounter <= resultCounter) {
+      console.info("not picking a new result, none available");
+      return;
+    }
+
+    const result = inferenceResults.find(
+      (r: InferenceResult) => r.counter == resultCounter
+    );
+
+    console.log("Incrementing result counter ", resultCounter, result);
+    setResultCounter((c) => c + 1);
+
+    tonePlayer.load(result.audio).then(() => {
+      console.log("Loaded new: ", result.audio);
+
+      // Re-jigger the transport so it stops playing old buffers. It seems like this doesn't
+      // introduce a gap, but watch out for that.
+      Tone.Transport.pause();
+      if (!paused) {
+        Tone.Transport.start();
+      }
+    });
+
+    setPrevNumClipsPlayed(numClipsPlayed);
+  }, [
+    numClipsPlayed,
+    prevNumClipsPlayed,
+    resultCounter,
+    inferenceResults,
+    paused,
+    tonePlayer,
+  ]);
+
   // /////////////
 
+  // Request a new inference prompt at a regular interval
+  // TODO(hayk): Rewrite this to request more frequently and max out
   useEffect(() => {
     console.log("setInterval");
     setInterval(() => {
       setInferenceResults((prevResults) => {
-        const lastResult = prevResults[prevResults.length - 1];
-        const newResult = { ...lastResult, counter: lastResult.counter + 1 };
+        const lastResult = prevResults[prevResults.length - 2];
+        const newResult = { ...lastResult, counter: lastResult.counter + 2 };
 
         let results = [...prevResults, newResult];
 
         if (results.length > maxLength) {
           results = results.slice(1);
         }
+
+        console.log(results);
 
         return results;
       });
@@ -134,7 +198,9 @@ export default function Home() {
           <ThreeCanvas
             paused={paused}
             getTime={() => Tone.Transport.seconds}
-            audioLength={tonePlayer ? tonePlayer.sampleTime * tonePlayer.buffer.length : 5}
+            audioLength={
+              tonePlayer ? tonePlayer.sampleTime * tonePlayer.buffer.length : 5
+            }
             inferenceResults={inferenceResults}
           />
         </div>
