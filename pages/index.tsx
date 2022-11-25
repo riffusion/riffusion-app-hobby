@@ -371,17 +371,6 @@ export default function Home() {
             newPromptInputs[index].prompt = prompt;
             setPromptInputs(newPromptInputs);
           }}
-          nextPrompt={() => {
-            // if there are no upcoming prompts, don't do anything
-            var promptLastIndex = promptInputs.length - 1;
-            if (
-              promptInputs[promptLastIndex].prompt == "" &&
-              promptInputs[promptLastIndex - 1].prompt == ""
-            ) {
-              return;
-            }
-            setPromptInputs([...promptInputs, { prompt: "" }]);
-          }}
         />
 
         <Info />

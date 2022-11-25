@@ -7,14 +7,12 @@ interface PromptPanelProps {
   prompts: PromptInput[];
   addPrompt: (prompt: string) => void;
   changePrompt: (prompt: string, index: number) => void;
-  nextPrompt: () => void;
 }
 
 export default function PromptPanel({
   prompts,
   addPrompt,
   changePrompt,
-  nextPrompt,
 }: PromptPanelProps) {
   const inputPrompt = useRef(null);
 
@@ -59,13 +57,6 @@ export default function PromptPanel({
               autoComplete="off"
             />
           </form>
-
-          {/* Test button */}
-          <button
-            title="Add"
-            className="fixed z-90 top-48 right-8 bg-slate-100 w-14 h-14 rounded-full drop-shadow-lg"
-            onClick={() => nextPrompt()}
-          ></button>
         </div>
       </main>
     </>
@@ -77,6 +68,6 @@ const promptEntryClassNames = {
   1: "font-normal text-m text-gray-300 text-opacity-60",
   2: "font-medium text-xl text-gray-200 text-opacity-80",
   3: "font-bold text-5xl text-white", // This is the primary prompt
-  4: "font-medium text-2xl text-gray-200 text-opacity-80", // This is prompt it is transitioning to
-  5: "font-normal text-m text-gray-300 text-opacity-60", // This is the UP NEXT prompt
+  4: "font-medium text-3xl text-gray-100 text-opacity-80", // This is prompt it is transitioning to
+  5: "font-normal text-m text-gray-200 text-opacity-60", // This is the UP NEXT prompt
 };
