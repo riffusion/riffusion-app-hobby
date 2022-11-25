@@ -53,7 +53,7 @@ const Info = () => {
               <div className="my-8 inline-block w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                 <Dialog.Title
                   as="h1"
-                  className="text-2xl font-medium leading-6 text-gray-900 pb-1"
+                  className="text-3xl font-medium leading-6 text-gray-900 pb-2"
                 >
                   Welcome to Riffusion
                 </Dialog.Title>
