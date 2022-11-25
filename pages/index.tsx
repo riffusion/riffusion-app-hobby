@@ -18,7 +18,7 @@ const defaultPromptInputs = [
   { prompt: "A jazz pianist playing a classical concerto" },
   { prompt: "Country singer and a techno DJ" },
   { prompt: "A typewriter in they style of K-Pop" },
-  { prompt: "Boy band with a tropical beat " },
+  { prompt: "lo-fi beat for the holidays" },
   { prompt: "" },
   { prompt: "" },
 ];
