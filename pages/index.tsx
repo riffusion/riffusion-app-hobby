@@ -10,7 +10,6 @@ import Pause from "../components/Pause";
 import { InferenceResult, PromptInput } from "../types";
 
 import * as Tone from "tone";
-import { start } from "repl";
 
 const SERVER_URL = "http://129.146.52.68:3013/run_inference/";
 
@@ -22,6 +21,11 @@ const defaultPromptInputs = [
   { prompt: "" },
   { prompt: "" },
 ];
+
+enum AppState {
+  SamePrompt,
+  Transition,
+}
 
 const urlToBase64 = async (url: string) => {
   const data = await fetch(url);
@@ -37,9 +41,10 @@ const urlToBase64 = async (url: string) => {
 };
 
 // TODO(hayk): Do this as soon as sample comes back
-const timeout = 5150;
+const timeout = 5000;
 const maxLength = 10;
 const alphaVelocity = 0.25;
+const maxNumInferenceResults = 15;
 
 export default function Home() {
   const [paused, setPaused] = useState(true);
@@ -62,6 +67,8 @@ export default function Home() {
 
   const [alpha, setAlpha] = useState(0.0);
   const [seed, setSeed] = useState(0);
+
+  const [appState, setAppState] = useState<AppState>(AppState.SamePrompt);
 
   // On load, populate the first two prompts from checked-in URLs
   useEffect(() => {
@@ -208,10 +215,49 @@ export default function Home() {
 
   // /////////////
 
-  const runInference = async (alpha: number, seed: number, promptInputs: PromptInput[]) => {
-    console.log(promptInputs);
+  // Set the app state based on the prompt inputs array
+  useEffect(() => {
+    if (alpha <= 1) {
+      return;
+    }
+
+    const upNextPrompt = promptInputs[promptInputs.length - 1].prompt;
+    const endPrompt = promptInputs[promptInputs.length - 2].prompt;
+
+    if (appState == AppState.SamePrompt) {
+      if (endPrompt) {
+        setAppState(AppState.Transition);
+      }
+      setSeed(seed + 1);
+    } else if (appState == AppState.Transition) {
+      setPromptInputs([...promptInputs, { prompt: "" }]);
+
+      if (upNextPrompt) {
+        setAppState(AppState.Transition);
+      } else {
+        setAppState(AppState.SamePrompt);
+      }
+    }
+
+    setAlpha(alpha - 1);
+  }, [promptInputs, alpha]);
+
+  // On any app state change, reset alpha
+  useEffect(() => {
+    console.log("App State: ", appState);
+    setAlpha(0.25);
+  }, [appState]);
+
+  const runInference = async (
+    alpha: number,
+    seed: number,
+    appState: AppState,
+    promptInputs: PromptInput[]
+  ) => {
     const startPrompt = promptInputs[promptInputs.length - 3].prompt;
     const endPrompt = promptInputs[promptInputs.length - 2].prompt;
+
+    const transitioning = appState == AppState.Transition;
 
     const inferenceInput = {
       alpha: alpha,
@@ -220,8 +266,8 @@ export default function Home() {
         seed: seed,
       },
       end: {
-        prompt: endPrompt ? endPrompt : startPrompt,
-        seed: endPrompt ? seed : seed + 1,
+        prompt: transitioning ? endPrompt : startPrompt,
+        seed: transitioning ? seed : seed + 1,
       },
     };
 
@@ -244,7 +290,6 @@ export default function Home() {
       const lastResult = prevResults.find((r) => r.counter == maxResultCounter);
 
       const newCounter = lastResult ? lastResult.counter + 1 : 0;
-      console.log("newCounter", newCounter);
 
       const newResult = {
         input: inferenceInput,
@@ -255,12 +300,13 @@ export default function Home() {
       };
 
       // TODO(hayk): Fix up
-      if (alpha >= 1.0) {
-        setAlpha(alpha - 0.75);
-        setSeed(seed + 1);
-      } else {
-        setAlpha((a) => a + alphaVelocity);
-      }
+      // if (alpha > 1.0) {
+      //   setAlpha(alpha - 0.75);
+      //   setSeed(seed + 1);
+      // } else {
+      //   setAlpha(inferenceInput.alpha + alphaVelocity);
+      // }
+      setAlpha(alpha + alphaVelocity);
 
       let results = [...prevResults, newResult];
 
@@ -274,13 +320,17 @@ export default function Home() {
   };
 
   useInterval(() => {
-    runInference(alpha, seed, promptInputs);
+    console.log(inferenceResults);
+    if (inferenceResults.length < maxNumInferenceResults) {
+      runInference(alpha, seed, appState, promptInputs);
+    }
   }, timeout);
 
   // Run inference on a timer.
   // TODO(hayk): Improve the timing here.
+  // TODO(hayk): Fix warning about effects.
   useEffect(() => {
-    runInference(alpha, seed, promptInputs);
+    runInference(alpha, seed, appState, promptInputs);
   }, []);
 
   return (
