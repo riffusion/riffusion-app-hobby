@@ -59,7 +59,8 @@ const Info = () => {
                 </Dialog.Title>
                 <div className="mt-2">
                   <p className="text-sm text-gray-500">
-                    Riffusion is a fine-tuned Stable Diffusion model that generates spectrogram images from any text prompt. <br></br> 
+                    Riffusion is a fine-tuned Stable Diffusion model that
+                    generates spectrogram images from any text prompt. <br></br>
                     <br></br>
                     These images are then converted into music. <br></br>
                   </p>
@@ -71,7 +72,7 @@ const Info = () => {
                     className="inline-flex justify-center rounded-md border border-transparent bg-sky-100 px-4 py-2 text-sm font-medium text-sky-800 hover:bg-sky-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
                     onClick={() => setOpen(false)}
                   >
-                    Let's Riff 🎸
+                    Let&apos;s Riff 🎸
                   </button>
                 </div>
               </div>
