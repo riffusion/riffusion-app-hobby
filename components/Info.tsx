@@ -1,19 +1,19 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-import { FiSliders } from "react-icons/fi";
+import { FiInfo } from "react-icons/fi";
 
-const Settings = () => {
+const Info = () => {
   const [open, setOpen] = useState(false);
 
   return (
     <>
       <button
-        title="Settings"
+        title="Info"
         className="fixed z-90 top-8 right-8 bg-slate-100 w-14 h-14 rounded-full drop-shadow-lg
           flex justify-center items-center text-black text-2xl hover:bg-sky-500 hover:drop-shadow-2xl"
         onClick={() => setOpen(true)}
       >
-        <FiSliders />
+        <FiInfo />
       </button>
 
       <Transition appear show={open} as={Fragment}>
@@ -52,14 +52,16 @@ const Settings = () => {
             >
               <div className="my-8 inline-block w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                 <Dialog.Title
-                  as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
+                  as="h1"
+                  className="text-2xl font-medium leading-6 text-gray-900 pb-1"
                 >
-                  Settings
+                  Welcome to Riffusion
                 </Dialog.Title>
                 <div className="mt-2">
                   <p className="text-sm text-gray-500">
-                    Here are some knobs for you to tweak.
+                    Riffusion is a fine-tuned Stable Diffusion model that generates spectrogram images from any text prompt. <br></br> 
+                    <br></br>
+                    These images are then converted into music. <br></br>
                   </p>
                 </div>
 
@@ -69,7 +71,7 @@ const Settings = () => {
                     className="inline-flex justify-center rounded-md border border-transparent bg-sky-100 px-4 py-2 text-sm font-medium text-sky-800 hover:bg-sky-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
                     onClick={() => setOpen(false)}
                   >
-                    Wicked!
+                    Let's Riff 🎸
                   </button>
                 </div>
               </div>
@@ -81,4 +83,4 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+export default Info;
