@@ -25,7 +25,7 @@ export default function PromptPanel({
                 <div className="pl-20">
                     <div className="h-[80vh] flex flex-col justify-around pt-[5vh] pr-5">
                         {prompts.slice(-6).map((prompt, index) => (
-                            <PromptEntry prompt={prompt.prompt} className={promptEntryClassNames[index]} index={index} />
+                            <PromptEntry prompt={prompt.prompt} className={promptEntryClassNames[index]} index={index} key={index}/>
                         ))}
                     </div>
 

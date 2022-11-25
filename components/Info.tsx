@@ -1,8 +1,21 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { FiInfo } from "react-icons/fi";
+import styled, { css } from "styled-components";
 
-const Info = () => {
+const ModalContainer = styled.div`
+position: absolute;
+top: 0;
+left: 0;
+width: 100vw;
+height: 100vh;
+background: rgba(0, 0, 0, 0.5);
+display: flex;
+align-items: center;
+justify-content: center;
+`;
+
+export default function Info(){
   const [open, setOpen] = useState(false);
 
   return (
@@ -50,38 +63,38 @@ const Info = () => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="my-8 inline-block w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                <Dialog.Title
-                  as="h1"
-                  className="text-3xl font-medium leading-6 text-gray-900 pb-2"
-                >
-                  Welcome to Riffusion
-                </Dialog.Title>
-                <div className="mt-2">
-                  <p className="text-sm text-gray-500">
-                    Riffusion is a fine-tuned Stable Diffusion model that
-                    generates spectrogram images from any text prompt. <br></br>
-                    <br></br>
-                    These images are then converted into music. <br></br>
-                  </p>
-                </div>
-
-                <div className="mt-4">
-                  <button
-                    type="button"
-                    className="inline-flex justify-center rounded-md border border-transparent bg-sky-100 px-4 py-2 text-sm font-medium text-sky-800 hover:bg-sky-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
-                    onClick={() => setOpen(false)}
+              <ModalContainer>
+                <div className="my-8 inline-block w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Title
+                    as="h1"
+                    className="text-3xl font-medium leading-6 text-gray-900 pb-2"
                   >
-                    Let&apos;s Riff 🎸
-                  </button>
+                    Welcome to Riffusion
+                  </Dialog.Title>
+                  <div className="mt-2">
+                    <p className="text-sm text-gray-500">
+                      Riffusion is a fine-tuned Stable Diffusion model that
+                      generates spectrogram images from any text prompt. <br></br>
+                      <br></br>
+                      These images are then converted into music. <br></br>
+                    </p>
+                  </div>
+
+                  <div className="mt-4">
+                    <button
+                      type="button"
+                      className="inline-flex justify-center rounded-md border border-transparent bg-sky-100 px-4 py-2 text-sm font-medium text-sky-800 hover:bg-sky-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
+                      onClick={() => setOpen(false)}
+                    >
+                      Let&apos;s Riff 🎸
+                    </button>
+                  </div>
                 </div>
-              </div>
+              </ModalContainer>
             </Transition.Child>
           </div>
-        </Dialog>
-      </Transition>
+      </Dialog>
+    </Transition>
     </>
   );
 };
-
-export default Info;
