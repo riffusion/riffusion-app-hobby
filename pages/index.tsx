@@ -15,8 +15,8 @@ const defaultPromptInputs = [
   { prompt: "Country singer and a techno DJ"},
   { prompt: "A typewriter in they style of K-Pop"},
   { prompt: "Boy band with a tropical beat "},
-  { prompt: "..."},
-  { prompt: "Anything you want"},
+  { prompt: ""},
+  { prompt: ""},
 ];
 
 const defaultInferenceResults = [
@@ -207,10 +207,18 @@ export default function Home() {
           addPrompt={(prompt: string) => {
             setPromptInputs([...promptInputs, { prompt: prompt }]);
           }}
-          changeUpNextPrompt={(prompt: string) => {
+          changePrompt={(prompt: string, index: number) => {
             const newPromptInputs = [...promptInputs];
-            newPromptInputs[newPromptInputs.length - 1].prompt = prompt;
+            newPromptInputs[index].prompt = prompt;
             setPromptInputs(newPromptInputs);
+          }}
+          nextPrompt={() => {
+            // if there are no upcoming prompts, don't do anything
+            var promptLastIndex = promptInputs.length - 1;
+            if (promptInputs[promptLastIndex].prompt == "" && promptInputs[promptLastIndex-1].prompt == "") {
+              return;
+            }
+            setPromptInputs([...promptInputs, { prompt: "" }]);
           }}
         />
 
