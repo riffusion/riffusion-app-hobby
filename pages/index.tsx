@@ -1,6 +1,8 @@
 import Head from "next/head";
 import { useEffect, useState, useRef } from "react";
 
+import Image from "next/image";
+
 import ThreeCanvas from "../components/ThreeCanvas";
 import PromptPanel from "../components/PromptPanel";
 import Info from "../components/Info";
@@ -10,37 +12,31 @@ import { InferenceResult, PromptInput } from "../types";
 
 import * as Tone from "tone";
 
+const SERVER_URL = "http://129.146.52.68:3013/run_inference/";
+
 const defaultPromptInputs = [
-  { prompt: "A jazz pianist playing a classical concerto"},
-  { prompt: "Country singer and a techno DJ"},
-  { prompt: "A typewriter in they style of K-Pop"},
-  { prompt: "Boy band with a tropical beat "},
-  { prompt: ""},
-  { prompt: ""},
+  { prompt: "A jazz pianist playing a classical concerto" },
+  { prompt: "Country singer and a techno DJ" },
+  { prompt: "A typewriter in they style of K-Pop" },
+  { prompt: "Boy band with a tropical beat " },
+  { prompt: "" },
+  { prompt: "" },
 ];
 
-const defaultInferenceResults = [
-  {
-    input: {
-      alpha: 0.0,
-      start: defaultPromptInputs[0],
-      end: defaultPromptInputs[1],
-    },
-    image: "rap_sample.jpg",
-    audio: "rap_sample.mp3",
-    counter: 0,
-  },
-  {
-    input: {
-      alpha: 0.0,
-      start: defaultPromptInputs[0],
-      end: defaultPromptInputs[1],
-    },
-    image: "pop_sample.jpg",
-    audio: "pop_sample.mp3",
-    counter: 1,
-  },
-];
+const urlToBase64 = async (url: string) => {
+  const data = await fetch(url);
+  const blob = await data.blob();
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(blob);
+    reader.onloadend = () => {
+      const base64data = reader.result;
+      resolve(base64data);
+    };
+  });
+};
+
+const defaultInferenceResults = [];
 
 // TODO(hayk): Do this as soon as sample comes back
 const timeout = 5150;
@@ -65,9 +61,54 @@ export default function Home() {
 
   const [resultCounter, setResultCounter] = useState(0);
 
+  // const [randomImgSrc, setRandomImgSrc] = useState("");
+
+  // On load, populate the first two prompts from checked-in URLs
+  useEffect(() => {
+    if (inferenceResults.length > 0) {
+      return;
+    }
+
+    const populateDefaults = async () => {
+      const result1 = {
+        input: {
+          alpha: 0.0,
+          start: defaultPromptInputs[0],
+          end: defaultPromptInputs[1],
+        },
+        image: await urlToBase64("rap_sample.jpg") as string,
+        audio: await urlToBase64("rap_sample.mp3") as string,
+        counter: 0,
+      };
+
+      const result2 = {
+        input: {
+          alpha: 0.0,
+          start: defaultPromptInputs[0],
+          end: defaultPromptInputs[1],
+        },
+        image: await urlToBase64("pop_sample.jpg") as string,
+        audio: await urlToBase64("pop_sample.mp3") as string,
+        counter: 1,
+      };
+
+      setInferenceResults([...inferenceResults, result1, result2]);
+    };
+
+    populateDefaults();
+  }, [inferenceResults]);
+
   // On load, create a player synced to the tone transport
   useEffect(() => {
-    const audioUrl = defaultInferenceResults[0].audio;
+    if (tonePlayer) {
+      return;
+    }
+
+    if (inferenceResults.length === 0) {
+      return;
+    }
+
+    const audioUrl = inferenceResults[0].audio;
 
     const player = new Tone.Player(audioUrl, () => {
       console.log("Created player.");
@@ -90,7 +131,7 @@ export default function Home() {
       // Make further load callbacks do nothing.
       player.buffer.onload = () => {};
     }).toDestination();
-  }, []);
+  }, [tonePlayer, inferenceResults]);
 
   // On play/pause button, play/pause the audio with the tone transport
   useEffect(() => {
@@ -122,8 +163,8 @@ export default function Home() {
       ...inferenceResults.map((r) => r.counter)
     );
 
-    if (maxResultCounter <= resultCounter) {
-      console.info("not picking a new result, none available");
+    if (maxResultCounter < resultCounter) {
+      console.info("not picking a new result, none available", resultCounter, maxResultCounter);
       return;
     }
 
@@ -135,7 +176,7 @@ export default function Home() {
     setResultCounter((c) => c + 1);
 
     tonePlayer.load(result.audio).then(() => {
-      console.log("Loaded new: ", result.audio);
+      console.log("Loaded new audio");
 
       // Re-jigger the transport so it stops playing old buffers. It seems like this doesn't
       // introduce a gap, but watch out for that.
@@ -159,25 +200,67 @@ export default function Home() {
 
   // Request a new inference prompt at a regular interval
   // TODO(hayk): Rewrite this to request more frequently and max out
-  useEffect(() => {
-    console.log("setInterval");
-    setInterval(() => {
-      setInferenceResults((prevResults) => {
-        const lastResult = prevResults[prevResults.length - 2];
-        const newResult = { ...lastResult, counter: lastResult.counter + 2 };
+  // useEffect(() => {
+  //   console.log("setInterval");
+  //   setInterval(() => {
+  //     setInferenceResults((prevResults) => {
+  //       const lastResult = prevResults[prevResults.length - 2];
+  //       const newResult = { ...lastResult, counter: lastResult.counter + 2 };
 
-        let results = [...prevResults, newResult];
+  //       let results = [...prevResults, newResult];
 
-        if (results.length > maxLength) {
-          results = results.slice(1);
-        }
+  //       if (results.length > maxLength) {
+  //         results = results.slice(1);
+  //       }
 
-        console.log(results);
+  //       console.log(results);
 
-        return results;
-      });
-    }, timeout);
-  }, []);
+  //       return results;
+  //     });
+  //   }, timeout);
+  // }, []);
+
+  // useEffect(() => {
+  //   console.log("FETCHING");
+  //   fetch(SERVER_URL, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Access-Control-Allow-Origin": "*",
+  //     },
+  //     body: JSON.stringify({
+  //       alpha: 0.0,
+  //       start: {
+  //         prompt: "bieber grunge",
+  //         seed: 42,
+  //       },
+  //       end: {
+  //         prompt: "eminem violin",
+  //         seed: 10,
+  //       },
+  //     }),
+  //   })
+  //     .then((response) => {
+  //       console.log("Got response!");
+  //       response.json().then((data) => {
+  //         const imageB64Bytes = data.image;
+  //         // const imageBytes = Buffer.from(imageB64Bytes, "base64").toString();
+  //         // const image_bytes = new TextDecoder("utf-8").decode(imageB64Bytes);
+
+  //         const audioB64Bytes = data.audio;
+  //         var snd = new Audio("data:audio/mp3;base64," + audioB64Bytes);
+  //         snd.play();
+
+  //         // const audio_bytes = new TextDecoder("utf-8").decode(audioB64Bytes);
+
+  //         // console.log(imageBytes);
+  //         setRandomImgSrc(imageB64Bytes);
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // }, []);
 
   return (
     <>
@@ -202,6 +285,17 @@ export default function Home() {
           />
         </div>
 
+        {/* TODO(hayk): Kill this, just for testing. */}
+        {/* {randomImgSrc && (
+          <Image
+            unoptimized
+            src={`data:image/png;base64,${randomImgSrc}`}
+            alt={"random image"}
+            width={256}
+            height={256}
+          />
+        )} */}
+
         <PromptPanel
           prompts={promptInputs}
           addPrompt={(prompt: string) => {
@@ -215,7 +309,10 @@ export default function Home() {
           nextPrompt={() => {
             // if there are no upcoming prompts, don't do anything
             var promptLastIndex = promptInputs.length - 1;
-            if (promptInputs[promptLastIndex].prompt == "" && promptInputs[promptLastIndex-1].prompt == "") {
+            if (
+              promptInputs[promptLastIndex].prompt == "" &&
+              promptInputs[promptLastIndex - 1].prompt == ""
+            ) {
               return;
             }
             setPromptInputs([...promptInputs, { prompt: "" }]);
