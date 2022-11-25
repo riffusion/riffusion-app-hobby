@@ -54,7 +54,16 @@ void main()
     // Get the color of the fragment from the texture map
     // at that coordinate in the UV mapping
     vec4 source = texture2D(terrainTexture, vUV);
-    gl_FragColor = vec4(source.r - 0.05, source.g - 0.05, source.b + 0.1, 1.0);
+
+    float x = vUV.x;
+    float y = vUV.y;
+
+    float r = source.r - 0.05 - 0.0 * sin(x * 3.14 * 0.5);
+
+    float g = source.g - 0.05 - 0.05 * sin(y * 10.0);
+    float b = source.b + 0.1 - 0.05 * sin(y * 10.0);
+
+    gl_FragColor = vec4(r, g, b, 1.0);
 }
 
 `;

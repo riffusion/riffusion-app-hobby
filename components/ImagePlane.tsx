@@ -5,6 +5,7 @@ import { useLoader } from "@react-three/fiber";
 interface ImagePlaneProps {
   url: string;
   height: number;
+  duration: number;
 }
 
 /**
@@ -16,7 +17,7 @@ export default function ImagePlane(props: ImagePlaneProps) {
   return (
     <Suspense fallback={null}>
       <mesh rotation-z={-Math.PI / 2} position-y={props.height}>
-        <planeGeometry attach="geometry" args={[5, 5]} />
+        <planeGeometry attach="geometry" args={[props.duration, 5]} />
         <meshBasicMaterial attach="material" map={texture} />
       </mesh>
     </Suspense>

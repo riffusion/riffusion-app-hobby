@@ -40,6 +40,10 @@ const urlToBase64 = async (url: string) => {
   });
 };
 
+function getRandomInt(max: number) {
+  return Math.floor(Math.random() * max);
+}
+
 // TODO(hayk): Do this as soon as sample comes back
 const timeout = 5000;
 const maxLength = 10;
@@ -66,7 +70,7 @@ export default function Home() {
   const [resultCounter, setResultCounter] = useState(0);
 
   const [alpha, setAlpha] = useState(0.0);
-  const [seed, setSeed] = useState(0);
+  const [seed, setSeed] = useState(getRandomInt(1000000));
 
   const [appState, setAppState] = useState<AppState>(AppState.SamePrompt);
 
@@ -134,7 +138,8 @@ export default function Home() {
       Tone.Transport.scheduleRepeat((time) => {
         console.log(
           "Edge of clip, t = ",
-          Tone.Transport.getSecondsAtTime(time)
+          Tone.Transport.getSecondsAtTime(time),
+          bufferLength
         );
         setNumClipsPlayed((n) => n + 1);
       }, bufferLength);
@@ -346,14 +351,14 @@ export default function Home() {
 
       <div className="bg-[#0A2342] flex flex-row min-h-screen text-white">
         <div className="w-1/3 min-h-screen">
-          <ThreeCanvas
-            paused={paused}
-            getTime={() => Tone.Transport.seconds}
-            audioLength={
-              tonePlayer ? tonePlayer.sampleTime * tonePlayer.buffer.length : 5
-            }
-            inferenceResults={inferenceResults}
-          />
+          {tonePlayer && (
+            <ThreeCanvas
+              paused={paused}
+              getTime={() => Tone.Transport.seconds}
+              audioLength={tonePlayer.sampleTime * tonePlayer.buffer.length}
+              inferenceResults={inferenceResults}
+            />
+          )}
         </div>
 
         <PromptPanel

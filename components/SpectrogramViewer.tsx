@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
-import { QuadraticBezierLine, Plane } from "@react-three/drei";
+import { Box } from "@react-three/drei";
 
 import { InferenceResult } from "../types";
 import HeightMapImage from "./HeightMapImage";
@@ -54,28 +54,26 @@ export default function SpectrogramViewer({
             />
           );
         } else {
-          return <ImagePlane url={value.image} height={height} key={index} />;
+          return (
+            <ImagePlane
+              url={value.image}
+              height={height}
+              duration={audioLength}
+              key={index}
+            />
+          );
         }
       })}
 
       {/* TODO make into playhead component */}
       <group ref={playheadRef}>
-        <Plane
-          args={[5.5, 2.0]}
+        <Box
+          args={[5.5, 2.0, 0.15]}
           rotation={[Math.PI / 2 - 0.4, 0, 0]}
           position={[0, 0, -0.5]}
         >
-          <meshBasicMaterial color="#ee2211" transparent opacity={0.8} />
-        </Plane>
-
-        {/* <QuadraticBezierLine
-          start={[-3, 0, 1]} // Starting point, can be an array or a vec3
-          end={[3, 0, 1]} // Ending point, can be an array or a vec3
-          mid={[0, -0.8, 0.4]} // Optional control point, can be an array or a vec3
-          color="#DD1C1A" // Default
-          lineWidth={5} // In pixels (default)
-          dashed={false} // Default
-        /> */}
+          <meshBasicMaterial color="#ee2211" transparent opacity={0.7} />
+        </Box>
       </group>
     </group>
   );
