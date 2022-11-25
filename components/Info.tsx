@@ -18,12 +18,18 @@ justify-content: center;
 export default function Info(){
   const [open, setOpen] = useState(false);
 
+  var classNameCondition = ""
+  if (open) {
+    classNameCondition="fixed z-90 top-8 right-8 bg-sky-300 w-14 h-14 rounded-full drop-shadow-lg flex justify-center items-center text-sky-900 text-2xl hover:bg-sky-500 hover:drop-shadow-2xl"
+  } else {
+    classNameCondition="fixed z-90 top-8 right-8 bg-slate-100 w-14 h-14 rounded-full drop-shadow-lg flex justify-center items-center text-sky-900 text-2xl hover:bg-sky-500 hover:drop-shadow-2xl"
+  }
+
   return (
     <>
       <button
         title="Info"
-        className="fixed z-90 top-8 right-8 bg-slate-100 w-14 h-14 rounded-full drop-shadow-lg
-          flex justify-center items-center text-black text-2xl hover:bg-sky-500 hover:drop-shadow-2xl"
+        className= {classNameCondition}
         onClick={() => setOpen(true)}
       >
         <FiInfo />
@@ -83,7 +89,7 @@ export default function Info(){
                   <div className="mt-4">
                     <button
                       type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-sky-100 px-4 py-2 text-sm font-medium text-sky-800 hover:bg-sky-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
+                      className="inline-flex justify-center rounded-md border border-transparent bg-sky-300 px-4 py-2 text-sm font-medium text-sky-900 hover:bg-sky-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
                       onClick={() => setOpen(false)}
                     >
                       Let&apos;s Riff 🎸
