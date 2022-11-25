@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import ThreeCanvas from "../components/ThreeCanvas";
 import PromptPanel from "../components/PromptPanel";
-import Settings from "../components/Settings";
+import Info from "../components/Info";
 import Pause from "../components/Pause";
 
 import { InferenceResult, PromptInput } from "../types";
@@ -12,11 +12,11 @@ import * as Tone from "tone";
 
 const defaultPromptInputs = [
   { prompt: "A jazz pianist playing a classical concerto"},
-  { prompt: "Taylor Swift singing with a tropical beat"},
-  { prompt: "A typewriter in the bahamas"},
-  { prompt: "Justin Bieber anger rap"},
-  { prompt: "New york city rap, with a dust storm, cinematic score, dramatic, composition"},
-  { prompt: "Jack Johnson playing a harmonica in the 1920s"},
+  { prompt: "Country singer and a techno DJ"},
+  { prompt: "A typewriter in they style of K-Pop"},
+  { prompt: "Boy band with a tropical beat "},
+  { prompt: "..."},
+  { prompt: "Anything you want"},
 ];
 
 const defaultInferenceResults = [
@@ -151,7 +151,7 @@ export default function Home() {
           }}
         />
 
-        <Settings />
+        <Info />
 
         <Pause paused={paused} setPaused={setPaused} />
       </div>

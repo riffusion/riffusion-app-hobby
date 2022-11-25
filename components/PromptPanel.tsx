@@ -21,7 +21,7 @@ export default function PromptPanel({
         <>
             <main className="w-2/3 min-h-screen">
                 <div className="pl-20">
-                    <div className="h-[80vh] flex flex-col justify-around pt-[5vh]">
+                    <div className="h-[80vh] flex flex-col justify-around pt-[5vh] pr-5">
                         {prompts.slice(-6).map((prompt, index) => (
                             <PromptEntry prompt={index == 5 ? "UP NEXT: " + prompt.prompt : prompt.prompt} className={promptEntryClassNames[index]} key={index} />
                         ))}
@@ -34,12 +34,13 @@ export default function PromptPanel({
                         inputPrompt.current.value = '';
                     }}>
                         <input
-                            className="fixed z-90 bottom-20 w-1/2 h-12 pl-3 text-xl text-black rounded-lg border-sky-500 border-2"
+                            className="fixed z-90 bottom-20 w-1/2 h-12 pl-3 text-xl text-black rounded-lg border-sky-400 border-4 focus:outline-none focus:border-sky-500" 
                             ref={inputPrompt}
                             type="text"
                             id="prompt"
                             name="prompt"
                             placeholder="What do you want to hear next?"
+                            maxLength={150}
                             autoComplete="off"
                         />
                     </form>
@@ -56,6 +57,6 @@ const promptEntryClassNames = {
     1: "font-normal text-m text-gray-300 text-opacity-60",
     2: "font-medium text-xl text-gray-200 text-opacity-80",
     3: "font-bold text-5xl text-white",  // This is the primary prompt
-    4: "font-medium text-2xl text-gray-200 text-opacity-80",
+    4: "font-medium text-2xl text-gray-200 text-opacity-80", // This is prompt it is transitioning to
     5: "font-normal text-m text-gray-300 text-opacity-60",
 }
