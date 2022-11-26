@@ -44,7 +44,7 @@ export default function SpectrogramViewer({
   return (
     <group>
       {inferenceResults.map((value: InferenceResult, index: number) => {
-        const position = audioLength * (-0.53 - value.counter) + playbarShift;
+        const position = audioLength * (-0.6 - value.counter) + playbarShift;
         if (use_height_map) {
           return (
             <HeightMapImage
