@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useInterval, useTimeout } from "usehooks-ts";
+import * as Tone from "tone";
 
 import ThreeCanvas from "../components/ThreeCanvas";
 import PromptPanel from "../components/PromptPanel";
@@ -9,8 +10,6 @@ import Info from "../components/Info";
 import Pause from "../components/Pause";
 
 import { InferenceResult, PromptInput } from "../types";
-
-import * as Tone from "tone";
 
 // TODO(hayk): Get this into a configuration.
 const SERVER_URL = "http://129.146.52.68:3013/run_inference/";
@@ -28,19 +27,6 @@ enum AppState {
   SamePrompt,
   Transition,
 }
-
-const urlToBase64 = async (url: string) => {
-  const data = await fetch(url);
-  const blob = await data.blob();
-  return new Promise((resolve) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(blob);
-    reader.onloadend = () => {
-      const base64data = reader.result;
-      resolve(base64data);
-    };
-  });
-};
 
 function getRandomInt(max: number) {
   return Math.floor(Math.random() * max);
@@ -125,47 +111,6 @@ export default function Home() {
   const [alpha, setAlpha] = useState(0.0);
 
   const [appState, setAppState] = useState<AppState>(AppState.SamePrompt);
-
-  // On load, populate the first two prompts from checked-in URLs
-  useEffect(() => {
-    // NOTE(hayk): not currently populating initial prompts.
-    if (true) {
-      return;
-    }
-
-    if (inferenceResults.length > 0) {
-      return;
-    }
-
-    const populateDefaults = async () => {
-      const result1 = {
-        input: {
-          alpha: 0.0,
-          start: defaultPromptInputs[0],
-          end: defaultPromptInputs[1],
-        },
-        image: (await urlToBase64("rap_sample.jpg")) as string,
-        audio: (await urlToBase64("rap_sample.mp3")) as string,
-        counter: 0,
-      };
-
-      const result2 = {
-        input: {
-          alpha: 0.0,
-          start: defaultPromptInputs[0],
-          end: defaultPromptInputs[1],
-        },
-        image: (await urlToBase64("pop_sample.jpg")) as string,
-        audio: (await urlToBase64("pop_sample.mp3")) as string,
-        counter: 1,
-      };
-
-      console.log(result1);
-      setInferenceResults([...inferenceResults, result1]);
-    };
-
-    populateDefaults();
-  }, [inferenceResults]);
 
   // On load, create a player synced to the tone transport
   useEffect(() => {
