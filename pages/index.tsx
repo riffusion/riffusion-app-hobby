@@ -394,7 +394,6 @@ export default function Home() {
 
   // TODO(hayk): Fix warning about effects.
   useTimeout(() => {
-    console.log("SHOULD ONLY RUN ONCE");
     runInference(alpha, seed, appState, promptInputs);
   }, 1000);
 
