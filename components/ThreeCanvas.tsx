@@ -2,6 +2,7 @@ import { Canvas } from "@react-three/fiber";
 
 import { InferenceResult } from "../types";
 import SpectrogramViewer from "./SpectrogramViewer";
+import { PerspectiveCamera } from "@react-three/drei";
 
 interface CanvasProps {
   paused: boolean;
@@ -20,9 +21,16 @@ export default function ThreeCanvas({
   audioLength,
 }: CanvasProps) {
   return (
-    <Canvas camera={{ position: [0, 0, 8], rotation: [0.4, 0, 0] }}>
+    <Canvas>
       <ambientLight intensity={2} />
       <pointLight position={[40, 40, 40]} />
+      <PerspectiveCamera
+        makeDefault
+        position={[0, 0, 8]}
+        rotation={[0.4, 0, 0]}
+        fov={70}
+      />
+
       <SpectrogramViewer
         paused={paused}
         inferenceResults={inferenceResults}

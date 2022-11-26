@@ -12,6 +12,7 @@ import { InferenceResult, PromptInput } from "../types";
 
 import * as Tone from "tone";
 
+// TODO(hayk): Get this into a configuration.
 const SERVER_URL = "http://129.146.52.68:3013/run_inference/";
 
 const defaultPromptInputs = [
