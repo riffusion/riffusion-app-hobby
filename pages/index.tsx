@@ -356,8 +356,7 @@ export default function Home() {
 
       const newResult = {
         input: inferenceInput,
-        // TODO(hayk): Swap for JPG?
-        image: "data:image/png;base64," + data.image,
+        image: "data:image/jpeg;base64," + data.image,
         audio: "data:audio/mpeg;base64," + data.audio,
         counter: newCounter,
       };
