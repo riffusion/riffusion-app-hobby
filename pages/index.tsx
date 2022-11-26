@@ -54,7 +54,7 @@ export default function Home() {
   const [denoising, setDenoising] = useState(0.75);
   const [guidance, setGuidance] = useState(7.0);
   const [numInferenceSteps, setNumInferenceSteps] = useState(50);
-  const [seedImageId, setSeedImageId] = useState(0);
+  const [seedImageId, setSeedImageId] = useState("og_beat");
   const [maskImageId, setMaskImageId] = useState(null);
 
   const [alphaVelocity, setAlphaVelocity] = useState(0.25);
@@ -82,7 +82,7 @@ export default function Home() {
     }
 
     if (router.query.seedImageId) {
-      setSeedImageId(parseInt(router.query.seedImageId as string));
+      setSeedImageId(router.query.seedImageId as string);
     }
 
     if (router.query.maskImageId) {
