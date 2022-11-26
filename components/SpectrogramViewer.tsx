@@ -39,15 +39,17 @@ export default function SpectrogramViewer({
     playheadRef.current.position.y = camera.position.y;
   });
 
+  const playbarShift = 3.6; // [m]
+
   return (
     <group>
       {inferenceResults.map((value: InferenceResult, index: number) => {
-        const height = audioLength * (-0.48 - value.counter);
+        const position = audioLength * (-0.53 - value.counter) + playbarShift;
         if (use_height_map) {
           return (
             <HeightMapImage
               url={value.image}
-              position={[0, height, 0]}
+              position={[0, position, 0]}
               rotation={[0, 0, -Math.PI / 2]}
               scale={[audioLength, 5, 1]}
               key={index}
@@ -57,7 +59,7 @@ export default function SpectrogramViewer({
           return (
             <ImagePlane
               url={value.image}
-              height={height}
+              height={position}
               duration={audioLength}
               key={index}
             />
@@ -69,10 +71,10 @@ export default function SpectrogramViewer({
       <group ref={playheadRef}>
         <Box
           args={[5.5, 2.0, 0.15]}
-          rotation={[Math.PI / 2 - 0.4, 0, 0]}
-          position={[0, 0, -0.5]}
+          rotation={[Math.PI / 2 - 0.2, 0, 0]}
+          position={[0, playbarShift, -0.5]}
         >
-          <meshBasicMaterial color="#ee2211" transparent opacity={0.7} />
+          <meshBasicMaterial color="#ee2211" transparent opacity={0.8} />
         </Box>
       </group>
     </group>

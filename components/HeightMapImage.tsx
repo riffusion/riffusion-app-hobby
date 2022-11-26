@@ -38,7 +38,7 @@ export default function HeightMapImage(props: HeightMapImageProps) {
           // Feed the heightmap
           bumpTexture: { value: heightMap },
           // Feed the scaling constant for the heightmap
-          bumpScale: { value: -0.2 },
+          bumpScale: { value: -0.5 },
           // Feed the texture map
           terrainTexture: { value: textureMap },
         }}

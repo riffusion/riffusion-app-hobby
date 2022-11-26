@@ -16,7 +16,7 @@ const SERVER_URL = "http://129.146.52.68:3013/run_inference/";
 const defaultPromptInputs = [
   { prompt: "A jazz pianist playing a classical concerto" },
   { prompt: "Country singer and a techno DJ" },
-  { prompt: "A typewriter in they style of K-Pop" },
+  { prompt: "A typewriter in the style of K-Pop" },
   { prompt: "lo-fi beat for the holidays" },
   { prompt: "" },
   { prompt: "" },
@@ -264,15 +264,28 @@ export default function Home() {
 
     const transitioning = appState == AppState.Transition;
 
+    const denoising = 0.85;
+    const guidance = 7.0;
+    const numInferenceSteps = 50;
+    const seedImageId = 0;
+    const maskImageId = null;
+
     const inferenceInput = {
       alpha: alpha,
+      num_inference_steps: numInferenceSteps,
+      seed_image_id: seedImageId,
+      mask_image_id: maskImageId,
       start: {
         prompt: startPrompt,
         seed: seed,
+        denoising: denoising,
+        guidance: guidance,
       },
       end: {
         prompt: transitioning ? endPrompt : startPrompt,
         seed: transitioning ? seed : seed + 1,
+        denoising: denoising,
+        guidance: guidance,
       },
     };
 
@@ -324,6 +337,8 @@ export default function Home() {
     });
   };
 
+  // Run inference on a timer.
+  // TODO(hayk): Improve the strategy here.
   useInterval(() => {
     console.log(inferenceResults);
     if (inferenceResults.length < maxNumInferenceResults) {
@@ -331,8 +346,6 @@ export default function Home() {
     }
   }, timeout);
 
-  // Run inference on a timer.
-  // TODO(hayk): Improve the timing here.
   // TODO(hayk): Fix warning about effects.
   useEffect(() => {
     runInference(alpha, seed, appState, promptInputs);
@@ -351,14 +364,14 @@ export default function Home() {
 
       <div className="bg-[#0A2342] flex flex-row min-h-screen text-white">
         <div className="w-1/3 min-h-screen">
-          {tonePlayer && (
-            <ThreeCanvas
-              paused={paused}
-              getTime={() => Tone.Transport.seconds}
-              audioLength={tonePlayer.sampleTime * tonePlayer.buffer.length}
-              inferenceResults={inferenceResults}
-            />
-          )}
+          <ThreeCanvas
+            paused={paused}
+            getTime={() => Tone.Transport.seconds}
+            audioLength={
+              tonePlayer ? tonePlayer.sampleTime * tonePlayer.buffer.length : 0
+            }
+            inferenceResults={inferenceResults}
+          />
         </div>
 
         <PromptPanel
