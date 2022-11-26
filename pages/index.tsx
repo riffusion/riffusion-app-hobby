@@ -297,7 +297,7 @@ export default function Home() {
     }
 
     setAlpha(alpha - 1);
-  }, [promptInputs, alpha]);
+  }, [promptInputs, alpha, appState, seed]);
 
   // On any app state change, reset alpha
   useEffect(() => {
@@ -348,7 +348,7 @@ export default function Home() {
 
     const data = await response.json();
 
-    setInferenceResults((prevResults) => {
+    setInferenceResults((prevResults: InferenceResult[]) => {
       const maxResultCounter = Math.max(...prevResults.map((r) => r.counter));
 
       const lastResult = prevResults.find((r) => r.counter == maxResultCounter);

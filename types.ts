@@ -8,7 +8,7 @@ export interface PromptInput {
 export interface InferenceInput {
     alpha: number;
     num_inference_steps?: number;
-    seed_image_id?: number;
+    seed_image_id?: string;
     mask_image_id?: string;
 
     start: PromptInput;
