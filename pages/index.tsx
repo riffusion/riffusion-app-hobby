@@ -1,6 +1,7 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useInterval } from "usehooks-ts";
+import { useInterval, useTimeout } from "usehooks-ts";
 
 import ThreeCanvas from "../components/ThreeCanvas";
 import PromptPanel from "../components/PromptPanel";
@@ -47,20 +48,71 @@ function getRandomInt(max: number) {
 // TODO(hayk): Do this as soon as sample comes back
 const timeout = 5000;
 const maxLength = 10;
-const alphaVelocity = 0.25;
 const maxNumInferenceResults = 15;
 
 export default function Home() {
+  const [denoising, setDenoising] = useState(0.75);
+  const [guidance, setGuidance] = useState(7.0);
+  const [numInferenceSteps, setNumInferenceSteps] = useState(50);
+  const [seedImageId, setSeedImageId] = useState(0);
+  const [maskImageId, setMaskImageId] = useState(null);
+
+  const [alphaVelocity, setAlphaVelocity] = useState(0.25);
+  const [seed, setSeed] = useState(getRandomInt(1000000));
   const [paused, setPaused] = useState(true);
+
+  // If a prompt is available from a query string, set it as the initial
+  const router = useRouter();
 
   const [promptInputs, setPromptInputs] =
     useState<PromptInput[]>(defaultPromptInputs);
 
+  // Set the initial seed from the URL if available
+  useEffect(() => {
+    if (router.query.denoising) {
+      setDenoising(parseFloat(router.query.denoising as string));
+    }
+
+    if (router.query.guidance) {
+      setGuidance(parseFloat(router.query.guidance as string));
+    }
+
+    if (router.query.numInferenceSteps) {
+      setNumInferenceSteps(parseInt(router.query.numInferenceSteps as string));
+    }
+
+    if (router.query.seedImageId) {
+      setSeedImageId(parseInt(router.query.seedImageId as string));
+    }
+
+    if (router.query.maskImageId) {
+      if (router.query.maskImageId === "none") {
+        setMaskImageId("");
+      } else {
+        setMaskImageId(router.query.maskImageId as string);
+      }
+    }
+
+    if (router.query.alphaVelocity) {
+      setAlphaVelocity(parseFloat(router.query.alphaVelocity as string));
+    }
+
+    if (router.query.seed) {
+      console.log("setting seed");
+      setSeed(parseInt(router.query.seed as string));
+    }
+
+    if (router.query.prompt) {
+      setPromptInputs((promptInputs) => {
+        promptInputs[3].prompt = router.query.prompt as string;
+        return promptInputs;
+      });
+    }
+  }, [router.query]);
+
   const [inferenceResults, setInferenceResults] = useState<InferenceResult[]>(
     []
   );
-
-  // /////////////
 
   const [tonePlayer, setTonePlayer] = useState<Tone.Player>(null);
 
@@ -70,7 +122,6 @@ export default function Home() {
   const [resultCounter, setResultCounter] = useState(0);
 
   const [alpha, setAlpha] = useState(0.0);
-  const [seed, setSeed] = useState(getRandomInt(1000000));
 
   const [appState, setAppState] = useState<AppState>(AppState.SamePrompt);
 
@@ -264,12 +315,6 @@ export default function Home() {
 
     const transitioning = appState == AppState.Transition;
 
-    const denoising = 0.85;
-    const guidance = 7.0;
-    const numInferenceSteps = 50;
-    const seedImageId = 0;
-    const maskImageId = null;
-
     const inferenceInput = {
       alpha: alpha,
       num_inference_steps: numInferenceSteps,
@@ -333,6 +378,8 @@ export default function Home() {
         results = results.slice(1);
       }
 
+      console.log(results);
+
       return results;
     });
   };
@@ -340,16 +387,16 @@ export default function Home() {
   // Run inference on a timer.
   // TODO(hayk): Improve the strategy here.
   useInterval(() => {
-    console.log(inferenceResults);
     if (inferenceResults.length < maxNumInferenceResults) {
       runInference(alpha, seed, appState, promptInputs);
     }
   }, timeout);
 
   // TODO(hayk): Fix warning about effects.
-  useEffect(() => {
+  useTimeout(() => {
+    console.log("SHOULD ONLY RUN ONCE");
     runInference(alpha, seed, appState, promptInputs);
-  }, []);
+  }, 1000);
 
   return (
     <>
