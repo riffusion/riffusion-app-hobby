@@ -24,7 +24,7 @@ export default function SpectrogramViewer({
   audioLength,
   use_height_map = true,
 }: SpectrogramViewerProps) {
-  const camera = useThree((state) => state.camera);
+  const { camera } = useThree();
 
   const playheadRef = useRef(null);
 
@@ -67,7 +67,8 @@ export default function SpectrogramViewer({
         }
       })}
 
-      {/* TODO make into playhead component */}
+      {/* Playhead as as transparent red box. */}
+      {/* TODO(hayk): Synchronize this better with the audio. */}
       <group ref={playheadRef}>
         <Box
           args={[5.5, 2.0, 0.15]}
