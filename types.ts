@@ -29,3 +29,10 @@ export interface InferenceResult {
     // Duration of the audio in seconds
     duration_s: number;
 }
+
+// High-level state of the interactive app
+export enum AppState {
+    UNINITIALIZED = "UNINITIALIZED",
+    SAME_PROMPT = "SAME_PROMPT",
+    TRANSITION = "TRANSITION",
+}

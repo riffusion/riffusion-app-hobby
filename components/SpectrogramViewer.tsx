@@ -63,7 +63,7 @@ export default function SpectrogramViewer({
 
       {inferenceResults.map((result: InferenceResult, index: number) => {
         const duration_s = result.duration_s;
-        const position = duration_s * (-0.6 - result.counter) + playbarShift;
+        const position = duration_s * (-0.55 - result.counter) + playbarShift;
         if (use_height_map) {
           return (
             <HeightMapImage
