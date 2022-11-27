@@ -40,20 +40,25 @@ export default function AudioPlayer({
     const audioUrl = inferenceResults[0].audio;
 
     const player = new Tone.Player(audioUrl, () => {
-      console.log("Created player.");
-
       player.loop = true;
       player.sync().start(0);
 
       // Set up a callback to increment numClipsPlayed at the edge of each clip
       const bufferLength = player.sampleTime * player.buffer.length;
+      console.log(bufferLength, inferenceResults[0].duration_s);
+
+      // TODO(hayk): Set this callback up to vary each time using duration_s
       Tone.Transport.scheduleRepeat((time) => {
         // TODO(hayk): Edge of clip callback
         console.log(
           "Edge of clip, t = ",
           Tone.Transport.getSecondsAtTime(time),
-          bufferLength
+          ", bufferLength = ",
+          bufferLength,
+          ", tone transport seconds = ",
+          Tone.Transport.seconds
         );
+
         setNumClipsPlayed((n) => n + 1);
       }, bufferLength);
 
@@ -108,11 +113,17 @@ export default function AudioPlayer({
       (r: InferenceResult) => r.counter == resultCounter
     );
 
-    console.log("Incrementing result counter ", resultCounter);
     setResultCounter((c) => c + 1);
 
+    console.log("numClipsPlayed incremented ", Tone.Transport.seconds);
+
     tonePlayer.load(result.audio).then(() => {
-      console.log("Loaded new audio");
+      console.log(
+        "Now playing result ",
+        resultCounter,
+        ", time is ",
+        Tone.Transport.seconds
+      );
 
       // Re-jigger the transport so it stops playing old buffers. It seems like this doesn't
       // introduce a gap, but watch out for that.
