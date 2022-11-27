@@ -5,13 +5,11 @@ import { useRef } from "react";
 
 interface PromptPanelProps {
   prompts: PromptInput[];
-  addPrompt: (prompt: string) => void;
   changePrompt: (prompt: string, index: number) => void;
 }
 
 export default function PromptPanel({
   prompts,
-  addPrompt,
   changePrompt,
 }: PromptPanelProps) {
   const inputPrompt = useRef(null);

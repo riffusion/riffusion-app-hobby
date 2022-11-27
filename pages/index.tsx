@@ -367,9 +367,6 @@ export default function Home() {
 
         <PromptPanel
           prompts={promptInputs}
-          addPrompt={(prompt: string) => {
-            setPromptInputs([...promptInputs, { prompt: prompt }]);
-          }}
           changePrompt={(prompt: string, index: number) => {
             const newPromptInputs = [...promptInputs];
             newPromptInputs[index].prompt = prompt;
