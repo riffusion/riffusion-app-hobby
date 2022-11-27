@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useInterval, useTimeout } from "usehooks-ts";
 import * as Tone from "tone";
 
+import AudioPlayer from "../components/AudioPlayer";
 import ThreeCanvas from "../components/ThreeCanvas";
 import PromptPanel from "../components/PromptPanel";
 import Info from "../components/Info";
@@ -38,12 +39,16 @@ const maxLength = 10;
 const maxNumInferenceResults = 15;
 
 export default function Home() {
+  // Create parameters for the inference request
   const [denoising, setDenoising] = useState(0.75);
   const [guidance, setGuidance] = useState(7.0);
   const [numInferenceSteps, setNumInferenceSteps] = useState(50);
   const [seedImageId, setSeedImageId] = useState("og_beat");
   const [maskImageId, setMaskImageId] = useState(null);
 
+  // Create parameters for the app state
+  const [appState, setAppState] = useState<AppState>(AppState.SamePrompt);
+  const [alpha, setAlpha] = useState(0.0);
   const [alphaVelocity, setAlphaVelocity] = useState(0.25);
   const [seed, setSeed] = useState(getRandomInt(1000000));
   const [paused, setPaused] = useState(true);
@@ -100,122 +105,6 @@ export default function Home() {
   const [inferenceResults, setInferenceResults] = useState<InferenceResult[]>(
     []
   );
-
-  const [tonePlayer, setTonePlayer] = useState<Tone.Player>(null);
-
-  const [numClipsPlayed, setNumClipsPlayed] = useState(0);
-  const [prevNumClipsPlayed, setPrevNumClipsPlayed] = useState(0);
-
-  const [resultCounter, setResultCounter] = useState(0);
-
-  const [alpha, setAlpha] = useState(0.0);
-
-  const [appState, setAppState] = useState<AppState>(AppState.SamePrompt);
-
-  // On load, create a player synced to the tone transport
-  useEffect(() => {
-    if (tonePlayer) {
-      return;
-    }
-
-    if (inferenceResults.length === 0) {
-      return;
-    }
-
-    const audioUrl = inferenceResults[0].audio;
-
-    const player = new Tone.Player(audioUrl, () => {
-      console.log("Created player.");
-
-      player.loop = true;
-      player.sync().start(0);
-
-      // Set up a callback to increment numClipsPlayed at the edge of each clip
-      const bufferLength = player.sampleTime * player.buffer.length;
-      Tone.Transport.scheduleRepeat((time) => {
-        console.log(
-          "Edge of clip, t = ",
-          Tone.Transport.getSecondsAtTime(time),
-          bufferLength
-        );
-        setNumClipsPlayed((n) => n + 1);
-      }, bufferLength);
-
-      setTonePlayer(player);
-
-      // Make further load callbacks do nothing.
-      player.buffer.onload = () => {};
-    }).toDestination();
-  }, [tonePlayer, inferenceResults]);
-
-  // On play/pause button, play/pause the audio with the tone transport
-  useEffect(() => {
-    if (!paused) {
-      console.log("Play");
-
-      if (Tone.context.state == "suspended") {
-        Tone.context.resume();
-      }
-
-      if (tonePlayer) {
-        Tone.Transport.start();
-      }
-    } else {
-      console.log("Pause");
-
-      if (tonePlayer) {
-        Tone.Transport.pause();
-      }
-    }
-  }, [paused, tonePlayer]);
-
-  useEffect(() => {
-    if (numClipsPlayed == prevNumClipsPlayed) {
-      return;
-    }
-
-    const maxResultCounter = Math.max(
-      ...inferenceResults.map((r) => r.counter)
-    );
-
-    if (maxResultCounter < resultCounter) {
-      console.info(
-        "not picking a new result, none available",
-        resultCounter,
-        maxResultCounter
-      );
-      return;
-    }
-
-    const result = inferenceResults.find(
-      (r: InferenceResult) => r.counter == resultCounter
-    );
-
-    console.log("Incrementing result counter ", resultCounter);
-    setResultCounter((c) => c + 1);
-
-    tonePlayer.load(result.audio).then(() => {
-      console.log("Loaded new audio");
-
-      // Re-jigger the transport so it stops playing old buffers. It seems like this doesn't
-      // introduce a gap, but watch out for that.
-      Tone.Transport.pause();
-      if (!paused) {
-        Tone.Transport.start();
-      }
-    });
-
-    setPrevNumClipsPlayed(numClipsPlayed);
-  }, [
-    numClipsPlayed,
-    prevNumClipsPlayed,
-    resultCounter,
-    inferenceResults,
-    paused,
-    tonePlayer,
-  ]);
-
-  // /////////////
 
   // Set the app state based on the prompt inputs array
   useEffect(() => {
@@ -302,18 +191,12 @@ export default function Home() {
 
       const newResult = {
         input: inferenceInput,
-        image: "data:image/jpeg;base64," + data.image,
-        audio: "data:audio/mpeg;base64," + data.audio,
+        image: data.image,
+        audio: data.audio,
+        duration_s: data.duration_s,
         counter: newCounter,
       };
 
-      // TODO(hayk): Fix up
-      // if (alpha > 1.0) {
-      //   setAlpha(alpha - 0.75);
-      //   setSeed(seed + 1);
-      // } else {
-      //   setAlpha(inferenceInput.alpha + alphaVelocity);
-      // }
       setAlpha(alpha + alphaVelocity);
 
       let results = [...prevResults, newResult];
@@ -358,12 +241,11 @@ export default function Home() {
           <ThreeCanvas
             paused={paused}
             getTime={() => Tone.Transport.seconds}
-            audioLength={
-              tonePlayer ? tonePlayer.sampleTime * tonePlayer.buffer.length : 0
-            }
             inferenceResults={inferenceResults}
           />
         </div>
+
+        <AudioPlayer paused={paused} inferenceResults={inferenceResults} />
 
         <PromptPanel
           prompts={promptInputs}

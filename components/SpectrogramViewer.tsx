@@ -6,12 +6,21 @@ import { InferenceResult } from "../types";
 import HeightMapImage from "./HeightMapImage";
 import ImagePlane from "./ImagePlane";
 
+// import { Effects } from "@react-three/drei";
+// import { ShaderPass, VerticalTiltShiftShader} from "three-stdlib";
+
+// extend({ ShaderPass });
+
+// Fun shaders:
+// RGBShiftShader
+// VerticalBlurShader
+// VerticalTiltShiftShader
+
 interface SpectrogramViewerProps {
   paused: boolean;
   inferenceResults: InferenceResult[];
   getTime: () => number;
   use_height_map?: boolean;
-  audioLength: number;
 }
 
 /**
@@ -21,7 +30,6 @@ export default function SpectrogramViewer({
   paused,
   inferenceResults,
   getTime,
-  audioLength,
   use_height_map = true,
 }: SpectrogramViewerProps) {
   const { camera } = useThree();
@@ -43,24 +51,35 @@ export default function SpectrogramViewer({
 
   return (
     <group>
-      {inferenceResults.map((value: InferenceResult, index: number) => {
-        const position = audioLength * (-0.6 - value.counter) + playbarShift;
+      {/* <Effects
+        multisamping={8}
+        renderIndex={1}
+        disableGamma={false}
+        disableRenderPass={false}
+        disableRender={false}
+      >
+        <shaderPass attachArray="passes" args={[VerticalTiltShiftShader]} />
+      </Effects> */}
+
+      {inferenceResults.map((result: InferenceResult, index: number) => {
+        const duration_s = result.duration_s;
+        const position = duration_s * (-0.6 - result.counter) + playbarShift;
         if (use_height_map) {
           return (
             <HeightMapImage
-              url={value.image}
+              url={result.image}
               position={[0, position, 0]}
               rotation={[0, 0, -Math.PI / 2]}
-              scale={[audioLength, 5, 1]}
+              scale={[duration_s, 5, 1]}
               key={index}
             />
           );
         } else {
           return (
             <ImagePlane
-              url={value.image}
+              url={result.image}
               height={position}
-              duration={audioLength}
+              duration={duration_s}
               key={index}
             />
           );

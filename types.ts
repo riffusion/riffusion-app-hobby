@@ -25,4 +25,7 @@ export interface InferenceResult {
 
     // URL of the audio
     audio: string;
+
+    // Duration of the audio in seconds
+    duration_s: number;
 }

@@ -8,7 +8,6 @@ interface CanvasProps {
   paused: boolean;
   inferenceResults: InferenceResult[];
   getTime: () => number;
-  audioLength: number;
 }
 
 /**
@@ -18,7 +17,6 @@ export default function ThreeCanvas({
   paused,
   inferenceResults,
   getTime,
-  audioLength,
 }: CanvasProps) {
   return (
     <Canvas>
@@ -35,7 +33,6 @@ export default function ThreeCanvas({
         paused={paused}
         inferenceResults={inferenceResults}
         getTime={getTime}
-        audioLength={audioLength}
       />
     </Canvas>
   );
