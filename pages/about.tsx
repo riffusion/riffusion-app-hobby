@@ -98,7 +98,7 @@ export default function Home() {
             algorithm to approximate the phase when reconstructing the audio
             clip.
           </p>
-          <p>
+          <p className="mt-3">
             The frequency bins in our spectrogram use the{" "}
             <a href="https://en.wikipedia.org/wiki/Mel_scale">Mel scale</a>,
             which is a perceptual scale of pitches judged by listeners to be
@@ -139,9 +139,9 @@ export default function Home() {
             With diffusion models, it is possible to condition their creations
             not only on a text prompt but also on other images. This is
             incredibly useful for modifying sounds while preserving the
-            structure of the an original clip you like. A denoising strength
-            parameter trades off between sounding similar to the original and
-            adapting the new prompt.
+            structure of the an original clip you like. You can control how 
+            much to deviate from the original clip and towards a new prompt 
+            using the denoising strength parameter.
           </p>
           <p className="mt-3">
             For example, here is a modification of that funky sax solo to crank
