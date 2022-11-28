@@ -50,6 +50,9 @@ export default function Home() {
     []
   );
 
+  // Currently playing result, from the audio player
+  const [nowPlayingResult, setNowPlayingResult] = useState<InferenceResult>(null);
+
   // Set the initial seed from the URL if available
   const router = useRouter();
   useEffect(() => {
@@ -63,7 +66,6 @@ export default function Home() {
     }
 
     if (router.query.seed) {
-      console.log("setting seed");
       setSeed(parseInt(router.query.seed as string));
     }
 
@@ -137,12 +139,19 @@ export default function Home() {
 
       setAlpha(alpha + alphaVelocity);
 
-      let results = [...prevResults, result];
-
-      console.log(results);
-
-      return results;
+      return [...prevResults, result];
     });
+  };
+
+  const nowPlayingCallback = (result: InferenceResult, playerTime: number) => {
+    console.log(
+      "Now playing result ",
+      result.counter,
+      ", player time is ",
+      playerTime
+    );
+
+    setNowPlayingResult(result);
   };
 
   return (
@@ -170,9 +179,15 @@ export default function Home() {
           seed={seed}
           appState={appState}
           promptInputs={promptInputs}
+          paused={paused}
+          nowPlayingResult={nowPlayingResult}
           newResultCallback={newResultCallback}
         />
-        <AudioPlayer paused={paused} inferenceResults={inferenceResults} />
+        <AudioPlayer
+          paused={paused}
+          inferenceResults={inferenceResults}
+          nowPlayingCallback={nowPlayingCallback}
+        />
 
         <PromptPanel
           prompts={promptInputs}

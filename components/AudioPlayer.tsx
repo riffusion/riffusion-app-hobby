@@ -7,6 +7,7 @@ import { InferenceResult } from "../types";
 interface AudioPlayerProps {
   paused: boolean;
   inferenceResults: InferenceResult[];
+  nowPlayingCallback: (result: InferenceResult, playerTime: number) => void;
 }
 
 /**
@@ -17,6 +18,7 @@ interface AudioPlayerProps {
 export default function AudioPlayer({
   paused,
   inferenceResults,
+  nowPlayingCallback,
 }: AudioPlayerProps) {
   // TODO(hayk): Rename
   const [tonePlayer, setTonePlayer] = useState<Tone.Player>(null);
@@ -37,27 +39,27 @@ export default function AudioPlayer({
       return;
     }
 
-    const audioUrl = inferenceResults[0].audio;
+    const result = inferenceResults[0];
 
-    const player = new Tone.Player(audioUrl, () => {
+    const player = new Tone.Player(result.audio, () => {
       player.loop = true;
       player.sync().start(0);
 
       // Set up a callback to increment numClipsPlayed at the edge of each clip
       const bufferLength = player.sampleTime * player.buffer.length;
-      console.log(bufferLength, inferenceResults[0].duration_s);
+      // console.log(bufferLength, result.duration_s);
 
       // TODO(hayk): Set this callback up to vary each time using duration_s
       Tone.Transport.scheduleRepeat((time) => {
         // TODO(hayk): Edge of clip callback
-        console.log(
-          "Edge of clip, t = ",
-          Tone.Transport.getSecondsAtTime(time),
-          ", bufferLength = ",
-          bufferLength,
-          ", tone transport seconds = ",
-          Tone.Transport.seconds
-        );
+        // console.log(
+        //   "Edge of clip, t = ",
+        //   Tone.Transport.getSecondsAtTime(time),
+        //   ", bufferLength = ",
+        //   bufferLength,
+        //   ", tone transport seconds = ",
+        //   Tone.Transport.seconds
+        // );
 
         setNumClipsPlayed((n) => n + 1);
       }, bufferLength);
@@ -72,8 +74,6 @@ export default function AudioPlayer({
   // On play/pause button, play/pause the audio with the tone transport
   useEffect(() => {
     if (!paused) {
-      console.log("Play");
-
       if (Tone.context.state == "suspended") {
         Tone.context.resume();
       }
@@ -82,8 +82,6 @@ export default function AudioPlayer({
         Tone.Transport.start();
       }
     } else {
-      console.log("Pause");
-
       if (tonePlayer) {
         Tone.Transport.pause();
       }
@@ -115,22 +113,16 @@ export default function AudioPlayer({
 
     setResultCounter((c) => c + 1);
 
-    console.log("numClipsPlayed incremented ", Tone.Transport.seconds);
-
     tonePlayer.load(result.audio).then(() => {
-      console.log(
-        "Now playing result ",
-        resultCounter,
-        ", time is ",
-        Tone.Transport.seconds
-      );
-
       // Re-jigger the transport so it stops playing old buffers. It seems like this doesn't
       // introduce a gap, but watch out for that.
       Tone.Transport.pause();
       if (!paused) {
         Tone.Transport.start();
       }
+
+      const playerTime = Tone.Transport.seconds;
+      nowPlayingCallback(result, playerTime);
     });
 
     setPrevNumClipsPlayed(numClipsPlayed);

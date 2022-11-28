@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { FiPause, FiPlay } from "react-icons/fi";
 
 interface PauseProps {
@@ -9,6 +10,15 @@ export default function Pause({
   paused,
   setPaused,
 }: PauseProps) {
+
+  // Print the state into the console
+  useEffect(() => {
+    if (paused) {
+      console.log("Pause");
+    } else {
+      console.log("Play");
+    }
+  }, [paused]);
 
   var classNameCondition = ""
   if (paused) {
