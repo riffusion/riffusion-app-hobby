@@ -179,7 +179,6 @@ export default function Home() {
             And here's an example that adapts a rock and roll solo to an
             acoustic folk fiddle:
           </p>
-          <p className="text-4xl">TODO(hayk): This is as far as I got.</p>
           <div className="grid grid-cols-2 gap-3">
             <div>
               <CaptionedImage
@@ -197,7 +196,7 @@ export default function Home() {
             <div className="text-red text-xl">
               <CaptionedImage
                 image_url={"/about/acoustic_folk_fiddle_solo.png"}
-                caption={"piano funk"}
+                caption={"acoustic folk fiddle solo"}
                 marginLeft={5}
               />
 
