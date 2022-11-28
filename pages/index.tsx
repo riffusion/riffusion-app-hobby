@@ -1,9 +1,9 @@
-import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import * as Tone from "tone";
 
 import AudioPlayer from "../components/AudioPlayer";
+import PageHead from "../components/PageHead";
 import Info from "../components/Info";
 import ModelInference from "../components/ModelInference";
 import Pause from "../components/Pause";
@@ -156,14 +156,7 @@ export default function Home() {
 
   return (
     <>
-      <Head>
-        <title>Riffusion</title>
-        <meta
-          name="description"
-          content="My name is Riffusion, and I write music."
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <PageHead />
 
       <div className="bg-[#0A2342] flex flex-row min-h-screen text-white">
         <div className="w-1/3 min-h-screen">
@@ -179,7 +172,6 @@ export default function Home() {
           seed={seed}
           appState={appState}
           promptInputs={promptInputs}
-          paused={paused}
           nowPlayingResult={nowPlayingResult}
           newResultCallback={newResultCallback}
         />

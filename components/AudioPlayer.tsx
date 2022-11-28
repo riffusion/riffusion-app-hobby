@@ -132,6 +132,7 @@ export default function AudioPlayer({
     resultCounter,
     inferenceResults,
     paused,
+    nowPlayingCallback,
     tonePlayer,
   ]);
 

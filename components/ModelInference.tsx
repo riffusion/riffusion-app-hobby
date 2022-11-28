@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
-import { useInterval } from "usehooks-ts";
 
 import {
   AppState,
@@ -18,7 +17,6 @@ interface ModelInferenceProps {
   appState: AppState;
   promptInputs: PromptInput[];
   nowPlayingResult: InferenceResult;
-  paused: boolean;
   newResultCallback: (input: InferenceInput, result: InferenceResult) => void;
 }
 
@@ -33,7 +31,6 @@ export default function ModelInference({
   appState,
   promptInputs,
   nowPlayingResult,
-  paused,
   newResultCallback,
 }: ModelInferenceProps) {
   // Create parameters for the inference request
@@ -142,10 +139,12 @@ export default function ModelInference({
       numInferenceSteps,
       seedImageId,
       newResultCallback,
+      numRequestsMade,
+      numResponsesReceived,
     ]
   );
 
-  // Kick off the first inference run when everything is ready.
+  // Kick off inference requests
   useEffect(() => {
     // Make sure things are initialized properly
     if (
@@ -157,8 +156,10 @@ export default function ModelInference({
     }
 
     if (numRequestsMade == 0) {
+      // Kick off the first request
       runInference(alpha, seed, appState, promptInputs);
     } else if (numRequestsMade == numResponsesReceived) {
+      // Otherwise buffer ahead a few from where the audio player currently is
       // TODO(hayk): Replace this with better buffer management
 
       const nowPlayingCounter = nowPlayingResult ? nowPlayingResult.counter : 0;
@@ -170,12 +171,13 @@ export default function ModelInference({
     }
   }, [
     initializedUrlParams,
-    numRequestsMade,
     alpha,
     seed,
     appState,
     promptInputs,
-    paused,
+    nowPlayingResult,
+    numRequestsMade,
+    numResponsesReceived,
     runInference,
   ]);
 
