@@ -3,8 +3,6 @@ import Image from "next/image";
 import PageHead from "../components/PageHead";
 import CaptionedImage from "../components/about/CaptionedImage";
 
-import funkySaxImg from "../public/about/funky_sax.png";
-import funkySaxToPianoImg from "../public/about/funky_sax_to_piano.png";
 import handDrawnSpectrogramImg from "../public/about/hand_drawn_spectrogram.png";
 import fourierTransformImg from "../public/about/fourier_transform.png";
 import spectrogramLabelImg from "../public/about/spectrogram_label.png";
@@ -16,9 +14,9 @@ export default function Home() {
 
       <main className="bg-white flex flex-row text-black place-content-center">
         <div className="w-3/4 md:w-2/3 lg:w-1/2 text-lg">
-          <h1 className="pt-20 pb-1 text-5xl font-bold">Riffusion</h1>
+          <h1 className="pt-20 pb-1 text-4xl font-bold">[ RIFFUSION ]</h1>
           <h3 className="font-medium italic text-xl pb-10">
-            (verb): riff + diffusion
+            (noun): riff + diffusion
           </h3>
           <p>
             You’ve heard of{" "}
