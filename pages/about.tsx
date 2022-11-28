@@ -176,7 +176,7 @@ export default function Home() {
             </div>
           </div>
           <p>
-            And here’s an example that adapts a rock and roll solo to an
+            And here's an example that adapts a rock and roll solo to an
             acoustic folk fiddle:
           </p>
           <p className="text-4xl">TODO(hayk): This is as far as I got.</p>
@@ -208,6 +208,58 @@ export default function Home() {
               </div>
             </div>
           </div>
+          <h2 className="pt-10 pb-5 text-3xl font-bold">Looping and Interpolation</h2>
+          <p>
+            Generating short clips is a blast, but we really wanted infinite AI-generated jams.
+          </p>
+          <p className="mt-3">
+            Let's say we put in a prompt and generate 100 clips with varying seeds. 
+            We can't concatenate the resulting clips because they differ in key, 
+            tempo, and downbeat.          
+          </p>
+          <p className="mt-3">
+            Our strategy is to pick one initial image and generate variations of it 
+            by running image-to-image generation with different seeds and prompts. 
+            This preserves the key properties of the clips. To make them loop-able, 
+            we also create initial images that are an exact number of measures.          
+          </p>
+          <p className="mt-3">
+            However, even with this approach it's still too abrupt to transition 
+            between clips. Multiple interpretations of the same prompt with the 
+            same overall structure can still vary greatly in their vibe and melodic
+            motifs.
+          </p>
+          <p className="mt-3">
+            To address this, we smoothly 
+            <em> interpolate between prompts and seeds in the {" "} 
+            <a href="https://github.com/hmartiro/riffusion-inference/blob/main/riffusion/audio.py">
+              latent space 
+            </a> {" "}
+            of the model
+            </em>. In diffusion models, the latent space is a feature vector 
+            that embeds the entire possible space of what the model can generate. 
+            Items which resemble each other are close in the latent space, and every 
+            numerical value of the latent space decodes to a viable output.
+          </p>
+          <p className="mt-3">
+            The key is that we can continuously sample the latent space between a 
+            prompt with two different seeds, or two different prompts with the same 
+            seed. Here is an example with the visual model:
+          </p>
+          <Image
+            className="ml-24 m-5 w-1/2"
+            src={happy_cows_interpolation.gif}
+            alt={"happy cows interpolation"}
+          />
+          <p className="mt-3">
+            We can do the same thing with our model, which often results in buttery 
+            smooth transitions,  even between starkly different prompts. This is vastly 
+            more interesting than interpolating the raw audio, because in the latent 
+            space all in-between points still sound like plausible clips.
+          </p>
+          <p className="mt-3">
+            A
+          </p>
         </div>
       </main>
     </>
