@@ -183,26 +183,26 @@ export default function Home() {
           <div className="grid grid-cols-2 gap-3">
             <div>
               <CaptionedImage
-                image_url={"/about/funky_sax.png"}
-                caption={"funk bassline with a jazzy saxophone solo"}
+                image_url={"/about/rock_and_roll_electric_guitar_solo.png"}
+                caption={"rock and roll electric guitar solo"}
                 marginLeft={5}
               />
 
               <div className="m-4">
-                <audio controls src="/about/funky_sax.mp3">
+                <audio controls src="/about/rock_and_roll_electric_guitar_solo.mp3">
                   Your browser does not support audio.
                 </audio>
               </div>
             </div>
             <div className="text-red text-xl">
               <CaptionedImage
-                image_url={"/about/funky_sax_to_piano.png"}
+                image_url={"/about/acoustic_folk_fiddle_solo.png"}
                 caption={"piano funk"}
                 marginLeft={5}
               />
 
               <div className="m-4">
-                <audio controls src="/about/funky_sax_to_piano.mp3">
+                <audio controls src="/about/acoustic_folk_fiddle_solo.mp3">
                   Your browser does not support audio.
                 </audio>
               </div>
@@ -246,10 +246,9 @@ export default function Home() {
             prompt with two different seeds, or two different prompts with the same 
             seed. Here is an example with the visual model:
           </p>
-          <Image
-            className="ml-24 m-5 w-1/2"
-            src={happy_cows_interpolation.gif}
-            alt={"happy cows interpolation"}
+          <CaptionedImage
+            image_url={"/about/happy_cows_interpolation.gif"}
+            caption={"Interpolation between two seeds for the same prompt"}
           />
           <p className="mt-3">
             We can do the same thing with our model, which often results in buttery 
@@ -258,8 +257,22 @@ export default function Home() {
             space all in-between points still sound like plausible clips.
           </p>
           <p className="mt-3">
-            A
+            Here is one of our favorites, a beautiful 20-step interpolation from 
+            <b> typing </b> to <b>jazz</b>:
           </p>
+          <div className="m-5 ml-16">
+            <audio controls src="/about/typing_to_jazz.mp3" className="w-1/2">
+              Your browser does not support audio.
+            </audio>
+          </div>
+          <p className="mt-3">
+            And another one from <b>church bells </b> to <b>electronic beats</b>:
+          </p>
+          <div className="m-5 ml-16">
+            <audio controls src="/about/church_bells_to_electronic_beats.mp3" className="w-1/2">
+              Your browser does not support audio.
+            </audio>
+          </div>
         </div>
       </main>
     </>
