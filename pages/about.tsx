@@ -6,6 +6,7 @@ import CaptionedImage from "../components/about/CaptionedImage";
 import handDrawnSpectrogramImg from "../public/about/hand_drawn_spectrogram.png";
 import fourierTransformImg from "../public/about/fourier_transform.png";
 import spectrogramLabelImg from "../public/about/spectrogram_label.png";
+import webAppScreenshot from "../public/about/web_app_screenshot.png";
 
 export default function Home() {
   return (
@@ -19,7 +20,7 @@ export default function Home() {
             (noun): riff + diffusion
           </h3>
           <p>
-            You’ve heard of{" "}
+            You've heard of{" "}
             <a href="https://en.wikipedia.org/wiki/Stable_Diffusion">
               Stable Diffusion
             </a>
@@ -269,6 +270,96 @@ export default function Home() {
           </p>
           <div className="m-5 ml-16">
             <audio controls src="/about/church_bells_to_electronic_beats.mp3" className="w-1/2">
+              Your browser does not support audio.
+            </audio>
+          </div>
+          <p className="mt-3">
+            Interpolation of <b>arabic gospel</b>, this time with the same prompt 
+            between two seeds:
+          </p>
+          <div className="m-5 ml-16">
+            <audio controls src="/about/arabic_gospel.mp3" className="w-1/2">
+              Your browser does not support audio.
+            </audio>
+          </div>
+          <p className="mt-3">
+            The huggingface {" "} 
+            <a href="https://github.com/huggingface/diffusers">
+              diffusers 
+            </a> {" "} 
+            library implements a wide range of pipelines including image-to-image 
+            and prompt interpolation, but we did not find an implementation that 
+            was able to do prompt interpolation combined with image-to-image 
+            conditioning. We implemented this pipeline, along with support for 
+            masking to limit generation to only parts of an image. Code {" "} 
+            <a href="https://github.com/hmartiro/riffusion-inference/blob/main/riffusion/riffusion_pipeline.py">
+              here 
+            </a>.
+          </p>
+          <h2 className="pt-10 pb-5 text-3xl font-bold">Interactive Web App</h2>
+          <p>
+            To put it all together, we made an interactive web app to type in prompts 
+            and infinitely generate interpolated content in real time, while 
+            visualizing the spectrogram timeline in 3D.
+          </p>
+          <p className="mt-3">
+            As the user types in new prompts, the audio smoothly transitions to the 
+            new prompt. If there is no new prompt, the app will interpolate between 
+            different seeds of the same prompt.          
+          </p>
+          <Image
+            className="ml-16 m-5 w-2/3"
+            src={webAppScreenshot}
+            alt={"web app screenshot"}
+          />
+          <p className="mt-3">
+            The app is built using  {" "} 
+            <a href="https://nextjs.org/">
+              Next.js 
+            </a>, {" "} 
+            <a href="https://reactjs.org/">
+              React 
+            </a>, {" "}
+            <a href="https://www.typescriptlang.org/">
+              Typescript 
+            </a>, {" "}
+            <a href="https://threejs.org/">
+              three.js 
+            </a>, and {" "}
+            <a href="https://tailwindcss.com/">
+              Tailwind
+            </a>, and deployed with {" "}
+            <a href="https://vercel.com/">
+              Vercel
+            </a>. 
+            It communicates over an API to the inference server that does the GPU processing.
+          </p>
+          <p className="mt-3">
+            The web app code is at {" "} 
+            <a href="https://github.com/hmartiro/riffusion-app">
+              https://github.com/hmartiro/riffusion-app 
+            </a>. 
+          </p>
+          <p className="mt-3">
+            The inference server code is at {" "} 
+            <a href="https://github.com/hmartiro/riffusion-inference">
+              https://github.com/hmartiro/riffusion-inference
+            </a>. 
+          </p>
+          <p className="mt-3">
+          If you have a powerful GPU, you can run the experience locally.
+          </p>
+          <h2 className="pt-10 pb-5 text-3xl font-bold">Samples</h2>
+          <p>
+            Some of our favorite prompts and results.
+          </p>
+          <CaptionedImage
+                image_url={"/about/mambo_but_from_jamaica.png"}
+                caption={"Mambo but from Jamaica"}
+                marginLeft={5}
+          />
+          <div className="m-5 ml-16">
+            <audio controls src="/about/mambo_but_from_jamaica.mp3" className="w-1/2">
               Your browser does not support audio.
             </audio>
           </div>
