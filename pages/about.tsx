@@ -147,7 +147,7 @@ export default function Home() {
             For example, here is a modification of that funky sax solo to crank
             up the piano:
           </p>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
               <CaptionedImage
                 image_url={"/about/funky_sax.png"}
@@ -179,7 +179,7 @@ export default function Home() {
             And here's an example that adapts a rock and roll solo to an
             acoustic folk fiddle:
           </p>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
               <CaptionedImage
                 image_url={"/about/rock_and_roll_electric_guitar_solo.png"}
