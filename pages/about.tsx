@@ -113,9 +113,8 @@ export default function Home() {
             beats similar to a hi-hat sound.
           </p>
           <Image
-            className="ml-20 m-5"
+            className="ml-16 m-5 w-2/5"
             src={handDrawnSpectrogramImg}
-            width={300}
             alt={"hand drawn spectrogram"}
           />
           <div className="m-5 ml-16">
