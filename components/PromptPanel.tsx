@@ -33,12 +33,7 @@ export default function PromptPanel({
             onSubmit={(e) => {
               e.preventDefault();
               const prompt = e.currentTarget.prompt.value;
-              var promptLastIndex = prompts.length - 1;
-              if (prompts[promptLastIndex - 1].prompt == "") {
-                changePrompt(prompt, promptLastIndex - 1);
-              } else {
-                changePrompt(prompt, promptLastIndex);
-              }
+              changePrompt(prompt, prompts.length - 1);
               inputPrompt.current.value = "";
             }}
           >

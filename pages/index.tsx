@@ -90,8 +90,20 @@ export default function Home() {
     let newAppState = appState;
 
     if (appState == AppState.SAME_PROMPT) {
-      if (endPrompt) {
+      if (upNextPrompt) {
         newAppState = AppState.TRANSITION;
+
+        // swap the last two prompts to bring the upNextPrompt into the next inference call
+        setPromptInputs((prevPromptInputs) => {
+          const newPromptInputs = [...prevPromptInputs];
+          newPromptInputs[newPromptInputs.length - 1] = {
+            prompt: endPrompt,
+          };
+          newPromptInputs[newPromptInputs.length - 2] = {
+            prompt: upNextPrompt,
+          };
+          return newPromptInputs;
+        });
       }
       setSeed(seed + 1);
     } else if (appState == AppState.TRANSITION) {
