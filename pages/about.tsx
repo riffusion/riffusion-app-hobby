@@ -14,7 +14,7 @@ export default function Home() {
       <PageHead />
 
       <main className="bg-white flex flex-row text-black place-content-center">
-        <div className="w-3/4 md:w-2/3 lg:w-1/2 text-lg">
+        <div className="w-3/4 md:w-2/3 lg:w-1/2 text-lg pb-20">
           <h1 className="pt-20 pb-1 text-4xl font-bold">[ RIFFUSION ]</h1>
           <h3 className="font-medium italic text-xl pb-10">
             (noun): riff + diffusion
@@ -359,6 +359,22 @@ export default function Home() {
           />
           <div className="m-5 ml-16">
             <audio controls src="/about/mambo_but_from_jamaica.mp3" className="w-1/2">
+              Your browser does not support audio.
+            </audio>
+          </div>
+          <p className="mt-3">
+            <b>Techno beat</b> to <b>Jamaican rap</b>:
+          </p>
+          <div className="m-5 ml-16">
+            <audio controls src="/about/techno_to_jamaican_rap.mp3" className="w-1/2">
+              Your browser does not support audio.
+            </audio>
+          </div>
+          <p className="mt-3">
+            <b>Fantasy ballad, female voice</b> to <b>teen boy pop star</b>:
+          </p>
+          <div className="m-5 ml-16">
+            <audio controls src="/about/fantasy_ballad_to_teen_boy_pop_star.mp3" className="w-1/2">
               Your browser does not support audio.
             </audio>
           </div>
