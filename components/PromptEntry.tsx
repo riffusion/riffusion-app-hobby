@@ -15,7 +15,8 @@ export default function PromptEntry({
     return (
       <>
         <p className={className}>
-            {prompt == "" ? index == 5 ? "UP NEXT: Anything you want" + prompt : "..." : index == 5 ? "UP NEXT: " + prompt : prompt}
+            {index + " " + prompt}
+            {/* {prompt == "" ? index == 5 ? "UP NEXT: Anything you want" + prompt : "..." : index == 5 ? "UP NEXT: " + prompt : prompt} */}
         </p>
       </>
     )

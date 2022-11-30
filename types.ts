@@ -3,6 +3,9 @@ export interface PromptInput {
     seed?: number;
     denoising?: number;
     guidance?: number;
+
+    // promptsInput is assigned a transitionCounter equal to the result.counter upon first being played
+    transitionCounter?: number;
 }
 
 export interface InferenceInput {
@@ -19,6 +22,9 @@ export interface InferenceResult {
     input: InferenceInput;
 
     counter: number;
+
+    // Binary played status (true = played or playing, false = not played)
+    played: boolean;
 
     // URL of the image
     image: string;

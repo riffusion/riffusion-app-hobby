@@ -46,9 +46,7 @@ export default function Home() {
   const [promptInputs, setPromptInputs] = useState<PromptInput[]>([]);
 
   // Model execution results
-  const [inferenceResults, setInferenceResults] = useState<InferenceResult[]>(
-    []
-  );
+  const [inferenceResults, setInferenceResults] = useState<InferenceResult[]>([]);
 
   // Currently playing result, from the audio player
   const [nowPlayingResult, setNowPlayingResult] = useState<InferenceResult>(null);
@@ -148,6 +146,7 @@ export default function Home() {
 
       result.counter = newCounter;
       result.input = input;
+      result.played = false;
 
       setAlpha(alpha + alphaVelocity);
 
@@ -164,6 +163,30 @@ export default function Home() {
     );
 
     setNowPlayingResult(result);
+
+    // find the first promptInput that matches the result.input.end.prompt and set it's transitionCounter to the result.counter if not already set
+    setPromptInputs((prevPromptInputs) => {
+      const newPromptInputs = [...prevPromptInputs];
+      const promptInputIndex = newPromptInputs.findIndex(
+        (p) => p.prompt == result.input.end.prompt
+      );
+      if (promptInputIndex >= 0) {
+        if (newPromptInputs[promptInputIndex].transitionCounter == null) {
+          newPromptInputs[promptInputIndex].transitionCounter = result.counter;
+        }
+      }
+      return newPromptInputs;
+    });
+
+    // set played state for the result to true
+    setInferenceResults((prevResults: InferenceResult[]) => {
+      return prevResults.map((r) => {
+        if (r.counter == result.counter) {
+          r.played = true;
+        }
+        return r
+      })
+    })
   };
 
   return (
@@ -195,6 +218,8 @@ export default function Home() {
 
         <PromptPanel
           prompts={promptInputs}
+          inferenceResults={inferenceResults}
+          nowPlayingResult={nowPlayingResult}
           changePrompt={(prompt: string, index: number) => {
             const newPromptInputs = [...promptInputs];
             newPromptInputs[index].prompt = prompt;
