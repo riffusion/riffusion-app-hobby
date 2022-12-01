@@ -1,33 +1,30 @@
 import PromptEntry from "./PromptEntry";
 
-import { InferenceResult, PromptInput } from "../types";
+import { AppState, PlayingState, InferenceResult, PromptInput } from "../types";
 import { useRef } from "react";
 
 interface PromptPanelProps {
   prompts: PromptInput[];
   inferenceResults: InferenceResult[];
   nowPlayingResult: InferenceResult;
+  appState: AppState;
   changePrompt: (prompt: string, index: number) => void;
-}
-
-enum PlayingState {
-  UNINITIALIZED = "UNINITIALIZED",
-  SAME_PROMPT = "SAME_PROMPT",
-  TRANSITION = "TRANSITION",
 }
 
 export default function PromptPanel({
   prompts,
   inferenceResults,
   nowPlayingResult,
+  appState,
   changePrompt,
 }: PromptPanelProps) {
   const inputPrompt = useRef(null);
 
+  var playingState: PlayingState
+
   const getDisplayPrompts = () => {
     var displayPrompts = [];
 
-    var playingState: PlayingState
     if (nowPlayingResult == null) {
       playingState = PlayingState.UNINITIALIZED
     } else if (nowPlayingResult.input.start.prompt == nowPlayingResult.input.end.prompt) {
@@ -53,7 +50,7 @@ export default function PromptPanel({
 
     // add the most recent end prompts to the displayPrompts
     lastPlayedResultsAlphaTransition.forEach((result) => {
-      displayPrompts.push({ prompt: result.input.end.prompt});
+      displayPrompts.push({ prompt: result.input.end.prompt });
     });
 
     // Handle the case where there are less than 4 played results (i.e. the initial state)
@@ -76,7 +73,7 @@ export default function PromptPanel({
         lastPromptsCopy[index].transitionCounter = null;
       }
     });
-    
+
     // add the prompts to the displayPrompts
     lastPromptsCopy.forEach((p) => {
       displayPrompts.push(p);
@@ -90,17 +87,68 @@ export default function PromptPanel({
     return displayPrompts;
   }
 
+  const getPromptEntryClassName = (index: number) => {
+    switch (playingState) {
+      case PlayingState.UNINITIALIZED:
+        console.log("promptEntryClassNames_5_0")
+        return promptEntryClassNames_5_0[index];
+      case PlayingState.SAME_PROMPT:
+        if (appState != AppState.TRANSITION) {
+          console.log("promptEntryClassNames_5_0")
+          return promptEntryClassNames_5_0[index];
+
+        } else {
+          switch (nowPlayingResult.input.alpha) {
+            case 0:
+              console.log("promptEntryClassNames_5_0")
+              return promptEntryClassNames_5_0[index];
+            case 0.25:
+              console.log("UNHANDLED promptEntryClassNames_5_25") // this is never reached currently
+            case 0.5:
+              console.log("promptEntryClassNames_5_50")
+              return promptEntryClassNames_5_50[index];
+            case 0.75:
+              console.log("promptEntryClassNames_5_75")
+              return promptEntryClassNames_5_75[index];
+            case 1:
+              console.log("promptEntryClassNames_5_1")
+              return promptEntryClassNames_5_1[index];
+          }
+        }
+      case PlayingState.TRANSITION:
+        switch (nowPlayingResult.input.alpha) {
+          case 0:
+            console.log("UNHANDLED promptEntryClassNames_6_0") // this is never reached currently
+          case 0.25:
+            console.log("promptEntryClassNames_6_25")
+            return promptEntryClassNames_6_25[index];
+          case 0.5:
+            console.log("promptEntryClassNames_6_50")
+            return promptEntryClassNames_6_50[index];
+          case 0.75:
+            console.log("promptEntryClassNames_6_75")
+            return promptEntryClassNames_6_75[index];
+          case 1:
+            console.log("promptEntryClassNames_6_1")
+            return promptEntryClassNames_6_1[index];
+        }
+      default:
+        console.log("UNHANDLED playingState: " + playingState)
+    }
+  }
+
   return (
     <>
       <main className="w-2/3 min-h-screen">
         <div className="pl-20">
-          <div className="h-[80vh] flex flex-col justify-around pt-[5vh] pr-5">
+          <div className="h-[80vh] flex flex-col justify-around pt-[10vh] pr-5">
             {getDisplayPrompts().map((prompt, index) => (
               <PromptEntry
-                prompt={prompt.prompt + " " + prompt.transitionCounter}
-                className={promptEntryClassNames[index]}
+                prompt={prompt.prompt + " "}
+                className={getPromptEntryClassName(index)}
                 index={index}
                 key={index}
+                playingState={playingState}
               />
             ))}
           </div>
@@ -132,20 +180,118 @@ export default function PromptPanel({
   );
 }
 
-const promptEntryClassNames = {
-  0: "font-medium text-xl text-gray-200 text-opacity-80",
-  1: "font-medium text-xl text-gray-200 text-opacity-80",
-  2: "font-medium text-xl text-gray-200 text-opacity-80",
-  3: "font-medium text-xl text-gray-200 text-opacity-80",
-  4: "font-medium text-xl text-gray-200 text-opacity-80",
-  5: "font-medium text-xl text-gray-200 text-opacity-80",
-};
+const promptEntryClassNameDict = {
+  0: "font-extralight text-xs text-gray-500 text-opacity-20",
+  1: "font-extralight text-xs text-gray-400 text-opacity-20",
+  2: "font-extralight text-sm text-gray-300 text-opacity-30",
+  3: "font-extralight text-sm text-gray-200 text-opacity-30", 
+  4: "font-light text-sm text-gray-200 text-opacity-40",
+  5: "font-light text-base text-gray-200 text-opacity-40",
+  6: "font-light text-base text-gray-100 text-opacity-50",
+  7: "font-light text-base text-gray-100 text-opacity-50", // starter for 0
 
-// const promptEntryClassNames = {
-//   0: "font-light text-sm text-gray-400 text-opacity-40",
-//   1: "font-normal text-m text-gray-300 text-opacity-60",
-//   2: "font-medium text-xl text-gray-200 text-opacity-80",
-//   3: "font-bold text-5xl text-white", // This is the primary prompt
-//   4: "font-medium text-3xl text-gray-100 text-opacity-80", // This is prompt it is transitioning to
-//   5: "font-normal text-m text-gray-200 text-opacity-60", // This is the UP NEXT prompt
-// };
+  8: "font-light text-base text-gray-100 text-opacity-50",
+  9: "font-light text-lg text-gray-100 text-opacity-50",
+  10: "font-light text-lg text-gray-100 text-opacity-60",
+  11: "font-normal text-lg text-gray-100 text-opacity-60",
+  12: "font-normal text-xl text-gray-100 text-opacity-60",
+  13: "font-normal text-xl text-gray-100 text-opacity-70",
+  14: "font-normal text-xl text-gray-100 text-opacity-70",
+  15: "font-normal text-xl text-gray-100 text-opacity-70", // starter for 1
+
+  16: "font-medium text-2xl text-gray-100 text-opacity-80", // 0%
+  17: "font-medium text-3xl text-gray-100 text-opacity-90", // 25%
+  18: "font-semibold text-4xl text-white", // 50%
+  19: "font-bold text-4xl text-white", // 75%
+  20: "font-bold text-5xl text-white",
+  21: "font-bold text-5xl text-white",
+  22: "font-bold text-5xl text-white",
+  23: "font-bold text-5xl text-white", // starter for 2 "start"
+
+  24: "font-bold text-5xl text-white",
+  25: "font-bold text-4xl text-white",  // 75%
+  26: "font-semibold text-4xl text-white", // 50%
+  27: "font-medium text-3xl text-gray-100 text-opacity-90", // 25%
+  28: "font-normal text-2xl text-gray-100 text-opacity-80", 
+  29: "font-normal text-l text-gray-100 text-opacity-70",
+  30: "font-normal text-l text-gray-100 text-opacity-70",
+  31: "font-normal text-l text-gray-100 text-opacity-70", // starter for 3 "end"
+
+  32: "font-normal text-base text-gray-100 text-opacity-70",
+  33: "font-normal text-base text-gray-100 text-opacity-60",
+  34: "font-normal text-base text-gray-100 text-opacity-60",
+  35: "font-normal text-base text-gray-100 text-opacity-60", // starter for 4 when "staging"
+
+  36: "font-normal text-base text-gray-100 text-opacity-60", // starter for 4 and 5 "Up Next"
+}
+
+// ClassNames below
+// Note that 6_0 and 5_25 are never reached in current stucture
+
+const promptEntryClassNames_5_0 = {
+  0: promptEntryClassNameDict[7],
+  1: promptEntryClassNameDict[15],
+  2: promptEntryClassNameDict[23], // This is the start and end prompt
+  3: promptEntryClassNameDict[31], // This is the staged prompt
+  4: promptEntryClassNameDict[36], // This is the UP NEXT prompt  
+}
+
+const promptEntryClassNames_5_50 = {
+  0: promptEntryClassNameDict[6],
+  1: promptEntryClassNameDict[14],
+  2: promptEntryClassNameDict[22],
+  3: promptEntryClassNameDict[30],
+  4: promptEntryClassNameDict[36],
+}
+
+const promptEntryClassNames_5_75 = {
+  0: promptEntryClassNameDict[5],
+  1: promptEntryClassNameDict[13],
+  2: promptEntryClassNameDict[21],
+  3: promptEntryClassNameDict[29],
+  4: promptEntryClassNameDict[36],
+}
+
+const promptEntryClassNames_5_1 = {
+  0: promptEntryClassNameDict[4],
+  1: promptEntryClassNameDict[12],
+  2: promptEntryClassNameDict[20],
+  3: promptEntryClassNameDict[28],
+  4: promptEntryClassNameDict[36],
+}
+
+const promptEntryClassNames_6_25 = {
+  0: promptEntryClassNameDict[3],
+  1: promptEntryClassNameDict[11],
+  2: promptEntryClassNameDict[19],
+  3: promptEntryClassNameDict[27],
+  4: promptEntryClassNameDict[35],
+  5: promptEntryClassNameDict[36],
+}
+
+const promptEntryClassNames_6_50 = {
+  0: promptEntryClassNameDict[2],
+  1: promptEntryClassNameDict[10],
+  2: promptEntryClassNameDict[18],
+  3: promptEntryClassNameDict[26],
+  4: promptEntryClassNameDict[34],
+  5: promptEntryClassNameDict[36],
+}
+
+const promptEntryClassNames_6_75 = {
+  0: promptEntryClassNameDict[1],
+  1: promptEntryClassNameDict[9],
+  2: promptEntryClassNameDict[17],
+  3: promptEntryClassNameDict[25],
+  4: promptEntryClassNameDict[33],
+  5: promptEntryClassNameDict[36],
+}
+
+const promptEntryClassNames_6_1 = {
+  0: promptEntryClassNameDict[0],
+  1: promptEntryClassNameDict[8],
+  2: promptEntryClassNameDict[16],
+  3: promptEntryClassNameDict[24],
+  4: promptEntryClassNameDict[32],
+  5: promptEntryClassNameDict[36],
+}

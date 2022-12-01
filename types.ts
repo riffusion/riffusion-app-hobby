@@ -36,9 +36,16 @@ export interface InferenceResult {
     duration_s: number;
 }
 
-// High-level state of the interactive app
+// High-level state of the app's inference call
 export enum AppState {
     UNINITIALIZED = "UNINITIALIZED",
     SAME_PROMPT = "SAME_PROMPT",
     TRANSITION = "TRANSITION",
 }
+
+// High-level state of the actively playing audio
+export enum PlayingState {
+    UNINITIALIZED = "UNINITIALIZED",
+    SAME_PROMPT = "SAME_PROMPT",
+    TRANSITION = "TRANSITION",
+  }

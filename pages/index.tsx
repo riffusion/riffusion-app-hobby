@@ -220,6 +220,7 @@ export default function Home() {
           prompts={promptInputs}
           inferenceResults={inferenceResults}
           nowPlayingResult={nowPlayingResult}
+          appState={appState}
           changePrompt={(prompt: string, index: number) => {
             const newPromptInputs = [...promptInputs];
             newPromptInputs[index].prompt = prompt;
