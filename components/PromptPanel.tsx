@@ -90,28 +90,22 @@ export default function PromptPanel({
   const getPromptEntryClassName = (index: number) => {
     switch (playingState) {
       case PlayingState.UNINITIALIZED:
-        console.log("promptEntryClassNames_5_0")
         return promptEntryClassNames_5_0[index];
       case PlayingState.SAME_PROMPT:
         if (appState != AppState.TRANSITION) {
-          console.log("promptEntryClassNames_5_0")
           return promptEntryClassNames_5_0[index];
 
         } else {
           switch (nowPlayingResult.input.alpha) {
             case 0:
-              console.log("promptEntryClassNames_5_0")
               return promptEntryClassNames_5_0[index];
             case 0.25:
               console.log("UNHANDLED promptEntryClassNames_5_25") // this is never reached currently
             case 0.5:
-              console.log("promptEntryClassNames_5_50")
               return promptEntryClassNames_5_50[index];
             case 0.75:
-              console.log("promptEntryClassNames_5_75")
               return promptEntryClassNames_5_75[index];
             case 1:
-              console.log("promptEntryClassNames_5_1")
               return promptEntryClassNames_5_1[index];
           }
         }
@@ -120,16 +114,12 @@ export default function PromptPanel({
           case 0:
             console.log("UNHANDLED promptEntryClassNames_6_0") // this is never reached currently
           case 0.25:
-            console.log("promptEntryClassNames_6_25")
             return promptEntryClassNames_6_25[index];
           case 0.5:
-            console.log("promptEntryClassNames_6_50")
             return promptEntryClassNames_6_50[index];
           case 0.75:
-            console.log("promptEntryClassNames_6_75")
             return promptEntryClassNames_6_75[index];
           case 1:
-            console.log("promptEntryClassNames_6_1")
             return promptEntryClassNames_6_1[index];
         }
       default:
