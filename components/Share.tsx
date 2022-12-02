@@ -62,12 +62,16 @@ export default function Share({
 
         // if seconds is 0, set prompt to the currently playing prompt
         if (secondsAgo == 0) {
+            if (!nowPlayingResult) {
+                return window.location.href;
+            }
             prompt = nowPlayingResult.input.start.prompt
             seed = nowPlayingResult.input.start.seed
             denoising = nowPlayingResult.input.start.denoising
             maskImageId = nowPlayingResult.input.mask_image_id
 
             // TODO, selectively add these based on whether we give user option to change them
+            
             // seedImageId = nowPlayingResult.input.seed_image_id
             // guidance = nowPlayingResult.input.guidance
             // numInferenceSteps = nowPlayingResult.input.num_inference_steps
@@ -151,7 +155,8 @@ export default function Share({
 
                                     <div className="mt-6">
 
-                                        <button
+                                        {/* TODO: Seth, add in 10 secondsAgo option */}
+                                        {/* <button
                                             className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-sky-500 group-hover:from-sky-600 group-hover:to-sky-500 hover:text-white"
                                             onClick={() => {
                                                 copyToClipboard(0)
@@ -161,7 +166,7 @@ export default function Share({
                                             <span className="w-64 relative px-5 py-2 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
                                                 Copy link from 20 seconds ago
                                             </span>
-                                        </button>
+                                        </button> */}
 
                                         <button
                                             type="button"
