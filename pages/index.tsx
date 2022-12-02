@@ -5,6 +5,7 @@ import * as Tone from "tone";
 import AudioPlayer from "../components/AudioPlayer";
 import PageHead from "../components/PageHead";
 import Info from "../components/Info";
+import Share from "../components/Share";
 import ModelInference from "../components/ModelInference";
 import Pause from "../components/Pause";
 import PromptPanel from "../components/PromptPanel";
@@ -229,6 +230,8 @@ export default function Home() {
         />
 
         <Info />
+
+        <Share />
 
         <Pause paused={paused} setPaused={setPaused} />
       </div>
