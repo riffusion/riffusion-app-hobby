@@ -100,7 +100,7 @@ export default function PromptPanel({
             case 0:
               return promptEntryClassNames_5_0[index];
             case 0.25:
-              console.log("UNHANDLED promptEntryClassNames_5_25") // this is never reached currently
+              return promptEntryClassNames_5_25[index];
             case 0.5:
               return promptEntryClassNames_5_50[index];
             case 0.75:
@@ -112,7 +112,7 @@ export default function PromptPanel({
       case PlayingState.TRANSITION:
         switch (nowPlayingResult.input.alpha) {
           case 0:
-            console.log("UNHANDLED promptEntryClassNames_6_0") // this is never reached currently
+            return promptEntryClassNames_6_0[index];
           case 0.25:
             return promptEntryClassNames_6_25[index];
           case 0.5:
@@ -226,6 +226,14 @@ const promptEntryClassNames_5_0 = {
   4: promptEntryClassNameDict[36], // This is the UP NEXT prompt  
 }
 
+const promptEntryClassNames_5_25 = { // This is not reached unless user has poor connection or delayed server response
+  0: promptEntryClassNameDict[7],
+  1: promptEntryClassNameDict[15],
+  2: promptEntryClassNameDict[23], // This is the start and end prompt
+  3: promptEntryClassNameDict[31], // This is the staged prompt
+  4: promptEntryClassNameDict[36], // This is the UP NEXT prompt
+}
+
 const promptEntryClassNames_5_50 = {
   0: promptEntryClassNameDict[6],
   1: promptEntryClassNameDict[14],
@@ -249,6 +257,16 @@ const promptEntryClassNames_5_1 = {
   3: promptEntryClassNameDict[28],
   4: promptEntryClassNameDict[36],
 }
+
+const promptEntryClassNames_6_0 = { // This is not reached unless user has poor connection or delayed server response
+  0: promptEntryClassNameDict[3],
+  1: promptEntryClassNameDict[11],
+  2: promptEntryClassNameDict[19],
+  3: promptEntryClassNameDict[27],
+  4: promptEntryClassNameDict[35],
+  5: promptEntryClassNameDict[36],
+}
+  
 
 const promptEntryClassNames_6_25 = {
   0: promptEntryClassNameDict[3],
