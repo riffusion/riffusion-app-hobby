@@ -231,7 +231,10 @@ export default function Home() {
 
         <Info />
 
-        <Share />
+        <Share
+          inferenceResults={inferenceResults}
+          nowPlayingResult={nowPlayingResult}
+        />
 
         <Pause paused={paused} setPaused={setPaused} />
       </div>
