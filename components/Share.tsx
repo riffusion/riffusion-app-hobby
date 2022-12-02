@@ -54,6 +54,11 @@ export default function Share({
         var seed
         var denoising
         var maskImageId
+        var seedImageId
+        var guidance
+        var numInferenceSteps
+        var alphaVelocity
+
 
         // if seconds is 0, set prompt to the currently playing prompt
         if (secondsAgo == 0) {
@@ -61,6 +66,12 @@ export default function Share({
             seed = nowPlayingResult.input.start.seed
             denoising = nowPlayingResult.input.start.denoising
             maskImageId = nowPlayingResult.input.mask_image_id
+
+            // TODO, selectively add these based on whether we give user option to change them
+            // seedImageId = nowPlayingResult.input.seed_image_id
+            // guidance = nowPlayingResult.input.guidance
+            // numInferenceSteps = nowPlayingResult.input.num_inference_steps
+            // alphaVelocity = nowPlayingResult.input.alpha_velocity
         }
 
         var baseUrl = "http://localhost:3000/?"
@@ -69,9 +80,13 @@ export default function Share({
         if (seed != null) { var seedString = "&seed=" + seed } else { seedString = "" }
         if (denoising != null) { var denoisingString = "&denoising=" + denoising } else { denoisingString = "" }
         if (maskImageId != null) { var maskImageIdString = "&maskImageId=" + maskImageId } else { maskImageIdString = "" }
+        if (seedImageId != null) { var seedImageIdString = "&seedImageId=" + seedImageId } else { seedImageIdString = "" }
+        if (guidance != null) { var guidanceString = "&guidance=" + guidance } else { guidanceString = "" }
+        if (numInferenceSteps != null) { var numInferenceStepsString = "&numInferenceSteps=" + numInferenceSteps } else { numInferenceStepsString = "" }
+        if (alphaVelocity != null) { var alphaVelocityString = "&alphaVelocity=" + alphaVelocity } else { alphaVelocityString = "" }
 
         // create url string with the variables above combined
-        var shareUrl = baseUrl + promptString + seedString + denoisingString + maskImageIdString
+        var shareUrl = baseUrl + promptString + seedString + denoisingString + maskImageIdString + seedImageIdString + guidanceString + numInferenceStepsString + alphaVelocityString
 
         return shareUrl;
     }
