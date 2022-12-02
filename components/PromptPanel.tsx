@@ -152,7 +152,7 @@ export default function PromptPanel({
             }}
           >
             <input
-              className="fixed w-1/2 h-12 pl-3 text-xl text-sky-900 rounded-lg border-sky-300 border-4 focus:outline-none focus:border-sky-500"
+              className="fixed w-1/2 h-12 pl-3 text-xl text-sky-900 rounded-lg border-sky-700 border-4 hover:border-sky-600 focus:outline-none focus:border-sky-400"
               ref={inputPrompt}
               type="text"
               id="prompt"

@@ -15,21 +15,21 @@ align-items: center;
 justify-content: center;
 `;
 
-export default function Info(){
+export default function Info() {
   const [open, setOpen] = useState(false);
 
   var classNameCondition = ""
   if (open) {
-    classNameCondition="fixed z-90 top-8 right-8 bg-sky-300 w-14 h-14 rounded-full drop-shadow-lg flex justify-center items-center text-sky-900 text-2xl hover:bg-sky-500 hover:drop-shadow-2xl"
+    classNameCondition = "fixed z-90 top-8 right-8 bg-sky-400 w-14 h-14 rounded-full drop-shadow-lg flex justify-center items-center text-white text-2xl hover:bg-sky-500 hover:drop-shadow-2xl"
   } else {
-    classNameCondition="fixed z-90 top-8 right-8 bg-slate-100 w-14 h-14 rounded-full drop-shadow-lg flex justify-center items-center text-sky-900 text-2xl hover:bg-sky-500 hover:drop-shadow-2xl"
+    classNameCondition = "fixed z-90 top-8 right-8 bg-slate-100 w-14 h-14 rounded-full drop-shadow-lg flex justify-center items-center text-sky-900 text-2xl hover:text-white hover:bg-sky-600 hover:drop-shadow-2xl"
   }
 
   return (
     <>
       <button
         title="Info"
-        className= {classNameCondition}
+        className={classNameCondition}
         onClick={() => setOpen(true)}
       >
         <FiInfo />
@@ -77,30 +77,43 @@ export default function Info(){
                   >
                     Welcome to Riffusion
                   </Dialog.Title>
-                  <div className="mt-2">
+                  <div className="mt-4">
                     <p className="text-sm text-gray-500">
-                      Riffusion is a fine-tuned Stable Diffusion model that
-                      generates spectrogram images from any text prompt. <br></br>
+                      Riffusion generates endless new jams from any text prompt. Try typing in your favorite artist or genre and you'll hear the music gradually transform.<br></br>
                       <br></br>
-                      These images are then converted into music. <br></br>
+                      The diffusion model first creates images from your prompt, and then converts them into music. Learn more about surfing the latent space of sound below.<br></br>
                     </p>
                   </div>
 
-                  <div className="mt-4">
+                  <div className="mt-6">
+
+                    <button
+                      className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-sky-500 group-hover:from-sky-600 group-hover:to-sky-500 hover:text-white"
+                      onClick={() => {
+                        window.open("/about", "_blank");
+                        setOpen(false);
+                      }}
+                    >
+                      <span className="relative px-5 py-2 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
+                        Surfing the what?
+                      </span>
+                    </button>
+
                     <button
                       type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-sky-300 px-4 py-2 text-sm font-medium text-sky-900 hover:bg-sky-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2"
+                      className="text-white bg-gradient-to-br from-purple-600 to-sky-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
                       onClick={() => setOpen(false)}
                     >
                       Let&apos;s Riff 🎸
                     </button>
+                    
                   </div>
                 </div>
               </ModalContainer>
             </Transition.Child>
           </div>
-      </Dialog>
-    </Transition>
+        </Dialog>
+      </Transition>
     </>
   );
 };
