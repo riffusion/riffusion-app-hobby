@@ -19,9 +19,9 @@ import {
 } from "../types";
 
 const defaultPromptInputs = [
-  { prompt: "A jazz pianist playing a classical concerto" },
-  { prompt: "Country singer and a techno DJ" },
-  { prompt: "A typewriter in the style of K-Pop" },
+  { prompt: "A jazz pianist playing a concerto" },
+  { prompt: "Techno DJ and a Country Singer" },
+  { prompt: "Classical italian tenor operatic pop" },
   { prompt: "lo-fi beat for the holidays" },
   { prompt: "" },
   { prompt: "" },

@@ -48,7 +48,7 @@ export default function Share({
     // function to generate a link to a the moment in the song based on the played clips, input variable is how many seconds ago
     function generateLink(secondsAgo: number) {
 
-        //TODO: Seth, handle start case, and seconds into past case
+        //TODO: Seth, and seconds into past case
 
         var prompt
         var seed
@@ -65,13 +65,13 @@ export default function Share({
             if (!nowPlayingResult) {
                 return window.location.href;
             }
-            prompt = nowPlayingResult.input.start.prompt
-            seed = nowPlayingResult.input.start.seed
-            denoising = nowPlayingResult.input.start.denoising
+            prompt = nowPlayingResult.input.end.prompt
+            seed = nowPlayingResult.input.end.seed
+            denoising = nowPlayingResult.input.end.denoising
             maskImageId = nowPlayingResult.input.mask_image_id
 
             // TODO, selectively add these based on whether we give user option to change them
-            
+
             // seedImageId = nowPlayingResult.input.seed_image_id
             // guidance = nowPlayingResult.input.guidance
             // numInferenceSteps = nowPlayingResult.input.num_inference_steps
