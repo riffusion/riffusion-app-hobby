@@ -48,8 +48,6 @@ export default function Share({
     // function to generate a link to a the moment in the song based on the played clips, input variable is how many seconds ago
     function generateLink(secondsAgo: number) {
 
-        //TODO: Seth, and seconds into past case
-
         var prompt
         var seed
         var denoising
@@ -59,16 +57,30 @@ export default function Share({
         var numInferenceSteps
         var alphaVelocity
 
-
-        // if seconds is 0, set prompt to the currently playing prompt
-        if (secondsAgo == 0) {
-            if (!nowPlayingResult) {
-                return window.location.href;
+        if (!nowPlayingResult) {
+            return window.location.href;
+        }
+        else {
+            var selectedInput: InferenceResult["input"]
+            if (secondsAgo == 0) {
+                selectedInput = nowPlayingResult.input
             }
-            prompt = nowPlayingResult.input.end.prompt
-            seed = nowPlayingResult.input.end.seed
-            denoising = nowPlayingResult.input.end.denoising
-            maskImageId = nowPlayingResult.input.mask_image_id
+            else {
+                var selectedCounter = nowPlayingResult.counter - (secondsAgo / 5)
+                selectedInput = inferenceResults.find((result) => result.counter == selectedCounter)?.input
+
+                if (!selectedInput) {
+                    // TODO: ideally don't show the button in this case...
+                    return window.location.href;
+                }
+            }
+
+            // TODO: Consider start or end here. End is something the the user hasn't actually heard yet. Start is perhaps a previous prompt than where the user is headed
+
+            prompt = selectedInput.start.prompt
+            seed = selectedInput.start.seed
+            denoising = selectedInput.start.denoising
+            maskImageId = selectedInput.mask_image_id
 
             // TODO, selectively add these based on whether we give user option to change them
 
