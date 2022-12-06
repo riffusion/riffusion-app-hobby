@@ -101,6 +101,9 @@ export default function Share({
         if (numInferenceSteps != null) { var numInferenceStepsString = "&numInferenceSteps=" + numInferenceSteps } else { numInferenceStepsString = "" }
         if (alphaVelocity != null) { var alphaVelocityString = "&alphaVelocity=" + alphaVelocity } else { alphaVelocityString = "" }
 
+        // Format strings to have + in place of spaces for ease of sharing, note this is only necessary for prompts currently
+        promptString = promptString.replace(/ /g, "+");
+
         // create url string with the variables above combined
         var shareUrl = baseUrl + promptString + seedString + denoisingString + maskImageIdString + seedImageIdString + guidanceString + numInferenceStepsString + alphaVelocityString
 
