@@ -195,7 +195,7 @@ export default function Home() {
       <PageHead />
 
       <div className="bg-[#0A2342] flex flex-row min-h-screen text-white">
-        <div className="w-1/3 min-h-screen">
+        <div className="w-0 sm:w-1/3 min-h-screen">
           <ThreeCanvas
             paused={paused}
             getTime={() => Tone.Transport.seconds}
