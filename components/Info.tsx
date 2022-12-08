@@ -79,7 +79,7 @@ export default function Info() {
                   </Dialog.Title>
                   <div className="mt-4">
                     <p className="text-sm text-gray-500">
-                      Riffusion generates endless new jams from any text prompt. Try typing in your favorite artist or genre and you'll hear the music gradually transform.<br></br>
+                      Riffusion generates endless new jams from any text prompt. Try typing in your favorite artist or genre, and you'll hear the music gradually transform.<br></br>
                       <br></br>
                       The diffusion model first creates images from your prompt, and then converts them into music. Learn more about surfing the latent space of sound below.<br></br>
                     </p>
