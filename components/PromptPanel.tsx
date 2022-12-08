@@ -131,7 +131,7 @@ export default function PromptPanel({
     <>
       <main className="fixed md:static md:w-2/3 md:min-h-screen">
         <div className="pl-10 pr-10 md:pl-20">
-          <div className="h-[78vh] md:h-[80vh] flex flex-col justify-around pt-[10vh] pr-5">
+          <div className="sm-landscape:h-[62vh] h-[78vh] md:h-[80vh] flex flex-col justify-around pt-[10vh] pr-5">
             {getDisplayPrompts().map((prompt, index) => (
               <PromptEntry
                 prompt={prompt.prompt + " "}
