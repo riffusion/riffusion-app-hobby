@@ -129,7 +129,7 @@ export default function PromptPanel({
 
   return (
     <>
-      <main className="fixed sm:flex sm:w-2/3 sm:min-h-screen">
+      <main className="fixed sm:static sm:w-2/3 sm:min-h-screen">
         <div className="pl-10 pr-10 sm:pl-20">
           <div className="h-[78vh] sm:h-[80vh] flex flex-col justify-around pt-[10vh] pr-5">
             {getDisplayPrompts().map((prompt, index) => (
