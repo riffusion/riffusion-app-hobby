@@ -143,12 +143,18 @@ export default function PromptPanel({
             ))}
           </div>
 
+          {/* // Form trims spaces, and only submits if the remaining prompt is more than 0 characters */}
           <form
             onSubmit={(e) => {
               e.preventDefault();
               const prompt = e.currentTarget.prompt.value;
-              changePrompt(prompt, prompts.length - 1);
-              inputPrompt.current.value = "";
+              const trimmedPrompt = prompt.trimStart();
+              if (trimmedPrompt.length > 0) {
+                changePrompt(trimmedPrompt, prompts.length - 1);
+                inputPrompt.current.value = "";
+              } else {
+                inputPrompt.current.value = "";
+              }
             }}
           >
             <input
