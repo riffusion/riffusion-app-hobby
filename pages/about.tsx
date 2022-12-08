@@ -8,10 +8,14 @@ import fourierTransformImg from "../public/about/fourier_transform.png";
 import spectrogramLabelImg from "../public/about/spectrogram_label.png";
 import webAppScreenshot from "../public/about/web_app_screenshot.png";
 
+import ToApp from "../components/ToApp";
+
 export default function Home() {
   return (
     <>
       <PageHead />
+
+      <ToApp/>
 
       <main className="bg-white flex flex-row text-black place-content-center">
         <div className="w-3/4 md:w-2/3 lg:w-1/2 text-lg pb-20">

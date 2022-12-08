@@ -229,14 +229,14 @@ export default function Home() {
           }}
         />
 
-        <Info />
+        <Pause paused={paused} setPaused={setPaused} />
 
         <Share
           inferenceResults={inferenceResults}
           nowPlayingResult={nowPlayingResult}
         />
 
-        <Pause paused={paused} setPaused={setPaused} />
+        <Info />
       </div>
     </>
   );
