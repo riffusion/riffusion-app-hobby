@@ -8,7 +8,7 @@ import fourierTransformImg from "../public/about/fourier_transform.png";
 import spectrogramLabelImg from "../public/about/spectrogram_label.png";
 import webAppScreenshot from "../public/about/web_app_screenshot.png";
 
-import ToApp from "../components/ToApp";
+import ToApp from "../components/about/ToApp";
 
 export default function Home() {
   return (
