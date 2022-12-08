@@ -132,7 +132,6 @@ export default function PromptPanel({
       <main className="sm:w-2/3 min-h-screen">
         <div className="pl-10 pr-10 sm:pl-20">
           <div className="h-[80vh] flex flex-col justify-around pt-[10vh] pr-5">
-          {/* <div className="h-[80vh] sm:h-[80vh] flex flex-col justify-around pt-[10vh] pr-5"> */}
             {getDisplayPrompts().map((prompt, index) => (
               <PromptEntry
                 prompt={prompt.prompt + " "}
@@ -153,7 +152,7 @@ export default function PromptPanel({
             }}
           >
             <input
-              className="fixed w-full sm:w-10/12 h-12 pl-3 pr-3 text-xl text-sky-900 rounded-lg border-sky-700 border-4 hover:border-sky-600 focus:outline-none focus:border-sky-400"
+              className="flex w-full sm:fixed sm:w-1/2 h-12 pl-3 pr-3 text-xl text-sky-900 rounded-lg border-sky-700 border-4 hover:border-sky-600 focus:outline-none focus:border-sky-400"
               ref={inputPrompt}
               type="text"
               id="prompt"
@@ -175,7 +174,7 @@ const promptEntryClassNameDict = {
   0: "font-extralight text-xs text-gray-500 text-opacity-20",
   1: "font-extralight text-xs text-gray-400 text-opacity-20",
   2: "font-extralight text-sm text-gray-300 text-opacity-30",
-  3: "font-extralight text-sm text-gray-200 text-opacity-30", 
+  3: "font-extralight text-sm text-gray-200 text-opacity-30",
   4: "font-light text-sm text-gray-200 text-opacity-40",
   5: "font-light text-base text-gray-200 text-opacity-40",
   6: "font-light text-base text-gray-100 text-opacity-50",
@@ -203,7 +202,7 @@ const promptEntryClassNameDict = {
   25: "font-bold text-4xl text-white",  // 75%
   26: "font-semibold text-4xl text-white", // 50%
   27: "font-medium text-3xl text-gray-100 text-opacity-90", // 25%
-  28: "font-normal text-2xl text-gray-100 text-opacity-80", 
+  28: "font-normal text-2xl text-gray-100 text-opacity-80",
   29: "font-normal text-l text-gray-100 text-opacity-70",
   30: "font-normal text-l text-gray-100 text-opacity-70",
   31: "font-normal text-l text-gray-100 text-opacity-70", // starter for 3 "end"
@@ -267,7 +266,7 @@ const promptEntryClassNames_6_0 = { // This is not reached unless user has poor 
   4: promptEntryClassNameDict[35],
   5: promptEntryClassNameDict[36],
 }
-  
+
 
 const promptEntryClassNames_6_25 = {
   0: promptEntryClassNameDict[3],
