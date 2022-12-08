@@ -30,7 +30,7 @@ export default function Share({
 
     var classNameCondition = ""
     if (open) {
-        classNameCondition = "fixed z-90 top-24 right-4 sm:top-28 sm:right-8 top-28 right-8 bg-sky-400 w-14 h-14 rounded-full drop-shadow-lg flex justify-center items-center text-white text-2xl hover:bg-sky-500 hover:drop-shadow-2xl"
+        classNameCondition = "fixed z-90 top-24 right-4 sm:top-28 sm:right-8 bg-sky-400 w-14 h-14 rounded-full drop-shadow-lg flex justify-center items-center text-white text-2xl hover:bg-sky-500 hover:drop-shadow-2xl"
     } else {
         classNameCondition = "fixed z-90 top-24 right-4 sm:top-28 sm:right-8 bg-slate-100 w-14 h-14 rounded-full drop-shadow-lg flex justify-center items-center text-sky-900 text-2xl hover:text-white hover:bg-sky-600 hover:drop-shadow-2xl"
     }
@@ -41,9 +41,12 @@ export default function Share({
         // use generateLink to generate the link
         const link = generateLink(secondsAgo);
 
-        var copyText = window.location.href
-        navigator.clipboard.writeText(link);
-    }
+        // TODO: Test this on mobile. Has to be executed on a site secured with https on mobile, so will not work on localhost
+        navigator.clipboard
+            .writeText(link)
+            // .then(() => { alert("successfully copied")})
+            // .catch(() => { alert("something went wrong") });
+    }  
 
     // function to generate a link to a the moment in the song based on the played clips, input variable is how many seconds ago
     function generateLink(secondsAgo: number) {
