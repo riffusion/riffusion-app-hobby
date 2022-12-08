@@ -11,7 +11,7 @@ export default function ToApp() {
 
       <button
         type="button"
-        className="fixed z-90 top-4 right-4 sm:top-8 sm:right-8 text-white bg-gradient-to-br from-purple-600 to-sky-500 hover:bg-gradient-to-bl w-14 h-14 rounded-full drop-shadow-lg flex justify-center items-center text-sky-900 text-2xl hover:text-white hover:bg-sky-600 hover:drop-shadow-2xl"
+        className="fixed z-90 top-4 right-4 md:top-8 md:right-8 text-white bg-gradient-to-br from-purple-600 to-sky-500 hover:bg-gradient-to-bl w-14 h-14 rounded-full drop-shadow-lg flex justify-center items-center text-sky-900 text-2xl hover:text-white hover:bg-sky-600 hover:drop-shadow-2xl"
         onClick={() => window.location.href = "/"}
       >
         🎸

@@ -129,9 +129,9 @@ export default function PromptPanel({
 
   return (
     <>
-      <main className="fixed sm:static sm:w-2/3 sm:min-h-screen">
-        <div className="pl-10 pr-10 sm:pl-20">
-          <div className="h-[78vh] sm:h-[80vh] flex flex-col justify-around pt-[10vh] pr-5">
+      <main className="fixed md:static md:w-2/3 md:min-h-screen">
+        <div className="pl-10 pr-10 md:pl-20">
+          <div className="h-[78vh] md:h-[80vh] flex flex-col justify-around pt-[10vh] pr-5">
             {getDisplayPrompts().map((prompt, index) => (
               <PromptEntry
                 prompt={prompt.prompt + " "}
@@ -158,7 +158,7 @@ export default function PromptPanel({
             }}
           >
             <input
-              className="flex w-full sm:fixed sm:w-1/2 h-12 pl-3 pr-3 text-xl text-sky-900 rounded-lg border-sky-700 border-4 hover:border-sky-600 focus:outline-none focus:border-sky-400"
+              className="flex w-full md:fixed md:w-1/2 h-12 pl-3 pr-3 text-xl text-sky-900 rounded-lg border-sky-700 border-4 hover:border-sky-600 focus:outline-none focus:border-sky-400"
               ref={inputPrompt}
               type="text"
               id="prompt"
