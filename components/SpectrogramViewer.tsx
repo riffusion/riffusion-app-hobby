@@ -49,6 +49,11 @@ export default function SpectrogramViewer({
 
   const playbarShift = 3.6; // [m]
 
+  // NOTE: this is a hacky way to compress image and box width to fit in the window for responsiveness
+  // if window is between 768px and 1068px, this scales the image to fit using a scaler
+  const spectrogramImageScale = window.innerWidth > 768 && window.innerWidth < 1068 ? window.innerWidth / 215 : 5;
+  const spectrogramBoxScale = window.innerWidth > 768 && window.innerWidth < 1068 ? window.innerWidth / 194 : 5.5;
+
   return (
     <group>
       {/* <Effects
@@ -64,13 +69,14 @@ export default function SpectrogramViewer({
       {inferenceResults.map((result: InferenceResult, index: number) => {
         const duration_s = result.duration_s;
         const position = duration_s * (-0.55 - result.counter) + playbarShift;
+
         if (use_height_map) {
           return (
             <HeightMapImage
               url={result.image}
               position={[0, position, 0]}
               rotation={[0, 0, -Math.PI / 2]}
-              scale={[duration_s, 5, 1]}
+              scale={[duration_s, spectrogramImageScale, 1]}
               key={index}
             />
           );
@@ -90,7 +96,7 @@ export default function SpectrogramViewer({
       {/* TODO(hayk): Synchronize this better with the audio. */}
       <group ref={playheadRef}>
         <Box
-          args={[5.5, 2.0, 0.15]}
+          args={[spectrogramBoxScale, 2.0, 0.15]}
           rotation={[Math.PI / 2 - 0.2, 0, 0]}
           position={[0, playbarShift, -0.5]}
         >
