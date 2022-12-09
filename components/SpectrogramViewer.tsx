@@ -50,7 +50,7 @@ export default function SpectrogramViewer({
   const playbarShift = 3.6; // [m]
 
   // NOTE: this is a hacky way to constrict image and box width to fit in the window for responsiveness
-  // if window is between 768px and 1068px, this scales the image to fit using a scaler
+  // if window is between 768px and 1350px, this scales the image to fit using a scaler
   const imageScaler = window.innerHeight / 3.40;
   const boxScaler = window.innerHeight / 3.76;
   const spectrogramImageScale = window.innerWidth > 767 && window.innerWidth < 1350 ? window.innerWidth / imageScaler : 5;
