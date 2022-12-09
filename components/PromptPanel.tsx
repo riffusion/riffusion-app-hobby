@@ -123,7 +123,16 @@ export default function PromptPanel({
             return promptEntryClassNames_6_1[index];
         }
       default:
-        console.log("UNHANDLED playingState: " + playingState)
+        // These states are reached if alpha is greater than 1 but the new inference is not ready
+        if (appState != AppState.TRANSITION) {
+          return promptEntryClassNames_5_0[index];
+        }
+        else if (playingState == PlayingState.SAME_PROMPT) {
+          return promptEntryClassNames_5_1[index];
+        }
+        else {
+          return promptEntryClassNames_6_1[index];
+        }
     }
   }
 
@@ -131,7 +140,7 @@ export default function PromptPanel({
     <>
       <main className="z-10 fixed w-full md:static md:w-2/3 md:min-h-screen">
         <div className="pl-10 pr-10 md:pl-20">
-          <div className="landscape:sm:h-[62vh] h-[78vh] md:h-[80vh] flex flex-col justify-around pt-[10vh] pr-5">
+          <div className="h-[78vh] landscape:sm:max-[750px]:h-[62vh] md:h-[80vh] flex flex-col justify-around pt-[10vh] pr-5">
             {getDisplayPrompts().map((prompt, index) => (
               <PromptEntry
                 prompt={prompt.prompt + " "}
