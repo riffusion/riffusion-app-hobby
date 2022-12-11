@@ -195,7 +195,7 @@ export default function Home() {
       <PageHead />
 
       <div className="bg-[#0A2342] flex flex-row min-h-screen text-white">
-        <div className="w-1/3 min-h-screen">
+        <div className="brightness-50	md:filter-none w-full z-0 md:w-1/3 min-h-screen">
           <ThreeCanvas
             paused={paused}
             getTime={() => Tone.Transport.seconds}
@@ -229,14 +229,14 @@ export default function Home() {
           }}
         />
 
-        <Info />
+        <Pause paused={paused} setPaused={setPaused} />
 
         <Share
           inferenceResults={inferenceResults}
           nowPlayingResult={nowPlayingResult}
         />
 
-        <Pause paused={paused} setPaused={setPaused} />
+        <Info />
       </div>
     </>
   );

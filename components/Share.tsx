@@ -30,9 +30,9 @@ export default function Share({
 
     var classNameCondition = ""
     if (open) {
-        classNameCondition = "fixed z-90 top-28 right-8 bg-sky-400 w-14 h-14 rounded-full drop-shadow-lg flex justify-center items-center text-white text-2xl hover:bg-sky-500 hover:drop-shadow-2xl"
+        classNameCondition = "fixed z-20 top-24 right-4 md:top-28 md:right-8 bg-sky-400 w-14 h-14 rounded-full drop-shadow-lg flex justify-center items-center text-white text-2xl hover:bg-sky-500 hover:drop-shadow-2xl"
     } else {
-        classNameCondition = "fixed z-90 top-28 right-8 bg-slate-100 w-14 h-14 rounded-full drop-shadow-lg flex justify-center items-center text-sky-900 text-2xl hover:text-white hover:bg-sky-600 hover:drop-shadow-2xl"
+        classNameCondition = "fixed z-20 top-24 right-4 md:top-28 md:right-8 bg-slate-100 w-14 h-14 rounded-full drop-shadow-lg flex justify-center items-center text-sky-900 text-2xl hover:text-white hover:bg-sky-600 hover:drop-shadow-2xl"
     }
 
     // function to copy link to moment in song to the clipboard
@@ -41,14 +41,15 @@ export default function Share({
         // use generateLink to generate the link
         const link = generateLink(secondsAgo);
 
-        var copyText = window.location.href
-        navigator.clipboard.writeText(link);
-    }
+        // TODO: Test this on mobile. Has to be executed on a site secured with https on mobile, so will not work on localhost
+        navigator.clipboard
+            .writeText(link)
+            // .then(() => { alert("successfully copied")})
+            // .catch(() => { alert("something went wrong") });
+    }  
 
     // function to generate a link to a the moment in the song based on the played clips, input variable is how many seconds ago
     function generateLink(secondsAgo: number) {
-
-        //TODO: Seth, and seconds into past case
 
         var prompt
         var seed
@@ -59,16 +60,30 @@ export default function Share({
         var numInferenceSteps
         var alphaVelocity
 
-
-        // if seconds is 0, set prompt to the currently playing prompt
-        if (secondsAgo == 0) {
-            if (!nowPlayingResult) {
-                return window.location.href;
+        if (!nowPlayingResult) {
+            return window.location.href;
+        }
+        else {
+            var selectedInput: InferenceResult["input"]
+            if (secondsAgo == 0) {
+                selectedInput = nowPlayingResult.input
             }
-            prompt = nowPlayingResult.input.end.prompt
-            seed = nowPlayingResult.input.end.seed
-            denoising = nowPlayingResult.input.end.denoising
-            maskImageId = nowPlayingResult.input.mask_image_id
+            else {
+                var selectedCounter = nowPlayingResult.counter - (secondsAgo / 5)
+                selectedInput = inferenceResults.find((result) => result.counter == selectedCounter)?.input
+
+                if (!selectedInput) {
+                    // TODO: ideally don't show the button in this case...
+                    return window.location.href;
+                }
+            }
+
+            // TODO: Consider start or end here. End is something the the user hasn't actually heard yet. Start is perhaps a previous prompt than where the user is headed
+
+            prompt = selectedInput.start.prompt
+            seed = selectedInput.start.seed
+            denoising = selectedInput.start.denoising
+            maskImageId = selectedInput.mask_image_id
 
             // TODO, selectively add these based on whether we give user option to change them
 
@@ -88,6 +103,9 @@ export default function Share({
         if (guidance != null) { var guidanceString = "&guidance=" + guidance } else { guidanceString = "" }
         if (numInferenceSteps != null) { var numInferenceStepsString = "&numInferenceSteps=" + numInferenceSteps } else { numInferenceStepsString = "" }
         if (alphaVelocity != null) { var alphaVelocityString = "&alphaVelocity=" + alphaVelocity } else { alphaVelocityString = "" }
+
+        // Format strings to have + in place of spaces for ease of sharing, note this is only necessary for prompts currently
+        promptString = promptString.replace(/ /g, "+");
 
         // create url string with the variables above combined
         var shareUrl = baseUrl + promptString + seedString + denoisingString + maskImageIdString + seedImageIdString + guidanceString + numInferenceStepsString + alphaVelocityString

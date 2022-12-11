@@ -20,9 +20,9 @@ export default function Info() {
 
   var classNameCondition = ""
   if (open) {
-    classNameCondition = "fixed z-90 top-48 right-8 bg-sky-400 w-14 h-14 rounded-full drop-shadow-lg flex justify-center items-center text-white text-2xl hover:bg-sky-500 hover:drop-shadow-2xl"
+    classNameCondition = "fixed z-20 top-44 right-4 md:top-48 md:right-8 bg-sky-400 w-14 h-14 rounded-full drop-shadow-lg flex justify-center items-center text-white text-2xl hover:bg-sky-500 hover:drop-shadow-2xl"
   } else {
-    classNameCondition = "fixed z-90 top-48 right-8 bg-slate-100 w-14 h-14 rounded-full drop-shadow-lg flex justify-center items-center text-sky-900 text-2xl hover:text-white hover:bg-sky-600 hover:drop-shadow-2xl"
+    classNameCondition = "fixed z-20 top-44 right-4 md:top-48 md:right-8 bg-slate-100 w-14 h-14 rounded-full drop-shadow-lg flex justify-center items-center text-sky-900 text-2xl hover:text-white hover:bg-sky-600 hover:drop-shadow-2xl"
   }
 
   return (
@@ -79,7 +79,7 @@ export default function Info() {
                   </Dialog.Title>
                   <div className="mt-4">
                     <p className="text-sm text-gray-500">
-                      Riffusion generates endless new jams from any text prompt. Try typing in your favorite artist or genre and you'll hear the music gradually transform.<br></br>
+                      Riffusion generates endless new jams from any text prompt. Try typing in your favorite artist or genre, and you'll hear the music gradually transform.<br></br>
                       <br></br>
                       The diffusion model first creates images from your prompt, and then converts them into music. Learn more about surfing the latent space of sound below.<br></br>
                     </p>
