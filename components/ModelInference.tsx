@@ -172,6 +172,7 @@ export default function ModelInference({
       newResultCallback,
       numRequestsMade,
       numResponsesReceived,
+      useBaseten,
     ]
   );
 
