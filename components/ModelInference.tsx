@@ -10,6 +10,10 @@ import {
 
 // TODO(hayk): Get this into a configuration.
 const SERVER_URL = "http://129.146.52.68:3013/run_inference/";
+// Baseten worklet api url. Using cors-anywhere to get around CORS issues.
+const BASETEN_URL = "http://cors-anywhere.herokuapp.com/https://app.baseten.co/applications/2qREaXP/production/worklets/mP7KkLP/invoke";
+// Temporary basten API key "irritating-haircut"
+const BASETEN_API_KEY = "JocxKmyo.g0JreAA8dZy5F20PdMxGAV34a4VGGpom"
 
 interface ModelInferenceProps {
   alpha: number;
@@ -117,13 +121,25 @@ export default function ModelInference({
 
       setNumRequestsMade((n) => n + 1);
 
-      const response = await fetch(SERVER_URL, {
+      // Server API call
+      // const ServerResponse = await fetch(SERVER_URL, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     "Access-Control-Allow-Origin": "*",
+      //   },
+      //   body: JSON.stringify(inferenceInput),
+      // });
+
+      // Baseten worklet API call
+      const response = await fetch(BASETEN_URL, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Authorization": "Api-Key JocxKmyo.g0JreAA8dZy5F20PdMxGAV34a4VGGpom",
           "Access-Control-Allow-Origin": "*",
         },
-        body: JSON.stringify(inferenceInput),
+        // add the body of the request with {"worklet_input": {}}
+        body: JSON.stringify({worklet_input: inferenceInput}),
       });
 
       const data = await response.json();
