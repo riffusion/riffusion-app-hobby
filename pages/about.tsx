@@ -39,7 +39,8 @@ export default function Home() {
             caption={"funk bassline with a jazzy saxophone solo"}
           />
           <p>
-            The magic is that this spectrogram can then be converted to audio:
+            The magic is that this spectrogram can then be converted to an audio
+            clip:
           </p>
           <div className="m-5 ml-16">
             <audio controls src="/about/funky_sax.mp3" className="w-1/2">
@@ -52,8 +53,8 @@ export default function Home() {
           </p>
           <p className="mt-3">
             This is the v1.5 stable diffusion model with no modifications, just
-            fine-tuned on images of spectrograms. Audio processing happens
-            downstream of the model.
+            fine-tuned on images of spectrograms paired with text. Audio
+            processing happens downstream of the model.
           </p>
           <p className="mt-3">
             It can generate infinite variations of a prompt by varying the seed.
@@ -113,7 +114,7 @@ export default function Home() {
             beats similar to a hi-hat sound.
           </p>
           <Image
-            className="ml-24 m-5 w-2/5 pt-5"
+            className="ml-24 m-5 w-2/5 border-2"
             src={handDrawnSpectrogramImg}
             alt={"hand drawn spectrogram"}
           />
@@ -139,13 +140,13 @@ export default function Home() {
             With diffusion models, it is possible to condition their creations
             not only on a text prompt but also on other images. This is
             incredibly useful for modifying sounds while preserving the
-            structure of the an original clip you like. You can control how 
-            much to deviate from the original clip and towards a new prompt 
-            using the denoising strength parameter.
+            structure of the an original clip you like. You can control how much
+            to deviate from the original clip and towards a new prompt using the
+            denoising strength parameter.
           </p>
           <p className="mt-3">
-            For example, here is a modification of that funky sax solo to crank
-            up the piano:
+            For example, here is that funky sax riff on the left, and on the
+            right is a modification of it to crank up the piano:
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
@@ -176,8 +177,8 @@ export default function Home() {
             </div>
           </div>
           <p>
-            And here's an example that adapts a rock and roll solo to an
-            acoustic folk fiddle:
+            The next example adapts a rock and roll solo to an acoustic folk
+            fiddle:
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
@@ -188,7 +189,10 @@ export default function Home() {
               />
 
               <div className="m-4">
-                <audio controls src="/about/rock_and_roll_electric_guitar_solo.mp3">
+                <audio
+                  controls
+                  src="/about/rock_and_roll_electric_guitar_solo.mp3"
+                >
                   Your browser does not support audio.
                 </audio>
               </div>
@@ -207,56 +211,61 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <h2 className="pt-10 pb-5 text-3xl font-bold">Looping and Interpolation</h2>
+          <h2 className="pt-10 pb-5 text-3xl font-bold">
+            Looping and Interpolation
+          </h2>
           <p>
-            Generating short clips is a blast, but we really wanted infinite AI-generated jams.
+            Generating short clips is a blast, but we really wanted infinite
+            AI-generated jams.
           </p>
           <p className="mt-3">
-            Let's say we put in a prompt and generate 100 clips with varying seeds. 
-            We can't concatenate the resulting clips because they differ in key, 
-            tempo, and downbeat.          
+            Let's say we put in a prompt and generate 100 clips with varying
+            seeds. We can't concatenate the resulting clips because they differ
+            in key, tempo, and downbeat.
           </p>
           <p className="mt-3">
-            Our strategy is to pick one initial image and generate variations of it 
-            by running image-to-image generation with different seeds and prompts. 
-            This preserves the key properties of the clips. To make them loop-able, 
-            we also create initial images that are an exact number of measures.          
+            Our strategy is to pick one initial image and generate variations of
+            it by running image-to-image generation with different seeds and
+            prompts. This preserves the key properties of the clips. To make
+            them loop-able, we also create initial images that are an exact
+            number of measures.
           </p>
           <p className="mt-3">
-            However, even with this approach it's still too abrupt to transition 
-            between clips. Multiple interpretations of the same prompt with the 
-            same overall structure can still vary greatly in their vibe and melodic
-            motifs.
+            However, even with this approach it's still too abrupt to transition
+            between clips. Multiple interpretations of the same prompt with the
+            same overall structure can still vary greatly in their vibe and
+            melodic motifs.
           </p>
           <p className="mt-3">
-            To address this, we smoothly 
-            <em> interpolate between prompts and seeds in the {" "} 
+            To address this, we smoothly interpolate between prompts and seeds
+            <em> in the latent space of the model</em>. In diffusion models, the{" "}
             <a href="https://github.com/hmartiro/riffusion-inference/blob/main/riffusion/audio.py">
-              latent space 
-            </a> {" "}
-            of the model
-            </em>. In diffusion models, the latent space is a feature vector 
-            that embeds the entire possible space of what the model can generate. 
-            Items which resemble each other are close in the latent space, and every 
-            numerical value of the latent space decodes to a viable output.
+              latent space
+            </a>{" "}
+            is a feature vector that embeds the entire possible space of what
+            the model can generate. Items which resemble each other are close in
+            the latent space, and every numerical value of the latent space
+            decodes to a viable output.
           </p>
           <p className="mt-3">
-            The key is that we can continuously sample the latent space between a 
-            prompt with two different seeds, or two different prompts with the same 
-            seed. Here is an example with the visual model:
+            The key is that we can continuously sample the latent space between
+            a prompt with two different seeds, or two different prompts with the
+            same seed. Here is an example with the visual model:
           </p>
           <CaptionedImage
             image_url={"/about/happy_cows_interpolation.gif"}
-            caption={"Interpolation between two seeds for the same prompt"}
+            caption={""}
           />
           <p className="mt-3">
-            We can do the same thing with our model, which often results in buttery 
-            smooth transitions,  even between starkly different prompts. This is vastly 
-            more interesting than interpolating the raw audio, because in the latent 
-            space all in-between points still sound like plausible clips.
+            We can do the same thing with our model, which often results in
+            buttery smooth transitions, even between starkly different prompts.
+            This is vastly more interesting than interpolating the raw audio,
+            because in the latent space all in-between points still sound like
+            plausible clips.
           </p>
+          {/* TODO(hayk): Move one of these examples to the bottom. */}
           <p className="mt-3">
-            Here is one of our favorites, a beautiful 20-step interpolation from 
+            Here is one of our favorites, a beautiful 20-step interpolation from
             <b> typing </b> to <b>jazz</b>:
           </p>
           <div className="m-5 ml-16">
@@ -265,16 +274,21 @@ export default function Home() {
             </audio>
           </div>
           <p className="mt-3">
-            And another one from <b>church bells </b> to <b>electronic beats</b>:
+            And another one from <b>church bells </b> to <b>electronic beats</b>
+            :
           </p>
           <div className="m-5 ml-16">
-            <audio controls src="/about/church_bells_to_electronic_beats.mp3" className="w-1/2">
+            <audio
+              controls
+              src="/about/church_bells_to_electronic_beats.mp3"
+              className="w-1/2"
+            >
               Your browser does not support audio.
             </audio>
           </div>
           <p className="mt-3">
-            Interpolation of <b>arabic gospel</b>, this time with the same prompt 
-            between two seeds:
+            Interpolation of <b>arabic gospel</b>, this time with the same
+            prompt between two seeds:
           </p>
           <div className="m-5 ml-16">
             <audio controls src="/about/arabic_gospel.mp3" className="w-1/2">
@@ -282,29 +296,29 @@ export default function Home() {
             </audio>
           </div>
           <p className="mt-3">
-            The huggingface {" "} 
-            <a href="https://github.com/huggingface/diffusers">
-              diffusers 
-            </a> {" "} 
-            library implements a wide range of pipelines including image-to-image 
-            and prompt interpolation, but we did not find an implementation that 
-            was able to do prompt interpolation combined with image-to-image 
-            conditioning. We implemented this pipeline, along with support for 
-            masking to limit generation to only parts of an image. Code {" "} 
+            The huggingface{" "}
+            <a href="https://github.com/huggingface/diffusers">diffusers</a>{" "}
+            library implements a wide range of pipelines including
+            image-to-image and prompt interpolation, but we did not find an
+            implementation that was able to do prompt interpolation combined
+            with image-to-image conditioning. We implemented this pipeline,
+            along with support for masking to limit generation to only parts of
+            an image. Code{" "}
             <a href="https://github.com/hmartiro/riffusion-inference/blob/main/riffusion/riffusion_pipeline.py">
-              here 
-            </a>.
+              here
+            </a>
+            .
           </p>
           <h2 className="pt-10 pb-5 text-3xl font-bold">Interactive Web App</h2>
           <p>
-            To put it all together, we made an interactive web app to type in prompts 
-            and infinitely generate interpolated content in real time, while 
-            visualizing the spectrogram timeline in 3D.
+            To put it all together, we made an interactive web app to type in
+            prompts and infinitely generate interpolated content in real time,
+            while visualizing the spectrogram timeline in 3D.
           </p>
           <p className="mt-3">
-            As the user types in new prompts, the audio smoothly transitions to the 
-            new prompt. If there is no new prompt, the app will interpolate between 
-            different seeds of the same prompt.          
+            As the user types in new prompts, the audio smoothly transitions to
+            the new prompt. If there is no new prompt, the app will interpolate
+            between different seeds of the same prompt.
           </p>
           <Image
             className="ml-16 m-5 w-2/3"
@@ -312,53 +326,44 @@ export default function Home() {
             alt={"web app screenshot"}
           />
           <p className="mt-3">
-            The app is built using  {" "} 
-            <a href="https://nextjs.org/">
-              Next.js 
-            </a>, {" "} 
-            <a href="https://reactjs.org/">
-              React 
-            </a>, {" "}
-            <a href="https://www.typescriptlang.org/">
-              Typescript 
-            </a>, {" "}
-            <a href="https://threejs.org/">
-              three.js 
-            </a>, and {" "}
-            <a href="https://tailwindcss.com/">
-              Tailwind
-            </a>, and deployed with {" "}
-            <a href="https://vercel.com/">
-              Vercel
-            </a>. 
-            It communicates over an API to the inference server that does the GPU processing.
+            The app is built using <a href="https://nextjs.org/">Next.js</a>,{" "}
+            <a href="https://reactjs.org/">React</a>,{" "}
+            <a href="https://www.typescriptlang.org/">Typescript</a>,{" "}
+            <a href="https://threejs.org/">three.js</a>, and{" "}
+            <a href="https://tailwindcss.com/">Tailwind</a>, and deployed with{" "}
+            <a href="https://vercel.com/">Vercel</a>. It communicates over an
+            API to the inference server that does the GPU processing.
           </p>
           <p className="mt-3">
-            The web app code is at {" "} 
+            The web app code is at{" "}
             <a href="https://github.com/hmartiro/riffusion-app">
-              https://github.com/hmartiro/riffusion-app 
-            </a>. 
+              https://github.com/hmartiro/riffusion-app
+            </a>
+            .
           </p>
           <p className="mt-3">
-            The inference server code is at {" "} 
+            The inference server code is at{" "}
             <a href="https://github.com/hmartiro/riffusion-inference">
               https://github.com/hmartiro/riffusion-inference
-            </a>. 
+            </a>
+            .
           </p>
           <p className="mt-3">
-          If you have a powerful GPU, you can run the experience locally.
+            If you have a powerful GPU, you can run the experience locally.
           </p>
           <h2 className="pt-10 pb-5 text-3xl font-bold">Samples</h2>
-          <p>
-            Some of our favorite prompts and results.
-          </p>
+          <p>Some of our favorite prompts and results.</p>
           <CaptionedImage
-                image_url={"/about/mambo_but_from_jamaica.png"}
-                caption={"Mambo but from Jamaica"}
-                marginLeft={5}
+            image_url={"/about/mambo_but_from_jamaica.png"}
+            caption={"Mambo but from Jamaica"}
+            marginLeft={5}
           />
           <div className="m-5 ml-16">
-            <audio controls src="/about/mambo_but_from_jamaica.mp3" className="w-1/2">
+            <audio
+              controls
+              src="/about/mambo_but_from_jamaica.mp3"
+              className="w-1/2"
+            >
               Your browser does not support audio.
             </audio>
           </div>
@@ -366,7 +371,11 @@ export default function Home() {
             <b>Techno beat</b> to <b>Jamaican rap</b>:
           </p>
           <div className="m-5 ml-16">
-            <audio controls src="/about/techno_to_jamaican_rap.mp3" className="w-1/2">
+            <audio
+              controls
+              src="/about/techno_to_jamaican_rap.mp3"
+              className="w-1/2"
+            >
               Your browser does not support audio.
             </audio>
           </div>
@@ -374,7 +383,11 @@ export default function Home() {
             <b>Fantasy ballad, female voice</b> to <b>teen boy pop star</b>:
           </p>
           <div className="m-5 ml-16">
-            <audio controls src="/about/fantasy_ballad_to_teen_boy_pop_star.mp3" className="w-1/2">
+            <audio
+              controls
+              src="/about/fantasy_ballad_to_teen_boy_pop_star.mp3"
+              className="w-1/2"
+            >
               Your browser does not support audio.
             </audio>
           </div>
