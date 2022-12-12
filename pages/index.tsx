@@ -6,6 +6,7 @@ import AudioPlayer from "../components/AudioPlayer";
 import PageHead from "../components/PageHead";
 import Info from "../components/Info";
 import Share from "../components/Share";
+import Settings from "../components/Settings"
 import ModelInference from "../components/ModelInference";
 import Pause from "../components/Pause";
 import PromptPanel from "../components/PromptPanel";
@@ -238,6 +239,8 @@ export default function Home() {
         />
 
         <Info />
+
+        <Settings />
       </div>
     </>
   );
