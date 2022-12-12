@@ -203,16 +203,16 @@ export function debugButton(
   inferenceResults,
   nowPlayingResult
 ) {
+  const [debugOpen, debugSetOpen] = useState(false);
+
   let buttonClassName = "";
-  if (open) {
+  if (debugOpen) {
     buttonClassName =
       "fixed z-20 top-4 right-6 bg-sky-400 w-10 h-10 rounded-full flex justify-center items-center text-white text-xl hover:bg-sky-500 hover:drop-shadow-2xl";
   } else {
     buttonClassName =
       "fixed z-20 top-4 right-6 bg-sky-100 w-10 h-10 rounded-full flex justify-center items-center text-sky-900 text-xl hover:text-white hover:bg-sky-500 hover:drop-shadow-2xl";
   }
-
-  const [debugOpen, debugSetOpen] = useState(false);
 
   return (
     <>
