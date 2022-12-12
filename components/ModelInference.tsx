@@ -12,7 +12,7 @@ import {
 const SERVER_URL = "http://129.146.52.68:3013/run_inference/";
 // Baseten worklet api url. Using cors-anywhere to get around CORS issues.
 const BASETEN_URL =
-  "http://cors-anywhere.herokuapp.com/https://app.baseten.co/applications/2qREaXP/production/worklets/mP7KkLP/invoke";
+  "https://app.baseten.co/applications/2qREaXP/production/worklets/mP7KkLP/invoke";
 // Temporary basten API key "irritating-haircut"
 const BASETEN_API_KEY = "JocxKmyo.g0JreAA8dZy5F20PdMxGAV34a4VGGpom";
 
