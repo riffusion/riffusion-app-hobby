@@ -214,7 +214,7 @@ export default function Home() {
           promptInputs={promptInputs}
           nowPlayingResult={nowPlayingResult}
           newResultCallback={newResultCallback}
-          useBaseten={true}
+          useBaseten={false}
         />
         <AudioPlayer
           paused={paused}
