@@ -9,6 +9,8 @@ interface DebugViewProps {
   promptInputs: PromptInput[];
   inferenceResults: InferenceResult[];
   nowPlayingResult: InferenceResult;
+  open: boolean ;
+  setOpen: (open: boolean) => void;
 }
 
 const ModalContainer = styled.div`
@@ -27,36 +29,19 @@ export default function DebugView({
   promptInputs,
   inferenceResults,
   nowPlayingResult,
+  open,
+  setOpen,
 }: DebugViewProps) {
-  const [open, setOpen] = useState(false);
-
-  let buttonClassName = "";
-  if (open) {
-    buttonClassName =
-      "fixed z-20 bottom-16 right-4 md:bottom-16 md:right-8 bg-sky-400 w-14 h-14 rounded-full drop-shadow-lg flex justify-center items-center text-white text-2xl hover:bg-sky-500 hover:drop-shadow-2xl";
-  } else {
-    buttonClassName =
-      "fixed z-20 bottom-16 right-4 md:bottom-16 md:right-8 bg-slate-100 w-14 h-14 rounded-full drop-shadow-lg flex justify-center items-center text-sky-900 text-2xl hover:text-white hover:bg-sky-600 hover:drop-shadow-2xl";
-  }
-
   return (
     <>
-      <button
-        title="Debug"
-        className={buttonClassName}
-        onClick={() => setOpen(true)}
-      >
-        <ImStatsBars />
-      </button>
-
       <Dialog
         open={open}
         onClose={() => setOpen(false)}
         as="div"
-        className="fixed inset-0 z-20"
+        className="fixed inset-0 z-30"
       >
         <ModalContainer>
-          <div className="px-4 text-center text-sm whitespace-nowrap h-[40rem] w-[70rem]  overflow-x-scroll">
+          <div className="px-4 text-center text-sm whitespace-nowrap h-[40rem] w-[70rem] overflow-x-scroll">
             <div className="my-8 inline-block transform rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
               <Dialog.Panel>
                 <h2 className="text-xl font-medium leading-6 text-gray-900 pb-2">

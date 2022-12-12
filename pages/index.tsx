@@ -243,15 +243,11 @@ export default function Home() {
           nowPlayingResult={nowPlayingResult}
         />
 
-        {/* <Info /> */}
-
-        <DebugView
-          promptInputs={promptInputs}
-          inferenceResults={inferenceResults}
-          nowPlayingResult={nowPlayingResult}
+        <Settings 
+          promptInputs={promptInputs} 
+          inferenceResults={inferenceResults} 
+          nowPlayingResult={nowPlayingResult} 
         />
-
-        <Settings />
       </div>
     </>
   );

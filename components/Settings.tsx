@@ -1,7 +1,10 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { FiSettings } from "react-icons/fi";
+import { ImStatsBars } from "react-icons/im";
 import styled, { css } from "styled-components";
+import { InferenceResult, PromptInput } from "../types";
+import DebugView from "./DebugView";
 
 const ModalContainer = styled.div`
 position: absolute;
@@ -15,7 +18,17 @@ align-items: center;
 justify-content: center;
 `;
 
-export default function Settings() {
+interface DebugViewProps {
+  promptInputs: PromptInput[];
+  inferenceResults: InferenceResult[];
+  nowPlayingResult: InferenceResult;
+}
+
+export default function Settings({
+  promptInputs,
+  inferenceResults,
+  nowPlayingResult,
+}: DebugViewProps) {
   const [open, setOpen] = useState(false);
 
   var classNameCondition = ""
@@ -88,6 +101,12 @@ export default function Settings() {
                       {seedImageSelector()}
 
                       {denoisingSelector()}
+
+                      {debugButton(
+                        promptInputs,
+                        inferenceResults,
+                        nowPlayingResult
+                      )}
 
                     </p>
                   </div>
@@ -177,4 +196,43 @@ export function denoisingSelector() {
       </label>
     </div>
   )
+}
+
+export function debugButton(
+  promptInputs,
+  inferenceResults,
+  nowPlayingResult
+) {
+  let buttonClassName = "";
+  if (open) {
+    buttonClassName =
+      "fixed z-20 top-4 right-6 bg-sky-400 w-10 h-10 rounded-full flex justify-center items-center text-white text-xl hover:bg-sky-500 hover:drop-shadow-2xl";
+  } else {
+    buttonClassName =
+      "fixed z-20 top-4 right-6 bg-sky-100 w-10 h-10 rounded-full flex justify-center items-center text-sky-900 text-xl hover:text-white hover:bg-sky-500 hover:drop-shadow-2xl";
+  }
+
+  const [debugOpen, debugSetOpen] = useState(false);
+
+  return (
+    <>
+      <button
+        title="Debug"
+        className={buttonClassName}
+        onClick={() => {
+          debugSetOpen(true);
+        }}
+      >
+        <ImStatsBars />
+      </button>
+
+      <DebugView
+        promptInputs={promptInputs}
+        inferenceResults={inferenceResults}
+        nowPlayingResult={nowPlayingResult}
+        open={debugOpen}
+        setOpen={debugSetOpen}
+      />
+    </>
+  );
 }
