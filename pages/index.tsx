@@ -243,7 +243,7 @@ export default function Home() {
           nowPlayingResult={nowPlayingResult}
         />
 
-        <Info />
+        {/* <Info /> */}
 
         <DebugView
           promptInputs={promptInputs}

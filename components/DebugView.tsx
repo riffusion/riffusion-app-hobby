@@ -53,7 +53,7 @@ export default function DebugView({
         open={open}
         onClose={() => setOpen(false)}
         as="div"
-        className="fixed inset-0 z-10"
+        className="fixed inset-0 z-20"
       >
         <ModalContainer>
           <div className="px-4 text-center text-sm whitespace-nowrap h-[40rem] w-[70rem]  overflow-x-scroll">
