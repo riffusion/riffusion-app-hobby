@@ -93,7 +93,7 @@ export default function Share({
             // alphaVelocity = nowPlayingResult.input.alpha_velocity
         }
 
-        var baseUrl = "http://localhost:3000/?"
+        var baseUrl = window.location.origin + "/?";
 
         if (prompt != null) { var promptString = "&prompt=" + prompt } else { promptString = "" }
         if (seed != null) { var seedString = "&seed=" + seed } else { seedString = "" }
