@@ -77,7 +77,7 @@ export default function Settings() {
                   >
                     Settings
                   </Dialog.Title>
-                  <div className="mt-4">
+                  <div className="mt-1">
                     <p className="label-text-alt">
                       <label className="label">
                         Riffusion generates music from text prompts using a diffusion model. Try typing in your favorite artist or genre, and playing with the settings below to explore the latent space of sound.
