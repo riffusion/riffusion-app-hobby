@@ -98,11 +98,11 @@ export default function Settings({
 
                       {/* <input type="range" min="0" max="100" value="40" className="range" /> */}
 
-                      {seedImageSelector()}
+                      {SeedImageSelector()}
 
-                      {denoisingSelector()}
+                      {DenoisingSelector()}
 
-                      {debugButton(
+                      {DebugButton(
                         promptInputs,
                         inferenceResults,
                         nowPlayingResult
@@ -154,7 +154,7 @@ export default function Settings({
   );
 };
 
-export function seedImageSelector() {
+export function SeedImageSelector() {
   return (
     <div className="form-control w-full">
       <label className="label">
@@ -176,7 +176,7 @@ export function seedImageSelector() {
   )
 }
 
-export function denoisingSelector() {
+export function DenoisingSelector() {
   return (
     <div className="form-control w-full">
       <label className="label">
@@ -198,7 +198,7 @@ export function denoisingSelector() {
   )
 }
 
-export function debugButton(
+export function DebugButton(
   promptInputs,
   inferenceResults,
   nowPlayingResult
