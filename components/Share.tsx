@@ -79,15 +79,15 @@ export default function Share({
             }
 
             // TODO: Consider start or end here. End is something the the user hasn't actually heard yet. Start is perhaps a previous prompt than where the user is headed
-
+            // TODO: Consider only including in the link the things that are different from the default values
             prompt = selectedInput.start.prompt
             seed = selectedInput.start.seed
             denoising = selectedInput.start.denoising
             maskImageId = selectedInput.mask_image_id
+            seedImageId = nowPlayingResult.input.seed_image_id
 
             // TODO, selectively add these based on whether we give user option to change them
 
-            // seedImageId = nowPlayingResult.input.seed_image_id
             // guidance = nowPlayingResult.input.guidance
             // numInferenceSteps = nowPlayingResult.input.num_inference_steps
             // alphaVelocity = nowPlayingResult.input.alpha_velocity
