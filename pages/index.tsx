@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import * as Tone from "tone";
 
 import AudioPlayer from "../components/AudioPlayer";
+import DebugView from "../components/DebugView";
 import PageHead from "../components/PageHead";
 import Info from "../components/Info";
 import Share from "../components/Share";
@@ -47,10 +48,13 @@ export default function Home() {
   const [promptInputs, setPromptInputs] = useState<PromptInput[]>([]);
 
   // Model execution results
-  const [inferenceResults, setInferenceResults] = useState<InferenceResult[]>([]);
+  const [inferenceResults, setInferenceResults] = useState<InferenceResult[]>(
+    []
+  );
 
   // Currently playing result, from the audio player
-  const [nowPlayingResult, setNowPlayingResult] = useState<InferenceResult>(null);
+  const [nowPlayingResult, setNowPlayingResult] =
+    useState<InferenceResult>(null);
 
   // Set the initial seed from the URL if available
   const router = useRouter();
@@ -185,9 +189,9 @@ export default function Home() {
         if (r.counter == result.counter) {
           r.played = true;
         }
-        return r
-      })
-    })
+        return r;
+      });
+    });
   };
 
   return (
@@ -210,7 +214,7 @@ export default function Home() {
           promptInputs={promptInputs}
           nowPlayingResult={nowPlayingResult}
           newResultCallback={newResultCallback}
-          useBaseten={false}
+          useBaseten={true}
         />
         <AudioPlayer
           paused={paused}
@@ -238,6 +242,11 @@ export default function Home() {
         />
 
         <Info />
+        <DebugView
+          promptInputs={promptInputs}
+          inferenceResults={inferenceResults}
+          nowPlayingResult={nowPlayingResult}
+        />
       </div>
     </>
   );
