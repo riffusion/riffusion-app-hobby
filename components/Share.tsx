@@ -215,7 +215,7 @@ export default function Share({
                     <img
                       src={getActiveResult()?.image}
                       alt="share image"
-                      className="w-3/4"
+                      className="w-4/5 sm:w-3/4"
                     />
                   </div>
 
@@ -223,7 +223,7 @@ export default function Share({
                     <audio
                       controls
                       src={getActiveResult()?.audio}
-                      className="w-3/4"
+                      className="w-4/5 sm:w-3/4"
                     >
                       Your browser does not support audio.
                     </audio>
@@ -235,14 +235,14 @@ export default function Share({
                         setOpen(false);
                       }}
                     >
-                      <span className="relative px-5 py-2 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
+                      <span className="relative px-2 sm:px-5 py-2 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
                         Cancel
                       </span>
                     </button>
 
                     <button
                       type="button"
-                      className="w-64 text-white bg-gradient-to-br from-purple-600 to-sky-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                      className="sm:w-64 text-white bg-gradient-to-br from-purple-600 to-sky-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-4 sm:px-5 py-2.5 text-center mr-2 mb-2"
                       onClick={() => {
                         copyLinkToClipboard(0);
                         setOpen(false);
