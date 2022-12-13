@@ -193,6 +193,8 @@ export default function Home() {
     });
   };
 
+  console.warn("baseten: ", process.env.NEXT_PUBLIC_RIFFUSION_USE_BASETEN);
+
   return (
     <>
       <PageHead />
