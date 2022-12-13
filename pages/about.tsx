@@ -33,7 +33,7 @@ export default function Home() {
             (noun): riff + diffusion
           </h3>
           <div className="relative rounded-xl bg-layer-2 p-2 pr-16 bg-sky-50">
-            <div className="flex items-start space-x-2.5 text-sky-700">
+            <div className="flex items-center space-x-2.5 text-sky-700">
               <BsInfoCircleFill className="h-6 w-6 flex-shrink-0" />
               <div>
                 <div className="mt-0.5 text-sm font-semibold">
