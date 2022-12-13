@@ -404,7 +404,7 @@ export default function Home() {
             results in under five seconds, you can run the experience locally.
           </p>
           <br />
-          <b>Code</b>
+          <h2 className="pt-10 pb-5 text-3xl font-bold">Code</h2>
           <ul className="mt-3 ml-10 list-disc">
             <li>
               Web app:{" "}

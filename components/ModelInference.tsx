@@ -16,6 +16,8 @@ interface ModelInferenceProps {
   nowPlayingResult: InferenceResult;
   newResultCallback: (input: InferenceInput, result: InferenceResult) => void;
   useBaseten: boolean;
+  denoising: number;
+  seedImageId: string;
 }
 
 /**
@@ -31,12 +33,12 @@ export default function ModelInference({
   nowPlayingResult,
   newResultCallback,
   useBaseten,
+  denoising,
+  seedImageId,
 }: ModelInferenceProps) {
   // Create parameters for the inference request
-  const [denoising, setDenoising] = useState(0.75);
   const [guidance, setGuidance] = useState(7.0);
   const [numInferenceSteps, setNumInferenceSteps] = useState(50);
-  const [seedImageId, setSeedImageId] = useState("og_beat");
   const [maskImageId, setMaskImageId] = useState(null);
 
   const [initializedUrlParams, setInitializedUrlParams] = useState(false);
@@ -50,20 +52,12 @@ export default function ModelInference({
   // Set initial params from URL query strings
   const router = useRouter();
   useEffect(() => {
-    if (router.query.denoising) {
-      setDenoising(parseFloat(router.query.denoising as string));
-    }
-
     if (router.query.guidance) {
       setGuidance(parseFloat(router.query.guidance as string));
     }
 
     if (router.query.numInferenceSteps) {
       setNumInferenceSteps(parseInt(router.query.numInferenceSteps as string));
-    }
-
-    if (router.query.seedImageId) {
-      setSeedImageId(router.query.seedImageId as string);
     }
 
     if (router.query.maskImageId) {

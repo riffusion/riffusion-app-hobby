@@ -43,6 +43,10 @@ export default function Home() {
   const [alphaVelocity, setAlphaVelocity] = useState(0.25);
   const [seed, setSeed] = useState(getRandomInt(1000000));
 
+  // Settings
+  const [denoising, setDenoising] = useState(0.75);
+  const [seedImageId, setSeedImageId] = useState("og_beat");
+
   // Prompts shown on screen and maintained by the prompt panel
   const [promptInputs, setPromptInputs] = useState<PromptInput[]>([]);
 
@@ -78,6 +82,14 @@ export default function Home() {
       initPromptInputs[3].prompt = router.query.prompt as string;
     }
     setPromptInputs(defaultPromptInputs);
+
+    if (router.query.denoising) {
+      setDenoising(parseFloat(router.query.denoising as string));
+    }
+
+    if (router.query.seedImageId) {
+      setSeedImageId(router.query.seedImageId as string);
+    }
   }, [router.isReady, router.query]);
 
   // Set the app state based on the prompt inputs array
@@ -214,6 +226,8 @@ export default function Home() {
           nowPlayingResult={nowPlayingResult}
           newResultCallback={newResultCallback}
           useBaseten={process.env.NEXT_PUBLIC_RIFFUSION_USE_BASETEN == "true"}
+          denoising={denoising}
+          seedImageId={seedImageId}
         />
 
         <AudioPlayer
@@ -245,6 +259,10 @@ export default function Home() {
           promptInputs={promptInputs}
           inferenceResults={inferenceResults}
           nowPlayingResult={nowPlayingResult}
+          denoising={denoising}
+          setDenoising={setDenoising}
+          seedImage={seedImageId}
+          setSeedImage={setSeedImageId}
         />
       </div>
     </>

@@ -9,7 +9,7 @@ interface DebugViewProps {
   promptInputs: PromptInput[];
   inferenceResults: InferenceResult[];
   nowPlayingResult: InferenceResult;
-  open: boolean ;
+  open: boolean;
   setOpen: (open: boolean) => void;
 }
 
@@ -39,8 +39,9 @@ export default function DebugView({
         onClose={() => setOpen(false)}
         as="div"
         className="fixed inset-0 z-30"
+        key="debug-dialog"
       >
-        <ModalContainer>
+        <ModalContainer key="debug-modal">
           <div className="px-4 text-center text-sm whitespace-nowrap h-[40rem] w-[70rem] overflow-x-scroll">
             <div className="my-8 inline-block transform rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
               <Dialog.Panel>

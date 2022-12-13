@@ -59,7 +59,7 @@ export default function PromptPanel({
       displayPrompts = [...promptsToAdd, ...displayPrompts];
     }
 
-    // Add in the upNext and staged prompts 
+    // Add in the upNext and staged prompts
     // select the last 2 prompts from prompts
     const lastPrompts = prompts.slice(-2);
 
@@ -167,7 +167,7 @@ export default function PromptPanel({
             }}
           >
             <input
-              className="flex w-full md:fixed md:w-1/2 h-12 pl-3 pr-3 text-xl text-sky-900 rounded-lg border-sky-700 border-4 hover:border-sky-600 focus:outline-none focus:border-sky-400"
+              className="flex w-full md:fixed md:w-1/2 h-12 pl-3 pr-3 text-xl text-sky-900 dark:text-sky-100 rounded-lg border-sky-700 border-4 hover:border-sky-600 focus:outline-none focus:border-sky-400"
               ref={inputPrompt}
               type="text"
               id="prompt"
@@ -238,7 +238,7 @@ const promptEntryClassNames_5_0 = {
   1: promptEntryClassNameDict[15],
   2: promptEntryClassNameDict[23], // This is the start and end prompt
   3: promptEntryClassNameDict[31], // This is the staged prompt
-  4: promptEntryClassNameDict[36], // This is the UP NEXT prompt  
+  4: promptEntryClassNameDict[36], // This is the UP NEXT prompt
 }
 
 const promptEntryClassNames_5_25 = { // This is not reached unless user has poor connection or delayed server response
