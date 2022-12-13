@@ -32,7 +32,6 @@ export default function Home() {
           <h3 className="font-medium italic text-xl pb-6">
             (noun): riff + diffusion
           </h3>
-
           <div className="relative rounded-xl bg-layer-2 p-2 pr-16 bg-sky-50">
             <div className="flex items-start space-x-2.5 text-sky-700">
               <BsInfoCircleFill className="h-6 w-6 flex-shrink-0" />
@@ -60,7 +59,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-
           <p className="text-blue-600 pb-3"></p>
           <p>
             You've heard of{" "}
@@ -319,13 +317,11 @@ export default function Home() {
             The interpolated clips are often diverse and have their own riffs
             and motifs come and go.
           </p>
-
           <Image
             className="ml-2 md:ml-4 m-5 w-11/12"
             src={latentSpaceInterpolation}
             alt={"Latent space interpolation example"}
           />
-
           {/* TODO(hayk): Move one of these examples to the bottom. */}
           <p className="mt-3">
             Here is one of our favorites, a beautiful 20-step interpolation from
@@ -404,23 +400,31 @@ export default function Home() {
             auto-scaling and load balancing.
           </p>
           <p className="mt-3">
-            The web app code is at{" "}
-            <a href="https://github.com/hmartiro/riffusion-app">
-              https://github.com/hmartiro/riffusion-app
-            </a>
-            .
-          </p>
-          <p className="mt-3">
-            The inference server code is at{" "}
-            <a href="https://github.com/hmartiro/riffusion-inference">
-              https://github.com/hmartiro/riffusion-inference
-            </a>
-            .
-          </p>
-          <p className="mt-3">
             If you have a GPU powerful enough to generate stable diffusion
             results in under five seconds, you can run the experience locally.
           </p>
+          <br />
+          <b>Code</b>
+          <ul className="mt-3 ml-10 list-disc">
+            <li>
+              Web app:{" "}
+              <a href="https://github.com/hmartiro/riffusion-app">
+                https://github.com/hmartiro/riffusion-app
+              </a>
+            </li>
+            <li>
+              Inference server:{" "}
+              <a href="https://github.com/hmartiro/riffusion-inference">
+                https://github.com/hmartiro/riffusion-inference
+              </a>
+            </li>
+            <li>
+              Model checkpoint:{" "}
+              <a href="https://huggingface.co/riffusion/riffusion-model-v1">
+                https://huggingface.co/riffusion/riffusion-model-v1
+              </a>
+            </li>
+          </ul>
           <h2 className="pt-10 pb-5 text-3xl font-bold">Samples</h2>
           <p>Some of our favorite prompts and results.</p>
           <CaptionedImage
