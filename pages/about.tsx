@@ -418,7 +418,7 @@ export default function Home() {
             .
           </p>
           <p className="mt-3">
-            If you have a powerful GPU that can generate stable diffusion
+            If you have a GPU powerful enough to generate stable diffusion
             results in under five seconds, you can run the experience locally.
           </p>
           <h2 className="pt-10 pb-5 text-3xl font-bold">Samples</h2>
