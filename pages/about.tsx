@@ -3,6 +3,8 @@ import Image from "next/image";
 import PageHead from "../components/PageHead";
 import CaptionedImage from "../components/about/CaptionedImage";
 
+import { BsInfoCircleFill } from "react-icons/bs";
+
 import handDrawnSpectrogramImg from "../public/about/hand_drawn_spectrogram.png";
 import fourierTransformImg from "../public/about/fourier_transform.png";
 import spectrogramLabelImg from "../public/about/spectrogram_label.png";
@@ -15,14 +17,48 @@ export default function Home() {
     <>
       <PageHead />
 
-      <ToApp/>
+      <ToApp />
 
       <main className="bg-white flex flex-row text-black place-content-center">
         <div className="w-3/4 md:w-2/3 lg:w-1/2 text-lg pb-20">
-          <h1 className="pt-20 pb-1 text-4xl font-bold">[ RIFFUSION ]</h1>
-          <h3 className="font-medium italic text-xl pb-10">
+          <h1 className="pt-16 pb-1 text-4xl font-bold">
+            <a href="/" className="no-underline">
+              [ RIFFUSION ]
+            </a>
+          </h1>
+          <h3 className="font-medium italic text-xl pb-6">
             (noun): riff + diffusion
           </h3>
+
+          <div className="relative rounded-xl bg-layer-2 p-2 pr-16 bg-sky-50">
+            <div className="flex items-start space-x-2.5 text-sky-700">
+              <BsInfoCircleFill className="h-6 w-6 flex-shrink-0" />
+              <div>
+                <div className="mt-0.5 text-sm font-semibold">
+                  <a href="/" className="no-underline">
+                    Riffusion
+                  </a>{" "}
+                  was created by{" "}
+                  <a
+                    className="no-underline text-slate-800"
+                    href="https://sethforsgren.com/"
+                  >
+                    Seth Forsgren
+                  </a>{" "}
+                  and{" "}
+                  <a
+                    className="no-underline text-slate-800"
+                    href="https://haykmartiros.com/"
+                  >
+                    Hayk Martiros
+                  </a>{" "}
+                  as a hobby project.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p className="text-blue-600 pb-3"></p>
           <p>
             You've heard of{" "}
             <a href="https://en.wikipedia.org/wiki/Stable_Diffusion">
@@ -75,7 +111,7 @@ export default function Home() {
             frequency and time given by its row and column.
           </p>
           <Image
-            className="ml-16 m-5 w-2/3"
+            className="ml-8 md:ml-16 m-5 w-3/4 md:w-2/3"
             src={spectrogramLabelImg}
             alt={"spectrogram with axes labeled"}
           />
@@ -88,7 +124,7 @@ export default function Home() {
             of varying amplitudes and phases.
           </p>
           <Image
-            className="ml-24 m-5 w-1/2"
+            className="ml-16 md:ml-24 m-5 w-3/4 md:w-1/2"
             src={fourierTransformImg}
             alt={"fourier transform explanation"}
           />
@@ -118,12 +154,12 @@ export default function Home() {
             beats similar to a hi-hat sound.
           </p>
           <Image
-            className="ml-24 m-5 w-2/5 border-2"
+            className="ml-16 md:ml-24 m-5 w-2/3 md:w-2/5 border-2"
             src={handDrawnSpectrogramImg}
             alt={"hand drawn spectrogram"}
           />
           <div className="m-5 ml-24">
-            <audio controls src="/about/hand_drawn.mp3" className="w-1/2">
+            <audio controls src="/about/hand_drawn.mp3" className="w-2/3 md:w-1/2">
               Your browser does not support audio.
             </audio>
           </div>
@@ -325,7 +361,7 @@ export default function Home() {
             between different seeds of the same prompt.
           </p>
           <Image
-            className="ml-16 m-5 w-2/3"
+            className="ml-8 md:ml-16 m-5 w-3/4 md:w-2/3"
             src={webAppScreenshot}
             alt={"web app screenshot"}
           />
