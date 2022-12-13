@@ -371,8 +371,13 @@ export default function Home() {
             <a href="https://www.typescriptlang.org/">Typescript</a>,{" "}
             <a href="https://threejs.org/">three.js</a>, and{" "}
             <a href="https://tailwindcss.com/">Tailwind</a>, and deployed with{" "}
-            <a href="https://vercel.com/">Vercel</a>. It communicates over an
-            API to the inference server that does the GPU processing.
+            <a href="https://vercel.com/">Vercel</a>.
+          </p>
+          <p className="mt-3">
+            It communicates with the sever over an API to run the inference calls 
+            on a GPU. We built a flask server for initial testing, and deployed 
+            the production model on <a href="https://www.baseten.co/">Baseten</a>{" "} 
+            for autoscaling and load balancing.
           </p>
           <p className="mt-3">
             The web app code is at{" "}

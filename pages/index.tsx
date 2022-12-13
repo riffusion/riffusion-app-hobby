@@ -7,6 +7,7 @@ import DebugView from "../components/DebugView";
 import PageHead from "../components/PageHead";
 import Info from "../components/Info";
 import Share from "../components/Share";
+import Settings from "../components/Settings";
 import ModelInference from "../components/ModelInference";
 import Pause from "../components/Pause";
 import PromptPanel from "../components/PromptPanel";
@@ -214,8 +215,9 @@ export default function Home() {
           promptInputs={promptInputs}
           nowPlayingResult={nowPlayingResult}
           newResultCallback={newResultCallback}
-          useBaseten={false}
+          useBaseten={true}
         />
+        
         <AudioPlayer
           paused={paused}
           inferenceResults={inferenceResults}
@@ -241,11 +243,10 @@ export default function Home() {
           nowPlayingResult={nowPlayingResult}
         />
 
-        <Info />
-        <DebugView
-          promptInputs={promptInputs}
-          inferenceResults={inferenceResults}
-          nowPlayingResult={nowPlayingResult}
+        <Settings 
+          promptInputs={promptInputs} 
+          inferenceResults={inferenceResults} 
+          nowPlayingResult={nowPlayingResult} 
         />
       </div>
     </>
