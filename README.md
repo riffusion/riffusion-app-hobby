@@ -3,7 +3,7 @@
 Riffusion generates audio using stable diffusion. See https://www.riffusion.com/about for details.
 
 * Web app: https://github.com/hmartiro/riffusion-app
-* Inference backend: https://github.com/hmartiro/riffusion-inference
+* Inference server: https://github.com/hmartiro/riffusion-inference
 * Model checkpoint: https://huggingface.co/riffusion/riffusion-model-v1
 
 ## Run
