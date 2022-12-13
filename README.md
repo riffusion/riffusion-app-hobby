@@ -1,12 +1,16 @@
 # Riffusion App
 
-Riffusion is an app for real-time music generation with stable diffusion. This repository contains the interactive web app.
+Riffusion is an app for real-time music generation with stable diffusion.
 
 Read about it at https://www.riffusion.com/about and try it at https://www.riffusion.com/.
 
 * Web app: https://github.com/hmartiro/riffusion-app
 * Inference server: https://github.com/hmartiro/riffusion-inference
 * Model checkpoint: https://huggingface.co/riffusion/riffusion-model-v1
+
+This repository contains the interactive web app that powers the website.
+
+It is built with Next.js, React, Typescript, three.js, Tailwind, and Vercel.
 
 ## Run
 
