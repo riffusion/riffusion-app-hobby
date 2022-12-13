@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import PageHead from "../components/PageHead";
 import CaptionedImage from "../components/about/CaptionedImage";
@@ -7,6 +8,8 @@ import { BsInfoCircleFill } from "react-icons/bs";
 
 import handDrawnSpectrogramImg from "../public/about/hand_drawn_spectrogram.png";
 import fourierTransformImg from "../public/about/fourier_transform.png";
+import img2imgExample from "../public/about/img2img_example.png";
+import latentSpaceInterpolation from "../public/about/latent_space_interpolation.png";
 import spectrogramLabelImg from "../public/about/spectrogram_label.png";
 import webAppScreenshot from "../public/about/web_app_screenshot.png";
 
@@ -22,9 +25,9 @@ export default function Home() {
       <main className="bg-white flex flex-row text-black place-content-center">
         <div className="w-3/4 md:w-2/3 lg:w-1/2 text-lg pb-20">
           <h1 className="pt-16 pb-1 text-4xl font-bold">
-            <a href="/" className="no-underline">
+            <Link href="/" className="no-underline">
               [ RIFFUSION ]
-            </a>
+            </Link>
           </h1>
           <h3 className="font-medium italic text-xl pb-6">
             (noun): riff + diffusion
@@ -35,9 +38,9 @@ export default function Home() {
               <BsInfoCircleFill className="h-6 w-6 flex-shrink-0" />
               <div>
                 <div className="mt-0.5 text-sm font-semibold">
-                  <a href="/" className="no-underline">
+                  <Link href="/" className="no-underline">
                     Riffusion
-                  </a>{" "}
+                  </Link>{" "}
                   was created by{" "}
                   <a
                     className="no-underline text-slate-800"
@@ -159,7 +162,11 @@ export default function Home() {
             alt={"hand drawn spectrogram"}
           />
           <div className="m-5 ml-24">
-            <audio controls src="/about/hand_drawn.mp3" className="w-2/3 md:w-1/2">
+            <audio
+              controls
+              src="/about/hand_drawn.mp3"
+              className="w-2/3 md:w-1/2"
+            >
               Your browser does not support audio.
             </audio>
           </div>
@@ -185,8 +192,8 @@ export default function Home() {
             denoising strength parameter.
           </p>
           <p className="mt-3">
-            For example, here is that funky sax riff on the left, and on the
-            right is a modification of it to crank up the piano:
+            For example, here is that funky sax riff again, followed by a
+            modification to crank up the piano:
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
@@ -270,6 +277,11 @@ export default function Home() {
             them loop-able, we also create initial images that are an exact
             number of measures.
           </p>
+          <Image
+            className="ml-4 md:ml-8 m-5 w-5/6 md:w-4/5"
+            src={img2imgExample}
+            alt={"img2img generation example"}
+          />
           <p className="mt-3">
             However, even with this approach it's still too abrupt to transition
             between clips. Multiple interpretations of the same prompt with the
@@ -288,8 +300,8 @@ export default function Home() {
             decodes to a viable output.
           </p>
           <p className="mt-3">
-            The key is that we can continuously sample the latent space between
-            a prompt with two different seeds, or two different prompts with the
+            The key is that it's possible to sample the latent space between a
+            prompt with two different seeds, or two different prompts with the
             same seed. Here is an example with the visual model:
           </p>
           <CaptionedImage
@@ -297,12 +309,23 @@ export default function Home() {
             caption={""}
           />
           <p className="mt-3">
-            We can do the same thing with our model, which often results in
+            We can do the same thing with our model, which often produces
             buttery smooth transitions, even between starkly different prompts.
-            This is vastly more interesting than interpolating the raw audio,
+            This is much more interesting than interpolating the raw audio,
             because in the latent space all in-between points still sound like
-            plausible clips.
+            plausible clips. The figure below is colorized to show the latent
+            space interpolation between two seeds of the same prompt. Playing
+            this sequence is much smoother than just playing the two endpoints.
+            The interpolated clips are often diverse and have their own riffs
+            and motifs come and go.
           </p>
+
+          <Image
+            className="ml-2 md:ml-4 m-5 w-11/12"
+            src={latentSpaceInterpolation}
+            alt={"Latent space interpolation example"}
+          />
+
           {/* TODO(hayk): Move one of these examples to the bottom. */}
           <p className="mt-3">
             Here is one of our favorites, a beautiful 20-step interpolation from
@@ -339,11 +362,10 @@ export default function Home() {
             The huggingface{" "}
             <a href="https://github.com/huggingface/diffusers">diffusers</a>{" "}
             library implements a wide range of pipelines including
-            image-to-image and prompt interpolation, but we did not find an
-            implementation that was able to do prompt interpolation combined
-            with image-to-image conditioning. We implemented this pipeline,
-            along with support for masking to limit generation to only parts of
-            an image. Code{" "}
+            image-to-image and prompt interpolation, but we needed an
+            implementation for interpolation combined with image-to-image
+            conditioning. We implemented this pipeline, along with support for
+            masking to limit generation to only parts of an image. Code{" "}
             <a href="https://github.com/hmartiro/riffusion-inference/blob/main/riffusion/riffusion_pipeline.py">
               here
             </a>
@@ -358,7 +380,9 @@ export default function Home() {
           <p className="mt-3">
             As the user types in new prompts, the audio smoothly transitions to
             the new prompt. If there is no new prompt, the app will interpolate
-            between different seeds of the same prompt.
+            between different seeds of the same prompt. Spectrograms are
+            visualized as 3D height maps along a timeline with a translucent
+            playhead.
           </p>
           <Image
             className="ml-8 md:ml-16 m-5 w-3/4 md:w-2/3"
@@ -369,15 +393,15 @@ export default function Home() {
             The app is built using <a href="https://nextjs.org/">Next.js</a>,{" "}
             <a href="https://reactjs.org/">React</a>,{" "}
             <a href="https://www.typescriptlang.org/">Typescript</a>,{" "}
-            <a href="https://threejs.org/">three.js</a>, and{" "}
-            <a href="https://tailwindcss.com/">Tailwind</a>, and deployed with{" "}
+            <a href="https://threejs.org/">three.js</a>,{" "}
+            <a href="https://tailwindcss.com/">Tailwind</a>, and{" "}
             <a href="https://vercel.com/">Vercel</a>.
           </p>
           <p className="mt-3">
-            It communicates with the sever over an API to run the inference calls 
-            on a GPU. We built a flask server for initial testing, and deployed 
-            the production model on <a href="https://www.baseten.co/">Baseten</a>{" "} 
-            for autoscaling and load balancing.
+            The app communicates over an API to run the inference calls on a GPU
+            server. We built a flask server for testing, and deployed to
+            production on <a href="https://www.baseten.co/">Baseten</a> for
+            autoscaling and load balancing.
           </p>
           <p className="mt-3">
             The web app code is at{" "}
@@ -394,7 +418,8 @@ export default function Home() {
             .
           </p>
           <p className="mt-3">
-            If you have a powerful GPU, you can run the experience locally.
+            If you have a powerful GPU that can generate stable diffusion
+            results in under five seconds, you can run the experience locally.
           </p>
           <h2 className="pt-10 pb-5 text-3xl font-bold">Samples</h2>
           <p>Some of our favorite prompts and results.</p>
