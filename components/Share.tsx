@@ -36,17 +36,70 @@ export default function Share({
     }
 
     // function to copy link to moment in song to the clipboard
-    function copyToClipboard(secondsAgo: number) {
+    function copyLinkToClipboard(secondsAgo: number) {
 
         // use generateLink to generate the link
         const link = generateLink(secondsAgo);
 
-        // TODO: Test this on mobile. Has to be executed on a site secured with https on mobile, so will not work on localhost
+        // Note that copying image and text to the clipboard simultaneously is not supported on all browsers, causes some funkiness
+        // This also has to be executed on a site secured with https on mobile, so will not work on localhost
         navigator.clipboard
             .writeText(link)
-            // .then(() => { alert("successfully copied")})
-            // .catch(() => { alert("something went wrong") });
-    }  
+        // }
+    }
+
+    function copyImageToClipboard(secondsAgo: number) {
+        // get image of the current moment in the song
+        var image: string
+        if (!nowPlayingResult) {
+            if (inferenceResults.length == 0) {
+                return
+            }
+            image = inferenceResults[0].image
+        }
+        else {
+            image = nowPlayingResult.image
+        }
+        // make pngImageBlob from the image
+        const imageBlob = dataURItoBlob(image)
+        // convert pngImageBlob to a PNG file
+        const pngImageFile = new File([imageBlob], "image.png", { type: "image/png" })
+
+        // use generateLink to generate the link, we'll add this to the clipboard as plain text as well
+        const link = generateLink(secondsAgo);
+
+        try {
+            navigator.clipboard.write([
+                new ClipboardItem({
+                    'image/png': pngImageFile,
+                    'text/plain': new Blob([link], { type: 'text/plain' }),
+                }),
+            ]);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    function displayShareImage() {
+        var image: string
+        if (!nowPlayingResult) {
+            if (inferenceResults.length == 0) {
+                return
+            }
+            image = inferenceResults[0].image
+        }
+        else {
+            image = nowPlayingResult.image
+
+        }
+
+        return (
+            <img src={image}
+                alt="share image"
+                className="w-64 h-64"
+            />
+        )
+    }
 
     // function to generate a link to a the moment in the song based on the played clips, input variable is how many seconds ago
     function generateLink(secondsAgo: number) {
@@ -78,7 +131,6 @@ export default function Share({
                 }
             }
 
-            // TODO: Consider start or end here. End is something the the user hasn't actually heard yet. Start is perhaps a previous prompt than where the user is headed
             // TODO: Consider only including in the link the things that are different from the default values
             prompt = selectedInput.start.prompt
             seed = selectedInput.start.seed
@@ -87,7 +139,6 @@ export default function Share({
             seedImageId = nowPlayingResult.input.seed_image_id
 
             // TODO, selectively add these based on whether we give user option to change them
-
             // guidance = nowPlayingResult.input.guidance
             // numInferenceSteps = nowPlayingResult.input.num_inference_steps
             // alphaVelocity = nowPlayingResult.input.alpha_velocity
@@ -163,34 +214,31 @@ export default function Share({
                                         as="h1"
                                         className="text-3xl font-medium leading-6 text-gray-900 pb-2"
                                     >
-                                        Riff with a friend
+                                        Share your riff
                                     </Dialog.Title>
                                     <div className="mt-4">
-                                        <p className="text-sm text-gray-500">
-                                            Chose a moment from your song to share.
-                                        </p>
+                                        {displayShareImage()}
                                     </div>
 
                                     <div className="mt-6">
 
-                                        {/* TODO: Seth, add in 10 secondsAgo option */}
-                                        {/* <button
+                                        <button
                                             className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-sky-500 group-hover:from-sky-600 group-hover:to-sky-500 hover:text-white"
                                             onClick={() => {
-                                                copyToClipboard(0)
                                                 setOpen(false);
                                             }}
                                         >
-                                            <span className="w-64 relative px-5 py-2 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
-                                                Copy link from 20 seconds ago
+                                            <span className="relative px-5 py-2 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
+                                                Cancel
                                             </span>
-                                        </button> */}
+                                        </button>
 
                                         <button
                                             type="button"
                                             className="w-64 text-white bg-gradient-to-br from-purple-600 to-sky-500 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
                                             onClick={() => {
-                                                copyToClipboard(0)
+                                                copyLinkToClipboard(0)
+                                                // copyImageToClipboard(0)
                                                 setOpen(false)
                                             }}
                                         >
@@ -207,3 +255,23 @@ export default function Share({
         </>
     );
 };
+
+function dataURItoBlob(image: string) {
+    // convert base64/URLEncoded data component to raw binary data held in a string
+    var byteString;
+    if (image.split(',')[0].indexOf('base64') >= 0)
+        byteString = atob(image.split(',')[1]);
+    else
+        byteString = unescape(image.split(',')[1]);
+
+    // separate out the mime component
+    var mimeString = image.split(',')[0].split(':')[1].split(';')[0];
+
+    // write the bytes of the string to a typed array
+    var ia = new Uint8Array(byteString.length);
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([ia], { type: mimeString });
+}
