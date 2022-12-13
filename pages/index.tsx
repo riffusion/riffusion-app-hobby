@@ -205,6 +205,29 @@ export default function Home() {
     });
   };
 
+  // TODO(hayk): This is not done yet but it's supposed to clear out future state and prompts
+  // and allow the user to immediately start a new prompt.
+  const resetCallback = () => {
+    console.log("RESET");
+
+    setPromptInputs([
+      promptInputs[0],
+      promptInputs[1],
+      promptInputs[2],
+      { prompt: "" },
+      { prompt: "" },
+      { prompt: "" },
+    ]);
+
+    if (nowPlayingResult == null) {
+      setInferenceResults([]);
+    }
+
+    // const counter = nowPlayingResult ? nowPlayingResult.counter : -1;
+    // setInferenceResults(inferenceResults.filter((r) => r.counter <= counter));
+    // setNowPlayingResult(null);
+  };
+
   return (
     <>
       <PageHead />
@@ -246,6 +269,7 @@ export default function Home() {
             newPromptInputs[index].prompt = prompt;
             setPromptInputs(newPromptInputs);
           }}
+          resetCallback={resetCallback}
         />
 
         <Pause paused={paused} setPaused={setPaused} />

@@ -9,6 +9,7 @@ interface PromptPanelProps {
   nowPlayingResult: InferenceResult;
   appState: AppState;
   changePrompt: (prompt: string, index: number) => void;
+  resetCallback: () => void;
 }
 
 export default function PromptPanel({
@@ -17,20 +18,23 @@ export default function PromptPanel({
   nowPlayingResult,
   appState,
   changePrompt,
+  resetCallback,
 }: PromptPanelProps) {
   const inputPrompt = useRef(null);
 
-  var playingState: PlayingState
+  var playingState: PlayingState;
 
   const getDisplayPrompts = () => {
     var displayPrompts = [];
 
     if (nowPlayingResult == null) {
-      playingState = PlayingState.UNINITIALIZED
-    } else if (nowPlayingResult.input.start.prompt == nowPlayingResult.input.end.prompt) {
-      playingState = PlayingState.SAME_PROMPT
+      playingState = PlayingState.UNINITIALIZED;
+    } else if (
+      nowPlayingResult.input.start.prompt == nowPlayingResult.input.end.prompt
+    ) {
+      playingState = PlayingState.SAME_PROMPT;
     } else {
-      playingState = PlayingState.TRANSITION
+      playingState = PlayingState.TRANSITION;
     }
 
     // Add the last 4 prompts from playedResults
@@ -38,7 +42,9 @@ export default function PromptPanel({
     const playedResults = inferenceResults.filter((r) => r.played);
 
     // filter playedResults to include only results where alpha is 0.25 (the first alpha of a new transition)
-    const playedResultsAlpha = playedResults.filter((r) => r.input.alpha == 0.25);
+    const playedResultsAlpha = playedResults.filter(
+      (r) => r.input.alpha == 0.25
+    );
 
     // filter playedResultsAlpha to include only results where playedResultsAlpha.input.start.prompt is not the same as playedResultsAlpha.input.end.prompt
     const playedResultsAlphaTransition = playedResultsAlpha.filter(
@@ -46,7 +52,8 @@ export default function PromptPanel({
     );
 
     // select the last 4 results
-    const lastPlayedResultsAlphaTransition = playedResultsAlphaTransition.slice(-4);
+    const lastPlayedResultsAlphaTransition =
+      playedResultsAlphaTransition.slice(-4);
 
     // add the most recent end prompts to the displayPrompts
     lastPlayedResultsAlphaTransition.forEach((result) => {
@@ -80,12 +87,15 @@ export default function PromptPanel({
     });
 
     // if playingState == PlayingState.SAME_PROMPT or playingState == PlayingState.UNINITIALIZED, remove the first prompt from displayPrompts
-    if (playingState == PlayingState.SAME_PROMPT || playingState == PlayingState.UNINITIALIZED) {
+    if (
+      playingState == PlayingState.SAME_PROMPT ||
+      playingState == PlayingState.UNINITIALIZED
+    ) {
       displayPrompts.shift();
     }
 
     return displayPrompts;
-  }
+  };
 
   const getPromptEntryClassName = (index: number) => {
     switch (playingState) {
@@ -94,7 +104,6 @@ export default function PromptPanel({
       case PlayingState.SAME_PROMPT:
         if (appState != AppState.TRANSITION) {
           return promptEntryClassNames_5_0[index];
-
         } else {
           switch (nowPlayingResult.input.alpha) {
             case 0:
@@ -126,15 +135,13 @@ export default function PromptPanel({
         // These states are reached if alpha is greater than 1 but the new inference is not ready
         if (appState != AppState.TRANSITION) {
           return promptEntryClassNames_5_0[index];
-        }
-        else if (playingState == PlayingState.SAME_PROMPT) {
+        } else if (playingState == PlayingState.SAME_PROMPT) {
           return promptEntryClassNames_5_1[index];
-        }
-        else {
+        } else {
           return promptEntryClassNames_6_1[index];
         }
     }
-  }
+  };
 
   return (
     <>
@@ -148,6 +155,7 @@ export default function PromptPanel({
                 index={index}
                 key={index}
                 playingState={playingState}
+                resetCallback={resetCallback}
               />
             ))}
           </div>
@@ -214,7 +222,7 @@ const promptEntryClassNameDict = {
   23: "font-bold text-5xl text-white", // starter for 2 "start"
 
   24: "font-bold text-5xl text-white",
-  25: "font-bold text-4xl text-white",  // 75%
+  25: "font-bold text-4xl text-white", // 75%
   26: "font-semibold text-4xl text-white", // 50%
   27: "font-medium text-3xl text-gray-100 text-opacity-90", // 25%
   28: "font-normal text-2xl text-gray-100 text-opacity-80",
@@ -228,7 +236,7 @@ const promptEntryClassNameDict = {
   35: "font-normal text-base text-gray-100 text-opacity-60", // starter for 4 when "staging"
 
   36: "font-normal text-base text-gray-100 text-opacity-60", // starter for 4 and 5 "Up Next"
-}
+};
 
 // ClassNames below
 // Note that 6_0 and 5_25 are never reached in current stucture
@@ -239,15 +247,16 @@ const promptEntryClassNames_5_0 = {
   2: promptEntryClassNameDict[23], // This is the start and end prompt
   3: promptEntryClassNameDict[31], // This is the staged prompt
   4: promptEntryClassNameDict[36], // This is the UP NEXT prompt
-}
+};
 
-const promptEntryClassNames_5_25 = { // This is not reached unless user has poor connection or delayed server response
+const promptEntryClassNames_5_25 = {
+  // This is not reached unless user has poor connection or delayed server response
   0: promptEntryClassNameDict[7],
   1: promptEntryClassNameDict[15],
   2: promptEntryClassNameDict[23], // This is the start and end prompt
   3: promptEntryClassNameDict[31], // This is the staged prompt
   4: promptEntryClassNameDict[36], // This is the UP NEXT prompt
-}
+};
 
 const promptEntryClassNames_5_50 = {
   0: promptEntryClassNameDict[6],
@@ -255,7 +264,7 @@ const promptEntryClassNames_5_50 = {
   2: promptEntryClassNameDict[22],
   3: promptEntryClassNameDict[30],
   4: promptEntryClassNameDict[36],
-}
+};
 
 const promptEntryClassNames_5_75 = {
   0: promptEntryClassNameDict[5],
@@ -263,7 +272,7 @@ const promptEntryClassNames_5_75 = {
   2: promptEntryClassNameDict[21],
   3: promptEntryClassNameDict[29],
   4: promptEntryClassNameDict[36],
-}
+};
 
 const promptEntryClassNames_5_1 = {
   0: promptEntryClassNameDict[4],
@@ -271,17 +280,17 @@ const promptEntryClassNames_5_1 = {
   2: promptEntryClassNameDict[20],
   3: promptEntryClassNameDict[28],
   4: promptEntryClassNameDict[36],
-}
+};
 
-const promptEntryClassNames_6_0 = { // This is not reached unless user has poor connection or delayed server response
+const promptEntryClassNames_6_0 = {
+  // This is not reached unless user has poor connection or delayed server response
   0: promptEntryClassNameDict[3],
   1: promptEntryClassNameDict[11],
   2: promptEntryClassNameDict[19],
   3: promptEntryClassNameDict[27],
   4: promptEntryClassNameDict[35],
   5: promptEntryClassNameDict[36],
-}
-
+};
 
 const promptEntryClassNames_6_25 = {
   0: promptEntryClassNameDict[3],
@@ -290,7 +299,7 @@ const promptEntryClassNames_6_25 = {
   3: promptEntryClassNameDict[27],
   4: promptEntryClassNameDict[35],
   5: promptEntryClassNameDict[36],
-}
+};
 
 const promptEntryClassNames_6_50 = {
   0: promptEntryClassNameDict[2],
@@ -299,7 +308,7 @@ const promptEntryClassNames_6_50 = {
   3: promptEntryClassNameDict[26],
   4: promptEntryClassNameDict[34],
   5: promptEntryClassNameDict[36],
-}
+};
 
 const promptEntryClassNames_6_75 = {
   0: promptEntryClassNameDict[1],
@@ -308,7 +317,7 @@ const promptEntryClassNames_6_75 = {
   3: promptEntryClassNameDict[25],
   4: promptEntryClassNameDict[33],
   5: promptEntryClassNameDict[36],
-}
+};
 
 const promptEntryClassNames_6_1 = {
   0: promptEntryClassNameDict[0],
@@ -317,4 +326,4 @@ const promptEntryClassNames_6_1 = {
   3: promptEntryClassNameDict[24],
   4: promptEntryClassNameDict[32],
   5: promptEntryClassNameDict[36],
-}
+};

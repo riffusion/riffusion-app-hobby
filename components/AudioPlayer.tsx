@@ -20,7 +20,6 @@ export default function AudioPlayer({
   inferenceResults,
   nowPlayingCallback,
 }: AudioPlayerProps) {
-  // TODO(hayk): Rename
   const [tonePlayer, setTonePlayer] = useState<Tone.Player>(null);
 
   const [numClipsPlayed, setNumClipsPlayed] = useState(0);
