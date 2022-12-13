@@ -1,6 +1,8 @@
 # Riffusion App
 
-Riffusion generates audio using stable diffusion. See https://www.riffusion.com/about for details.
+Riffusion is an app for real-time music generation with stable diffusion. This repository contains the interactive web app.
+
+Read about it at https://www.riffusion.com/about and try it at https://www.riffusion.com/.
 
 * Web app: https://github.com/hmartiro/riffusion-app
 * Inference server: https://github.com/hmartiro/riffusion-inference
