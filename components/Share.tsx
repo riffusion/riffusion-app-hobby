@@ -212,11 +212,18 @@ export default function Share({
                     Share your riff
                   </Dialog.Title>
                   <div className="mt-4">
-                    <img
-                      src={getActiveResult()?.image}
-                      alt="share image"
-                      className="w-4/5 sm:w-3/4"
-                    />
+                    {!getActiveResult() && (
+                      <div className="pl-8">
+                        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-sky-900"></div>
+                      </div>
+                    )}
+                    {getActiveResult() && (
+                      <img
+                        src={getActiveResult()?.image}
+                        alt="share image"
+                        className="w-4/5 sm:w-3/4"
+                      />
+                    )}
                   </div>
 
                   <div className="mt-4">
