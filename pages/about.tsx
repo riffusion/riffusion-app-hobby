@@ -32,7 +32,7 @@ export default function Home() {
           <h3 className="font-medium italic text-xl pb-6">
             (noun): riff + diffusion
           </h3>
-          <div className="relative rounded-xl bg-layer-2 p-2 pr-16 bg-sky-50">
+          <div className="relative rounded-xl bg-layer-2 p-2 pr-8 bg-sky-50">
             <div className="flex items-center space-x-2.5 text-sky-700">
               <BsInfoCircleFill className="h-6 w-6 flex-shrink-0" />
               <div>
