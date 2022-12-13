@@ -401,7 +401,7 @@ export default function Home() {
             The app communicates over an API to run the inference calls on a GPU
             server. We built a flask server for testing, and deployed to
             production on <a href="https://www.baseten.co/">Baseten</a> for
-            autoscaling and load balancing.
+            auto-scaling and load balancing.
           </p>
           <p className="mt-3">
             The web app code is at{" "}

@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 
-
 import {
   AppState,
   InferenceInput,
@@ -43,6 +42,10 @@ export default function ModelInference({
   const [initializedUrlParams, setInitializedUrlParams] = useState(false);
   const [numRequestsMade, setNumRequestsMade] = useState(0);
   const [numResponsesReceived, setNumResponsesReceived] = useState(0);
+
+  useEffect(() => {
+    console.log("Using baseten: ", useBaseten);
+  }, [useBaseten]);
 
   // Set initial params from URL query strings
   const router = useRouter();
@@ -127,7 +130,7 @@ export default function ModelInference({
         method: "POST",
         body: JSON.stringify(payload),
       });
-      
+
       const data = await response.json();
 
       console.log(`Got result #${numResponsesReceived}`);
@@ -145,12 +148,11 @@ export default function ModelInference({
             inferenceInput,
             JSON.parse(data.data.worklet_output.model_output)
           );
-        }
-        else {
+        } else {
           console.error("Baseten call failed: ", data);
         }
       } else {
-        // Note, data is currently wrapped in a data field 
+        // Note, data is currently wrapped in a data field
         newResultCallback(inferenceInput, data.data);
       }
 

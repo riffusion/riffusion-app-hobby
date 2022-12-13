@@ -3,9 +3,7 @@ import { useEffect, useState } from "react";
 import * as Tone from "tone";
 
 import AudioPlayer from "../components/AudioPlayer";
-import DebugView from "../components/DebugView";
 import PageHead from "../components/PageHead";
-import Info from "../components/Info";
 import Share from "../components/Share";
 import Settings from "../components/Settings";
 import ModelInference from "../components/ModelInference";
@@ -215,9 +213,9 @@ export default function Home() {
           promptInputs={promptInputs}
           nowPlayingResult={nowPlayingResult}
           newResultCallback={newResultCallback}
-          useBaseten={true}
+          useBaseten={process.env.NEXT_PUBLIC_RIFFUSION_USE_BASETEN == "true"}
         />
-        
+
         <AudioPlayer
           paused={paused}
           inferenceResults={inferenceResults}
@@ -243,10 +241,10 @@ export default function Home() {
           nowPlayingResult={nowPlayingResult}
         />
 
-        <Settings 
-          promptInputs={promptInputs} 
-          inferenceResults={inferenceResults} 
-          nowPlayingResult={nowPlayingResult} 
+        <Settings
+          promptInputs={promptInputs}
+          inferenceResults={inferenceResults}
+          nowPlayingResult={nowPlayingResult}
         />
       </div>
     </>
