@@ -17,6 +17,7 @@ import {
   InferenceResult,
   PromptInput,
 } from "../types";
+import Link from "next/link";
 
 const defaultPromptInputs = [
   { prompt: "A jazz pianist playing a concerto" },
@@ -232,7 +233,25 @@ export default function Home() {
     <>
       <PageHead />
 
+      <div className="absolute w-full h-screen z-10">
+          {/* Note, top bg section is used to maintain color in background on ios notch devices */}
+          <div className="absolute top-0 left-0 right-0 h-1 bg-[#0A2342]" />
+          <div className="absolute top-1 left-0 right-0 h-1/2 bg-gradient-to-b from-[#0A2342]" />
+        </div>
+
       <div className="bg-[#0A2342] flex flex-row min-h-screen text-white">
+
+        <div className="absolute w-full md:w-1/3">
+          <div className="absolute top-4 md:top-6 left-0 right-0 flex justify-center">
+            <div
+              className="text-3xl font-bold font-mono text-transparent bg-clip-text bg-gradient-to-t from-white/80 to-white/20 z-20 cursor-pointer"
+              onClick={() => window.open("/about", "_blank")}
+            >
+              [RIFFUSION]
+            </div>
+          </div>
+        </div>
+
         <div className="brightness-50	md:filter-none w-full z-0 md:w-1/3 min-h-screen">
           <ThreeCanvas
             paused={paused}
