@@ -248,7 +248,7 @@ export default function Share({
                         setOpen(false);
                       }}
                     >
-                      Copy link to current moment 🔗
+                      🔗 Copy link to current moment
                     </button>
                   </div>
                 </div>

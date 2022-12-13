@@ -141,7 +141,7 @@ export default function Settings({
                         setOpen(false);
                       }}
                     >
-                      Done 🎧
+                      🎧 Done
                     </button>
                   </div>
                 </div>
