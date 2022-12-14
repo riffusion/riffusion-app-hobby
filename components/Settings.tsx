@@ -160,9 +160,16 @@ export function SeedImageSelector(
 ) {
   let selectOptions = [
     ["OG Beat", "og_beat"],
-    ["Soul", "chill_soul_1"],
-    // ["High Energy", 0.85],
-    // ["Spacy", 0.95],
+    ["Epic", "epic"],
+    ['Folksy', 'folksy'],
+    ['Funk', 'funk'],
+    ['Hustle', 'hustle'],
+    ['Latin', 'latin'],
+    ['Lounge', 'lounge'],
+    ['Pressure', 'pressure'],
+    ['Rock', 'rock'],
+    ['Stomp', 'stomp'],
+    ['Wild', 'wild'],
   ];
 
   let matchedOption = selectOptions.find((x) => x[1] === seedImage);
