@@ -163,9 +163,9 @@ export function SeedImageSelector(
   let selectOptions = [
     ["OG Beat", "og_beat"],
     ["Agile", "agile"],
-    ["Marin", "marim"],
+    ["Marim", "marim"],
     ["Motorway", "motorway"],
-    ["Smooth", "vibes"],
+    ["Vibes", "vibes"],
   ];
 
   let matchedOption = selectOptions.find((x) => x[1] === seedImage);
@@ -191,7 +191,7 @@ export function SeedImageSelector(
         }}
         defaultValue={matchedOption[0]}
       >
-        <option disabled>Chose your vibe</option>
+        <option disabled>Change it up</option>
         {selectOptions.map((x, i) => (
           <option key={i}>{x[0]}</option>
         ))}
