@@ -246,7 +246,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    unmute(Tone.context.rawContext, false, false);
+    unmute(Tone.context.rawContext, true, false);
   }, []);
 
   return (
