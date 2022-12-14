@@ -13,25 +13,31 @@ import Pause from "../components/Pause";
 import PromptPanel from "../components/PromptPanel";
 import ThreeCanvas from "../components/ThreeCanvas";
 
+import { samplePrompts } from "../prompts";
+
 import {
   AppState,
   InferenceInput,
   InferenceResult,
   PromptInput,
 } from "../types";
-import Link from "next/link";
-
-const defaultPromptInputs = [
-  { prompt: "A jazz pianist playing a concerto" },
-  { prompt: "Techno DJ and a Country Singer" },
-  { prompt: "Classical italian tenor operatic pop" },
-  { prompt: "lo-fi beat for the holidays" },
-  { prompt: "" },
-  { prompt: "" },
-];
 
 function getRandomInt(max: number) {
   return Math.floor(Math.random() * max);
+}
+
+function getRandomFromArray(arr: any[], n: number) {
+  var result = new Array(n),
+    len = arr.length,
+    taken = new Array(len);
+  if (n > len)
+    throw new RangeError("getRandom: more elements taken than available");
+  while (n--) {
+    var x = Math.floor(Math.random() * len);
+    result[n] = arr[x in taken ? taken[x] : x];
+    taken[x] = --len in taken ? taken[len] : len;
+  }
+  return result;
 }
 
 export default function Home() {
@@ -81,11 +87,24 @@ export default function Home() {
 
     // Set prompt inputs here so that they are empty and incorrect information isn't shown
     // until URL params have a chance to be read.
-    let initPromptInputs = defaultPromptInputs;
+    let initPromptInputs = [
+      { prompt: "" },
+      { prompt: "" },
+      { prompt: "" },
+      { prompt: "" },
+      { prompt: "" },
+      { prompt: "" },
+    ];
+
+    // Set random initial prompts
+    const samples = getRandomFromArray(samplePrompts, 4);
+    for (let i = 0; i < 4; i++) {
+      initPromptInputs[i].prompt = samples[i];
+    }
     if (router.query.prompt) {
       initPromptInputs[3].prompt = router.query.prompt as string;
     }
-    setPromptInputs(defaultPromptInputs);
+    setPromptInputs(initPromptInputs);
 
     if (router.query.denoising) {
       setDenoising(parseFloat(router.query.denoising as string));

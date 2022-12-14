@@ -459,6 +459,12 @@ export default function Home() {
             image will result in poor, generic audio.
           </p>
           <p className="mb-2">
+            <b>Prompt Reweighting</b> - We have support for providing weights for tokens in
+            a prompt, to emphasize certain words more than others. An example syntax to boost
+            a word is (vocals:1.2), which applies a 1.2x multiplier. The shorthand (vocals) is
+            supported for a 1.1x boost or [vocals] for a 1.1x reduction.
+          </p>
+          <p className="mb-2">
             Parameters can also be specified via URL, for example:
             <br/>
             <a href="https://www.riffusion.com/?&prompt=rainy+day&denoising=0.85&seedImageId=og_beat">
