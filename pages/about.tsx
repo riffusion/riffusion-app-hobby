@@ -395,9 +395,11 @@ export default function Home() {
           </p>
           <p className="mt-3">
             The app communicates over an API to run the inference calls on a GPU
-            server. We built a flask server for testing, and deployed to
-            production on <a href="https://www.baseten.co/">Baseten</a> for
-            auto-scaling and load balancing.
+            server. We used{" "}
+            <a href="https://truss.baseten.co">Truss</a>{" "} 
+            to package the model and test it locally before 
+            deploying it to Baseten which provided GPU-backed inference, auto-scaling, 
+            and observability. We used NVIDIA A10Gs in production.
           </p>
           <p className="mt-3">
             If you have a GPU powerful enough to generate stable diffusion
