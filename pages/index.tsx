@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { unmute } from "../public/unmute";
+import { unmute } from "../external/unmute";
 import { useCallback, useEffect, useState } from "react";
 import * as Tone from "tone";
 

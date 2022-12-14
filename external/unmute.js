@@ -1,6 +1,7 @@
 "use strict";
 /**
  * @file unmute.ts
+ * Source: https://github.com/swevans/unmute
  * @author Spencer Evans evans.spencer@gmail.com
  *
  * unmute is a disgusting hack that helps..
