@@ -10,6 +10,7 @@ interface PromptPanelProps {
   appState: AppState;
   changePrompt: (prompt: string, index: number) => void;
   resetCallback: () => void;
+  setPaused: (paused: boolean) => void;
 }
 
 export default function PromptPanel({
@@ -19,6 +20,7 @@ export default function PromptPanel({
   appState,
   changePrompt,
   resetCallback,
+  setPaused,
 }: PromptPanelProps) {
   const inputPrompt = useRef(null);
 
@@ -150,12 +152,15 @@ export default function PromptPanel({
           <div className="h-[78vh] landscape:sm:max-[750px]:h-[62vh] md:h-[80vh] flex flex-col justify-around pt-[10vh] pr-5">
             {getDisplayPrompts().map((prompt, index) => (
               <PromptEntry
-                prompt={prompt.prompt + " "}
+                prompt={prompt.prompt}
                 className={getPromptEntryClassName(index)}
                 index={index}
                 key={index}
                 playingState={playingState}
                 resetCallback={resetCallback}
+                inferenceResults={inferenceResults}
+                nowPlayingResult={nowPlayingResult}
+                setPaused={setPaused}
               />
             ))}
           </div>
@@ -192,6 +197,10 @@ export default function PromptPanel({
       </main>
     </>
   );
+}
+
+export function refreshPage() {
+  window.location.reload();
 }
 
 const promptEntryClassNameDict = {

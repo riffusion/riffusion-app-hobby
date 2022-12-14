@@ -1,5 +1,6 @@
-import { PlayingState } from "../types";
+import { InferenceInput, InferenceResult, PlayingState } from "../types";
 import { IoMdClose } from "react-icons/io";
+import Pause from "./Pause";
 
 interface PromptEntryProps {
   prompt: string;
@@ -7,6 +8,9 @@ interface PromptEntryProps {
   className: string;
   playingState: PlayingState;
   resetCallback: () => void;
+  inferenceResults: InferenceResult[];
+  nowPlayingResult: InferenceResult;
+  setPaused: (value: boolean) => void;
 }
 
 export default function PromptEntry({
@@ -15,68 +19,117 @@ export default function PromptEntry({
   className,
   playingState,
   resetCallback,
+  inferenceResults,
+  nowPlayingResult,
+  setPaused
 }: PromptEntryProps) {
+
   const getPromptCopy = (prompt: string) => {
     switch (playingState) {
       case PlayingState.UNINITIALIZED:
       case PlayingState.SAME_PROMPT:
         switch (index) {
           case 0:
-            return prompt;
+            return (
+              <div className="tooltip text-left" data-tip="⏪ Jump to previous prompt?" onClick={() => { jumpToPrompt(prompt, inferenceResults, setPaused, nowPlayingResult) }} >
+                <p className={className}>{prompt}</p>
+              </div>
+            );
           case 1:
-            return prompt;
+            return (
+              <div className="tooltip text-left" data-tip="⏪ Jump to previous prompt?" onClick={() => { jumpToPrompt(prompt, inferenceResults, setPaused, nowPlayingResult) }} >
+                <p className={className}>{prompt}</p>
+              </div>
+            );
           case 2:
+            // active prompt
             if (prompt == " " || prompt == "") {
               return <span className="text-slate-600">{"<enter prompt>"}</span>;
             } else {
-              return prompt;
+              return (
+                <div className="tooltip text-left" data-tip="🔁 Restart current prompt?" onClick={() => { jumpToPrompt(prompt, inferenceResults, setPaused, nowPlayingResult) }} >
+                  <p className={className}>{prompt}</p>
+                </div>
+              )
             }
           case 3:
             if (prompt == " " || prompt == "") {
-              return "...";
+              return <p className={className}>...</p>
             } else {
-              return prompt;
+              return (
+                <div className="tooltip text-left" data-tip="🚀 Jump to upcoming prompt?" onClick={() => { jumpToPrompt(prompt, inferenceResults, setPaused, nowPlayingResult) }} >
+                  <p className={className}>{prompt}</p>
+                </div>
+              )
             }
           case 4:
             if (prompt == " " || prompt == "") {
-              return "UP NEXT: Anything you want";
+              return <p className={className}>UP NEXT: Anything you want</p>;
             } else {
-              return "UP NEXT: " + prompt;
+              return (
+                <div className="tooltip text-left" data-tip="🚀 Jump to upcoming prompt?" onClick={() => { jumpToPrompt(prompt, inferenceResults, setPaused, nowPlayingResult) }} >
+                  <p className={className}>UP NEXT: {prompt}</p>
+                </div>
+              )
             }
           default: {
             console.log("UNHANDLED default");
-            return prompt;
+            return <p className={className}>{prompt}</p>;
           }
         }
       case PlayingState.TRANSITION:
         switch (index) {
           case 0:
-            return prompt;
+            return (
+              <div className="tooltip text-left" data-tip="⏪ Jump to previous prompt?" onClick={() => { jumpToPrompt(prompt, inferenceResults, setPaused, nowPlayingResult) }} >
+                <p className={className}>{prompt}</p>
+              </div>
+            );
           case 1:
-            return prompt;
+            return (
+              <div className="tooltip text-left" data-tip="⏪ Jump to previous prompt?" onClick={() => { jumpToPrompt(prompt, inferenceResults, setPaused, nowPlayingResult) }} >
+                <p className={className}>{prompt}</p>
+              </div>
+            );
           case 2:
-            return prompt;
+            return (
+              <div className="tooltip text-left" data-tip="🔁 Restart outgoing prompt?" onClick={() => { jumpToPrompt(prompt, inferenceResults, setPaused, nowPlayingResult) }} >
+                <p className={className}>{prompt}</p>
+              </div>
+            )
           case 3:
             if (prompt == " " || prompt == "") {
-              return "< enter prompt >";
+              return <p className={className}> -enter prompt- </p>;
             } else {
-              return prompt;
+              return (
+                <div className="tooltip text-left" data-tip="🚀 Jump to incoming prompt?" onClick={() => { jumpToPrompt(prompt, inferenceResults, setPaused, nowPlayingResult) }} >
+                  <p className={className}>{prompt}</p>
+                </div>
+              )
             }
           case 4:
             if (prompt == " " || prompt == "") {
-              return "...";
+              return <p className={className}>...</p>;
             } else {
-              return prompt;
+              return (
+                <div className="tooltip text-left" data-tip="🚀 Jump to upcoming prompt?" onClick={() => { jumpToPrompt(prompt, inferenceResults, setPaused, nowPlayingResult) }} >
+                  <p className={className}>UP NEXT: {prompt}</p>
+                </div>
+              )
             }
           case 5:
             if (prompt == " " || prompt == "") {
-              return "UP NEXT: Anything you want";
+              return <p className={className}>UP NEXT: Anything you want</p>;
             } else {
-              return "UP NEXT: " + prompt;
+              return (
+                <div className="tooltip text-left" data-tip="🚀 Jump to upcoming prompt?" onClick={() => { jumpToPrompt(prompt, inferenceResults, setPaused, nowPlayingResult) }} >
+                  <p className={className}>UP NEXT: {prompt}</p>
+                </div>
+              )
             }
           default: {
             console.log("UNHANDLED default");
-            return prompt;
+            return <p className={className}>{prompt}</p>;
           }
         }
     }
@@ -84,7 +137,8 @@ export default function PromptEntry({
 
   return (
     <div className="flex">
-      <p className={className}>{getPromptCopy(prompt)}</p>
+      {getPromptCopy(prompt)}
+
       {/* TODO(hayk): Re-enable this when it's working. */}
       {/* {index == 2 ? (
         <IoMdClose
@@ -94,6 +148,124 @@ export default function PromptEntry({
           }}
         />
       ) : null} */}
-    </div>
+    </div >
   );
+}
+
+export function jumpToPrompt(prompt: String, inferenceResults: InferenceResult[], setPaused: (value: boolean) => void, nowPlayingResult?: InferenceResult) {
+
+  // Pause player since this function will open new tab that user will interact with
+  setPaused(true)
+
+  let firstTimePromptAppears = -1;
+  for (let i = 0; i < inferenceResults.length; i++) {
+    if (inferenceResults[i].input.start.prompt === prompt) {
+      firstTimePromptAppears = i;
+      break;
+    }
+  }
+  if (firstTimePromptAppears == -1) {
+    let url = generateLinkToUpcomingPrompt(prompt, nowPlayingResult)
+    window.open(url, "_blank").focus();
+  }
+  else {
+    let url = generateLinkToPreviousInput(inferenceResults[firstTimePromptAppears].input)
+    window.open(url, "_blank").focus();
+  }
+}
+
+export function generateLinkToUpcomingPrompt(prompt, nowPlayingResult?: InferenceResult) {
+
+  var promptString = "&prompt=" + prompt;
+  promptString = promptString.replace(/ /g, "+");
+
+  if (nowPlayingResult != null) {
+    var denoisingString = "&denoising=" + nowPlayingResult.input.start.denoising;
+    var seedImageIdString = "&seedImageId=" + nowPlayingResult.input.seed_image_id;
+  } else {
+    denoisingString = "";
+    seedImageIdString = "";
+  }
+
+  var baseUrl = window.location.origin + "/?";
+  var url = baseUrl + promptString + denoisingString + seedImageIdString;
+  return url;
+}
+
+// Todo: DRY this and share functions
+export function generateLinkToPreviousInput(selectedInput: InferenceInput) {
+  var prompt;
+  var seed;
+  var denoising;
+  var maskImageId;
+  var seedImageId;
+  var guidance;
+  var numInferenceSteps;
+  var alphaVelocity;
+
+  prompt = selectedInput.start.prompt;
+  seed = selectedInput.start.seed;
+  denoising = selectedInput.start.denoising;
+  maskImageId = selectedInput.mask_image_id;
+  seedImageId = selectedInput.seed_image_id;
+
+  var baseUrl = window.location.origin + "/?";
+
+  if (prompt != null) {
+    var promptString = "&prompt=" + prompt;
+  } else {
+    promptString = "";
+  }
+  if (seed != null) {
+    var seedString = "&seed=" + seed;
+  } else {
+    seedString = "";
+  }
+  if (denoising != null) {
+    var denoisingString = "&denoising=" + denoising;
+  } else {
+    denoisingString = "";
+  }
+  if (maskImageId != null) {
+    var maskImageIdString = "&maskImageId=" + maskImageId;
+  } else {
+    maskImageIdString = "";
+  }
+  if (seedImageId != null) {
+    var seedImageIdString = "&seedImageId=" + seedImageId;
+  } else {
+    seedImageIdString = "";
+  }
+  if (guidance != null) {
+    var guidanceString = "&guidance=" + guidance;
+  } else {
+    guidanceString = "";
+  }
+  if (numInferenceSteps != null) {
+    var numInferenceStepsString = "&numInferenceSteps=" + numInferenceSteps;
+  } else {
+    numInferenceStepsString = "";
+  }
+  if (alphaVelocity != null) {
+    var alphaVelocityString = "&alphaVelocity=" + alphaVelocity;
+  } else {
+    alphaVelocityString = "";
+  }
+
+  // Format strings to have + in place of spaces for ease of sharing, note this is only necessary for prompts currently
+  promptString = promptString.replace(/ /g, "+");
+
+  // create url string with the variables above combined
+  var shareUrl =
+    baseUrl +
+    promptString +
+    seedString +
+    denoisingString +
+    maskImageIdString +
+    seedImageIdString +
+    guidanceString +
+    numInferenceStepsString +
+    alphaVelocityString;
+
+  return shareUrl;
 }

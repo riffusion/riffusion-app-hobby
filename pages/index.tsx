@@ -13,7 +13,7 @@ import Pause from "../components/Pause";
 import PromptPanel from "../components/PromptPanel";
 import ThreeCanvas from "../components/ThreeCanvas";
 
-import { samplePrompts } from "../prompts";
+import { samplePrompts, initialSeeds, initialSeedImageMap } from "../prompts";
 
 import {
   AppState,
@@ -21,10 +21,6 @@ import {
   InferenceResult,
   PromptInput,
 } from "../types";
-
-function getRandomInt(max: number) {
-  return Math.floor(Math.random() * max);
-}
 
 function getRandomFromArray(arr: any[], n: number) {
   var result = new Array(n),
@@ -51,11 +47,11 @@ export default function Home() {
   const [alpha, setAlpha] = useState(0.0);
   const [alphaRollover, setAlphaRollover] = useState(false);
   const [alphaVelocity, setAlphaVelocity] = useState(0.25);
-  const [seed, setSeed] = useState(getRandomInt(1000000));
 
   // Settings
   const [denoising, setDenoising] = useState(0.75);
-  const [seedImageId, setSeedImageId] = useState("og_beat");
+  const [seedImageId, setSeedImageId] = useState(initialSeeds[Math.floor(Math.random() * initialSeeds.length)]);
+  const [seed, setSeed] = useState(initialSeedImageMap[seedImageId][Math.floor(Math.random() * initialSeedImageMap[seedImageId].length)]);
 
   // Prompts shown on screen and maintained by the prompt panel
   const [promptInputs, setPromptInputs] = useState<PromptInput[]>([]);
@@ -330,10 +326,14 @@ export default function Home() {
             newPromptInputs[index].prompt = prompt;
             setPromptInputs(newPromptInputs);
           }}
+          setPaused={setPaused}
           resetCallback={resetCallback}
         />
 
-        <Pause paused={paused} setPaused={setPaused} />
+        <Pause
+          paused={paused}
+          setPaused={setPaused}
+        />
 
         <Share
           inferenceResults={inferenceResults}
