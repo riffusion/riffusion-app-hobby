@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { unmute } from "../public/unmute";
 import { useCallback, useEffect, useState } from "react";
 import * as Tone from "tone";
 
@@ -243,6 +244,10 @@ export default function Home() {
     // setInferenceResults(inferenceResults.filter((r) => r.counter <= counter));
     // setNowPlayingResult(null);
   };
+
+  useEffect(() => {
+    unmute(Tone.context._context, false, false);
+  }, []);
 
   return (
     <>
