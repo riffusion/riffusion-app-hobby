@@ -162,41 +162,10 @@ export function SeedImageSelector(
 ) {
   let selectOptions = [
     ["OG Beat", "og_beat"],
-
-    // TODO: remove set of seed defaults based on test results
-    ["Epic", "epic"],
-    ['Folksy', 'folksy'],
-    ['Funk', 'funk'],
-    ['Hustle', 'hustle'],
-    ['Latin', 'latin'],
-    ['Lounge', 'lounge'],
-    ['Pressure', 'pressure'],
-    ['Rock', 'rock'],
-    ['Stomp', 'stomp'],
-    ['Wild', 'wild'],
-
-    ['Epic_cut', 'cut_epic'],
-    ['Folksy_cut', 'cut_folksy'],
-    ['Funk_cut', 'cut_funk'],
-    ['Hustle_cut', 'cut_hustle'],
-    ['Latin_cut', 'cut_latin'],
-    ['Lounge_cut', 'cut_lounge'],
-    ['Pressure_cut', 'cut_pressure'],
-    ['Rock_cut', 'cut_rock'],
-    ['Stomp_cut', 'cut_stomp'],
-    ['Wild_cut', 'cut_wild'],
-
-    ['Epic_cut32', 'cut32_epic'],
-    ['Folksy_cut32', 'cut32_folksy'],
-    ['Funk_cut32', 'cut32_funk'],
-    ['Hustle_cut32', 'cut32_hustle'],
-    ['Latin_cut32', 'cut32_latin'],
-    ['Lounge_cut32', 'cut32_lounge'],
-    ['Pressure_cut32', 'cut32_pressure'],
-    ['Rock_cut32', 'cut32_rock'],
-    ['Stomp_cut32', 'cut32_stomp'],
-    ['Wild_cut32', 'cut32_wild'],
-
+    ["Agile", "agile"],
+    ["Marin", "marim"],
+    ["Motorway", "motorway"],
+    ["Smooth", "vibes"],
   ];
 
   let matchedOption = selectOptions.find((x) => x[1] === seedImage);
