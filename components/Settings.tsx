@@ -102,9 +102,11 @@ export default function Settings({
                   </Dialog.Title>
                   <div className="mt-1">
                     <p className=" text-gray-700 text-sm">
-                      Riffusion generates music from text prompts using a
-                      diffusion model. Try typing in your favorite artist or
-                      genre, and playing with the settings below to explore the
+                      Riffusion generates music from text prompts. Try your
+                      favorite artists, instruments like saxophone or violin,
+                      modifiers like arabic or jamaican, genres like jazz or
+                      gospel, sounds like church bells or rain, or any
+                      combination. Play with the settings below to explore the
                       latent space of sound.
                     </p>
 
@@ -130,7 +132,7 @@ export default function Settings({
                       }}
                     >
                       <span className="relative px-5 py-2 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
-                        Tell me more
+                        💁🏻‍♀️ How does it work?
                       </span>
                     </button>
 
@@ -141,7 +143,7 @@ export default function Settings({
                         setOpen(false);
                       }}
                     >
-                      🎧 Done
+                      🎧 Riff
                     </button>
                   </div>
                 </div>

@@ -405,7 +405,6 @@ export default function Home() {
             results in under five seconds, you can run the experience locally
             using our test flask server.
           </p>
-          <br />
           <h2 className="pt-10 pb-5 text-3xl font-bold">Code</h2>
           <ul className="mt-3 ml-10 list-disc">
             <li>
@@ -427,6 +426,46 @@ export default function Home() {
               </a>
             </li>
           </ul>
+
+          <h2 className="pt-10 pb-5 text-3xl font-bold">Prompt Guide</h2>
+          <p className="mb-2">
+            Like other diffusion models, the quality of the results depends on
+            the prompt and other settings. This section provides some tips for
+            getting good results.
+          </p>
+          <p className="mb-2">
+            <b>Seed image</b> - The app does image-to-image conditioning, and
+            the seed image used for conditioning locks in the BPM and overall
+            vibe of the prompt. There can still be a large amount of diversity
+            with a given seed image, but the effect is present. In the app
+            settings, you can change the seed image to explore this effect.
+          </p>
+          <p className="mb-2">
+            <b>Denoising</b> - The higher the denoising, the more creative the
+            results but the less they will resemble the seed image. The default
+            denoising is 0.75, which does a good job of keeping on beat for most
+            prompts. The settings allow raising the denoising, which is often
+            fun but can quickly result in chaotic transitions and tempos.
+          </p>
+          <p className="mb-2">
+            <b>Prompt</b> - When providing prompts, get creative! Try your
+            favorite artists, instruments like saxophone or violin, modifiers
+            like arabic or jamaican, genres like jazz or rock, sounds like
+            church bells or rain, or any combination. Many words that are not
+            present in the training data still work because the text encoder can
+            associate words with similar semantics. The closer a prompt is in
+            spirit to the seed image And BPM, the better the results. For
+            example, a prompt for a genre that is much faster BPM than the seed
+            image will result in poor, generic audio.
+          </p>
+          <p className="mb-2">
+            Parameters can also be specified via URL, for example:
+            <br/>
+            <a href="https://www.riffusion.com/?&prompt=rainy+day&denoising=0.85&seedImageId=og_beat">
+              https://www.riffusion.com/?&prompt=rainy+day&denoising=0.85&seedImageId=og_beat
+            </a>
+          </p>
+
           <h2 className="pt-10 pb-5 text-3xl font-bold">Samples</h2>
           <p>Some of our favorite prompts and results.</p>
           <CaptionedImage

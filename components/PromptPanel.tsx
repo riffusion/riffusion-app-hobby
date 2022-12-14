@@ -162,6 +162,7 @@ export default function PromptPanel({
 
           {/* // Form trims spaces, and only submits if the remaining prompt is more than 0 characters */}
           <form
+            noValidate={true}
             onSubmit={(e) => {
               e.preventDefault();
               const prompt = e.currentTarget.prompt.value;
@@ -175,7 +176,7 @@ export default function PromptPanel({
             }}
           >
             <input
-              className="flex w-full md:fixed md:w-1/2 h-12 pl-3 pr-3 text-xl text-sky-900 dark:text-sky-100 rounded-lg border-sky-700 border-4 hover:border-sky-600 focus:outline-none focus:border-sky-400"
+              className="flex w-full md:fixed md:w-5/12 h-12 pl-3 pr-3 text-lg text-sky-900 dark:text-sky-100 rounded-lg border-sky-700 border-4 hover:border-sky-600 focus:outline-none focus:border-sky-400"
               ref={inputPrompt}
               type="text"
               id="prompt"
