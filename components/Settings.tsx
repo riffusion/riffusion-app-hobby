@@ -184,16 +184,16 @@ export function SeedImageSelector(
     ['Stomp_cut', 'cut_stomp'],
     ['Wild_cut', 'cut_wild'],
 
-    ['Epic_cut32', 'epic_cut32'],
-    ['Folksy_cut32', 'folksy_cut32'],
-    ['Funk_cut32', 'funk_cut32'],
-    ['Hustle_cut32', 'hustle_cut32'],
-    ['Latin_cut32', 'latin_cut32'],
-    ['Lounge_cut32', 'lounge_cut32'],
-    ['Pressure_cut32', 'pressure_cut32'],
-    ['Rock_cut32', 'rock_cut32'],
-    ['Stomp_cut32', 'stomp_cut32'],
-    ['Wild_cut32', 'wild_cut32'],
+    ['Epic_cut32', 'cut32_epic'],
+    ['Folksy_cut32', 'cut32_folksy'],
+    ['Funk_cut32', 'cut32_funk'],
+    ['Hustle_cut32', 'cut32_hustle'],
+    ['Latin_cut32', 'cut32_latin'],
+    ['Lounge_cut32', 'cut32_lounge'],
+    ['Pressure_cut32', 'cut32_pressure'],
+    ['Rock_cut32', 'cut32_rock'],
+    ['Stomp_cut32', 'cut32_stomp'],
+    ['Wild_cut32', 'cut32_wild'],
 
   ];
 
