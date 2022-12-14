@@ -166,11 +166,11 @@ export function jumpToPrompt(prompt: String, inferenceResults: InferenceResult[]
   }
   if (firstTimePromptAppears == -1) {
     let url = generateLinkToUpcomingPrompt(prompt, nowPlayingResult)
-    window.open(url, "_blank").focus();
+    window.location.href = url;
   }
   else {
     let url = generateLinkToPreviousInput(inferenceResults[firstTimePromptAppears].input)
-    window.open(url, "_blank").focus();
+    window.location.href = url;
   }
 }
 

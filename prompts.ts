@@ -17,6 +17,7 @@ export const samplePrompts = [
     "post-teen pop talent show winner",
     "sean paul dancehall",
     "mambo but from kenya",
+    "jack johnson vocals",
     "swing jazz trumpet",
     "bubblegum eurodance",
 ];
@@ -38,7 +39,7 @@ export const rollTheDicePrompts = [
     "water drops",
     "british soul dance",
     "pop r&b urban contemporary",
-    "baroque pop new wave",
+    "baroque new wave pop",
     "reggae fusion",
     "tropical german dance house",
     // TODO: consider adding samplePrompts to this list when using it
