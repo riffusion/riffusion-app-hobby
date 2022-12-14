@@ -5,7 +5,7 @@ export const samplePrompts = [
     "classical italian tenor operatic pop",
     "edm electropop indietronica metropopolis",
     "kygo tropical dance marvin gaye",
-    "detroit hip hop 808",
+    "eminem style rap",
     "church bells",
     "funk bassline with a jazzy saxophone",
     "a pianist playing a concerto",
@@ -42,15 +42,14 @@ export const rollTheDicePrompts = [
     "baroque new wave pop",
     "reggae fusion",
     "tropical german dance house",
-    // TODO: consider adding samplePrompts to this list when using it
 ];
 
 export const initialSeedImageMap = {
-    "og_beat": [3, 738973, 51209, 745234],
+    "og_beat": [3, 738973, 674, 745234],
     "agile": [808, 231, 3324, 323984],
-    "marim": [123, 676, 6754, 8730],
-    // "motorway": [8730, 323984, 745234],
-    // "vibes": [4205, 94, 78530]
+    "marim": [123, 51209, 6754, 8730],
+    "motorway": [8730, 323984, 745234],
+    "vibes": [4205, 94, 78530]
   }
   
 export const initialSeeds = [

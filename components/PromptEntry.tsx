@@ -34,6 +34,9 @@ export default function PromptEntry({
               <div className="tooltip text-left" data-tip="⏪ Jump to previous prompt?" onClick={() => { jumpToPrompt(prompt, inferenceResults, setPaused, nowPlayingResult) }} >
                 <p className={className}>{prompt}</p>
               </div>
+              // <div className="tooltip cursor-pointer" data-tip="hello">
+              //   <p className={className}>{prompt}</p>
+              // </div>
             );
           case 1:
             return (
@@ -136,7 +139,7 @@ export default function PromptEntry({
   };
 
   return (
-    <div className="flex">
+    <div className="flex cursor-pointer">
       {getPromptCopy(prompt)}
 
       {/* TODO(hayk): Re-enable this when it's working. */}
