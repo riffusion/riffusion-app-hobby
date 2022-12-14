@@ -10,6 +10,7 @@ import {
 
 interface ModelInferenceProps {
   alpha: number;
+  alphaRollover: boolean;
   seed: number;
   appState: AppState;
   promptInputs: PromptInput[];
@@ -27,6 +28,7 @@ interface ModelInferenceProps {
  */
 export default function ModelInference({
   alpha,
+  alphaRollover,
   seed,
   appState,
   promptInputs,
@@ -176,6 +178,11 @@ export default function ModelInference({
       return;
     }
 
+    // Wait for alpha rollover to resolve.
+    if (alphaRollover) {
+      return;
+    }
+
     if (numRequestsMade == 0) {
       // Kick off the first request
       runInference(alpha, seed, appState, promptInputs);
@@ -193,6 +200,7 @@ export default function ModelInference({
   }, [
     initializedUrlParams,
     alpha,
+    alphaRollover,
     seed,
     appState,
     promptInputs,

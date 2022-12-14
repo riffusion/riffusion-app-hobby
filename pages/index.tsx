@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import * as Tone from "tone";
 
 import AudioPlayer from "../components/AudioPlayer";
@@ -41,6 +41,7 @@ export default function Home() {
 
   // Current interpolation parameters
   const [alpha, setAlpha] = useState(0.0);
+  const [alphaRollover, setAlphaRollover] = useState(false);
   const [alphaVelocity, setAlphaVelocity] = useState(0.25);
   const [seed, setSeed] = useState(getRandomInt(1000000));
 
@@ -95,9 +96,10 @@ export default function Home() {
 
   // Set the app state based on the prompt inputs array
   useEffect(() => {
-    if (alpha <= 1) {
+    if (!alphaRollover) {
       return;
     }
+    setAlphaRollover(false);
 
     const upNextPrompt = promptInputs[promptInputs.length - 1].prompt;
     const endPrompt = promptInputs[promptInputs.length - 2].prompt;
@@ -134,9 +136,7 @@ export default function Home() {
     if (newAppState != appState) {
       setAppState(newAppState);
     }
-
-    setAlpha(alpha - 1);
-  }, [promptInputs, alpha, appState, seed]);
+  }, [promptInputs, alpha, alphaRollover, appState, seed]);
 
   // On any app state change, reset alpha
   useEffect(() => {
@@ -150,26 +150,33 @@ export default function Home() {
   }, [appState]);
 
   // What to do when a new inference result is available
-  const newResultCallback = (
-    input: InferenceInput,
-    result: InferenceResult
-  ) => {
-    setInferenceResults((prevResults: InferenceResult[]) => {
-      const maxResultCounter = Math.max(...prevResults.map((r) => r.counter));
+  const newResultCallback = useCallback(
+    (input: InferenceInput, result: InferenceResult) => {
+      setInferenceResults((prevResults: InferenceResult[]) => {
+        const maxResultCounter = Math.max(...prevResults.map((r) => r.counter));
 
-      const lastResult = prevResults.find((r) => r.counter == maxResultCounter);
+        const lastResult = prevResults.find(
+          (r) => r.counter == maxResultCounter
+        );
 
-      const newCounter = lastResult ? lastResult.counter + 1 : 0;
+        const newCounter = lastResult ? lastResult.counter + 1 : 0;
 
-      result.counter = newCounter;
-      result.input = input;
-      result.played = false;
+        result.counter = newCounter;
+        result.input = input;
+        result.played = false;
 
-      setAlpha(alpha + alphaVelocity);
+        let newAlpha = alpha + alphaVelocity;
+        if (newAlpha > 1 + 1e-3) {
+          newAlpha = newAlpha - 1;
+          setAlphaRollover(true);
+        }
+        setAlpha(newAlpha);
 
-      return [...prevResults, result];
-    });
-  };
+        return [...prevResults, result];
+      });
+    },
+    [alpha, alphaVelocity]
+  );
 
   const nowPlayingCallback = (result: InferenceResult, playerTime: number) => {
     console.log(
@@ -234,17 +241,16 @@ export default function Home() {
       <PageHead />
 
       <div className="absolute w-full h-screen z-10">
-          {/* Note, top bg section is used to maintain color in background on ios notch devices */}
-          <div className="absolute top-0 left-0 right-0 h-1 bg-[#0A2342]" />
-          <div className="absolute top-1 left-0 right-0 h-1/2 bg-gradient-to-b from-[#0A2342]" />
-        </div>
+        {/* Note, top bg section is used to maintain color in background on ios notch devices */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-[#0A2342]" />
+        <div className="absolute top-1 left-0 right-0 h-1/2 bg-gradient-to-b from-[#0A2342]" />
+      </div>
 
       <div className="bg-[#0A2342] flex flex-row min-h-screen text-white">
-
         <div className="absolute w-full md:w-1/3">
           <div className="absolute top-4 md:top-6 left-0 right-0 flex justify-center">
             <div
-              className="text-3xl font-bold font-mono text-transparent bg-clip-text bg-gradient-to-t from-white/80 to-white/20 z-20 cursor-pointer"
+              className="text-3xl font-bold font-mono text-transparent bg-clip-text bg-gradient-to-t from-white/80 to-white/70 z-20 cursor-pointer"
               onClick={() => window.open("/about", "_blank")}
             >
               [RIFFUSION]
@@ -262,6 +268,7 @@ export default function Home() {
 
         <ModelInference
           alpha={alpha}
+          alphaRollover={alphaRollover}
           seed={seed}
           appState={appState}
           promptInputs={promptInputs}
