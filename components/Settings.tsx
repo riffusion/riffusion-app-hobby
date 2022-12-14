@@ -160,6 +160,8 @@ export function SeedImageSelector(
 ) {
   let selectOptions = [
     ["OG Beat", "og_beat"],
+
+    // TODO: remove set of seed defaults based on test results
     ["Epic", "epic"],
     ['Folksy', 'folksy'],
     ['Funk', 'funk'],
@@ -170,6 +172,29 @@ export function SeedImageSelector(
     ['Rock', 'rock'],
     ['Stomp', 'stomp'],
     ['Wild', 'wild'],
+
+    ['Epic_cut', 'cut_epic'],
+    ['Folksy_cut', 'cut_folksy'],
+    ['Funk_cut', 'cut_funk'],
+    ['Hustle_cut', 'cut_hustle'],
+    ['Latin_cut', 'cut_latin'],
+    ['Lounge_cut', 'cut_lounge'],
+    ['Pressure_cut', 'cut_pressure'],
+    ['Rock_cut', 'cut_rock'],
+    ['Stomp_cut', 'cut_stomp'],
+    ['Wild_cut', 'cut_wild'],
+
+    ['Epic_cut32', 'epic_cut32'],
+    ['Folksy_cut32', 'folksy_cut32'],
+    ['Funk_cut32', 'funk_cut32'],
+    ['Hustle_cut32', 'hustle_cut32'],
+    ['Latin_cut32', 'latin_cut32'],
+    ['Lounge_cut32', 'lounge_cut32'],
+    ['Pressure_cut32', 'pressure_cut32'],
+    ['Rock_cut32', 'rock_cut32'],
+    ['Stomp_cut32', 'stomp_cut32'],
+    ['Wild_cut32', 'wild_cut32'],
+
   ];
 
   let matchedOption = selectOptions.find((x) => x[1] === seedImage);
