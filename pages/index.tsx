@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import * as Tone from "tone";
 
 import AudioPlayer from "../components/AudioPlayer";
+import FallingBehindWarning from "../components/FallingBehindWarning";
 import PageHead from "../components/PageHead";
 import Share from "../components/Share";
 import Settings from "../components/Settings";
@@ -213,6 +214,13 @@ export default function Home() {
     });
   };
 
+  // Track from the audio player whether we're behind on having new inference results,
+  // in order to display an alert.
+  const [playerIsBehind, setPlayerIsBehind] = useState(false);
+  const playerIsBehindCallback = (isBehind: boolean) => {
+    setPlayerIsBehind(isBehind);
+  };
+
   // TODO(hayk): This is not done yet but it's supposed to clear out future state and prompts
   // and allow the user to immediately start a new prompt.
   const resetCallback = () => {
@@ -258,6 +266,8 @@ export default function Home() {
           </div>
         </div>
 
+        {playerIsBehind ? <FallingBehindWarning /> : null}
+
         <div className="brightness-50	md:filter-none w-full z-0 md:w-1/3 min-h-screen">
           <ThreeCanvas
             paused={paused}
@@ -283,6 +293,7 @@ export default function Home() {
           paused={paused}
           inferenceResults={inferenceResults}
           nowPlayingCallback={nowPlayingCallback}
+          playerIsBehindCallback={playerIsBehindCallback}
         />
 
         <PromptPanel

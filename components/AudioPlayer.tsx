@@ -8,6 +8,7 @@ interface AudioPlayerProps {
   paused: boolean;
   inferenceResults: InferenceResult[];
   nowPlayingCallback: (result: InferenceResult, playerTime: number) => void;
+  playerIsBehindCallback: (isBehind: boolean) => void;
 }
 
 /**
@@ -19,13 +20,13 @@ export default function AudioPlayer({
   paused,
   inferenceResults,
   nowPlayingCallback,
+  playerIsBehindCallback,
 }: AudioPlayerProps) {
   const [tonePlayer, setTonePlayer] = useState<Tone.Player>(null);
 
   const [numClipsPlayed, setNumClipsPlayed] = useState(0);
   const [prevNumClipsPlayed, setPrevNumClipsPlayed] = useState(0);
 
-  // TODO(hayk): What is this?
   const [resultCounter, setResultCounter] = useState(0);
 
   // On load, create a player synced to the tone transport
@@ -46,20 +47,9 @@ export default function AudioPlayer({
 
       // Set up a callback to increment numClipsPlayed at the edge of each clip
       const bufferLength = player.sampleTime * player.buffer.length;
-      // console.log(bufferLength, result.duration_s);
 
       // TODO(hayk): Set this callback up to vary each time using duration_s
       Tone.Transport.scheduleRepeat((time) => {
-        // TODO(hayk): Edge of clip callback
-        // console.log(
-        //   "Edge of clip, t = ",
-        //   Tone.Transport.getSecondsAtTime(time),
-        //   ", bufferLength = ",
-        //   bufferLength,
-        //   ", tone transport seconds = ",
-        //   Tone.Transport.seconds
-        // );
-
         setNumClipsPlayed((n) => n + 1);
       }, bufferLength);
 
@@ -99,12 +89,15 @@ export default function AudioPlayer({
 
     if (maxResultCounter < resultCounter) {
       console.info(
-        "not picking a new result, none available",
+        "No new result available, looping previous clip",
         resultCounter,
         maxResultCounter
       );
+      playerIsBehindCallback(true);
       return;
     }
+
+    playerIsBehindCallback(false);
 
     const result = inferenceResults.find(
       (r: InferenceResult) => r.counter == resultCounter
