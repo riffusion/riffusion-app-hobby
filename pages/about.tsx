@@ -410,19 +410,22 @@ export default function Home() {
             <li>
               Web app:{" "}
               <a href="https://github.com/hmartiro/riffusion-app">
-                https://github.com/hmartiro/riffusion-app
+                https://github.com/hmartiro/
+                riffusion-app
               </a>
             </li>
             <li>
               Inference server:{" "}
               <a href="https://github.com/hmartiro/riffusion-inference">
-                https://github.com/hmartiro/riffusion-inference
+                https://github.com/hmartiro/
+                riffusion-inference
               </a>
             </li>
             <li>
               Model checkpoint:{" "}
               <a href="https://huggingface.co/riffusion/riffusion-model-v1">
-                https://huggingface.co/riffusion/riffusion-model-v1
+                https://huggingface.co/
+                riffusion/riffusion-model-v1
               </a>
             </li>
           </ul>
@@ -466,9 +469,13 @@ export default function Home() {
           </p>
           <p className="mb-2">
             Parameters can also be specified via URL, for example:
-            <br/>
+            <br />
+            <br />
             <a href="https://www.riffusion.com/?&prompt=rainy+day&denoising=0.85&seedImageId=og_beat">
-              https://www.riffusion.com/?&prompt=rainy+day&denoising=0.85&seedImageId=og_beat
+              https://www.riffusion.com/?
+              &prompt=rainy+day&
+              denoising=0.85&
+              seedImageId=og_beat
             </a>
           </p>
 
