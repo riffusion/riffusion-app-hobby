@@ -8,6 +8,7 @@ export default async function handler(req, res) {
     method: "POST",
     headers: headers,
     body: req.body,
+    signal: AbortSignal.timeout(15000),
   });
 
   const data = await response.json();
