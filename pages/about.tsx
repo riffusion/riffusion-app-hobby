@@ -519,7 +519,7 @@ export default function Home() {
             </audio>
           </div>
           <p className="mt-3">
-            <b>Cenematic New York City in a Dust Storm</b> to <b>Golden hour vibes</b>:
+            <b>Cinematic New York City in a Dust Storm</b> to <b>Golden hour vibes</b>:
           </p>
           <div className="m-5 ml-16">
             <audio

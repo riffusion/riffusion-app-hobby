@@ -1,10 +1,10 @@
 // List of interesting prompts to randomly sample.
 export const samplePrompts = [
     "lo-fi beat for the holidays",
-    "techno DJ and a country singer",
+    "techno DJ and a country fiddle",
     "classical italian tenor operatic pop",
     "kygo tropical dance marvin gaye",
-    "eminem style rap",
+    "eminem style anger rap",
     "church bells",
     "funk bassline with a jazzy saxophone",
     "piano concerto in a minor",
@@ -18,6 +18,9 @@ export const samplePrompts = [
     "jack johnson vocals",
     "swing jazz trumpet",
     "bubblegum eurodance",
+    "brazilian Forró dance",
+    "bongos on a havana street",
+    "copacabana beach",
 ];
 
 export const rollTheDicePrompts = [
@@ -40,6 +43,15 @@ export const rollTheDicePrompts = [
     "baroque new wave pop",
     "reggae fusion",
     "tropical german dance house",
+    "alarm clock",
+    "(caribbean:1.5) (jazz:0.3)",
+    "new orleans blues",
+    "clarinet with maracas",
+    "sultry sinatra",
+    "ancient chinese hymn",
+    "square dancing in wyoming",
+    "psychedelic nepalese trance",
+    "jazzy rapping from paris",
 ];
 
 export const initialSeedImageMap = {
@@ -49,7 +61,7 @@ export const initialSeedImageMap = {
     "motorway": [8730, 323984, 745234],
     "vibes": [4205, 94, 78530]
   }
-  
+
 export const initialSeeds = [
     "og_beat",
     // "agile",
