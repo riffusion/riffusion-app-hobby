@@ -174,7 +174,9 @@ export default function Share({
 
     const encodedPrompt = encodeURIComponent(result.input.start.prompt);
     const encodedUrl = encodeURIComponent(generateLink(0));
-    return `https://www.reddit.com/r/riffusion/submit?title=Prompt:+${encodedPrompt}&url=${encodedUrl}`;
+    return `https://www.reddit.com/r/riffusion/submit?title=Check+out+this+%23riffusion+prompt:+${encodeURI(
+      '"'
+    )}${encodedPrompt}${encodeURI('"')}&url=${encodedUrl}`;
   }, [nowPlayingResult, inferenceResults, generateLink]);
 
   const getTwitterLink = useCallback(() => {
@@ -187,7 +189,7 @@ export default function Share({
     const encodedPrompt = encodeURIComponent(result.input.start.prompt);
     const encodedUrl = encodeURIComponent(generateLink(0));
 
-    return `https://twitter.com/intent/tweet?&text=Check+out+this+prompt+on+%23riffusion:+${encodeURI(
+    return `https://twitter.com/intent/tweet?&text=Check+out+this+%23riffusion+prompt:+${encodeURI(
       '"'
     )}${encodedPrompt}${encodeURI('"')}${encodeURI("\n\n")}${encodedUrl}`;
   }, [nowPlayingResult, inferenceResults, generateLink]);
