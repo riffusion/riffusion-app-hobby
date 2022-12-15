@@ -50,8 +50,14 @@ export default function Home() {
 
   // Settings
   const [denoising, setDenoising] = useState(0.75);
-  const [seedImageId, setSeedImageId] = useState(initialSeeds[Math.floor(Math.random() * initialSeeds.length)]);
-  const [seed, setSeed] = useState(initialSeedImageMap[seedImageId][Math.floor(Math.random() * initialSeedImageMap[seedImageId].length)]);
+  const [seedImageId, setSeedImageId] = useState(
+    initialSeeds[Math.floor(Math.random() * initialSeeds.length)]
+  );
+  const [seed, setSeed] = useState(
+    initialSeedImageMap[seedImageId][
+      Math.floor(Math.random() * initialSeedImageMap[seedImageId].length)
+    ]
+  );
 
   // Prompts shown on screen and maintained by the prompt panel
   const [promptInputs, setPromptInputs] = useState<PromptInput[]>([]);
@@ -195,40 +201,66 @@ export default function Home() {
     [alpha, alphaVelocity]
   );
 
-  const nowPlayingCallback = (result: InferenceResult, playerTime: number) => {
-    console.log(
-      "Now playing result ",
-      result.counter,
-      ", player time is ",
-      playerTime
-    );
+  // State to handle the timeout for the player to not hog GPU forever. If you are
+  // in SAME_PROMPT for this long, it will pause the player and bring up an alert.
+  const timeoutIncrement = 600.0;
+  const [timeoutPlayerTime, setTimeoutPlayerTime] = useState(timeoutIncrement);
 
-    setNowPlayingResult(result);
-
-    // find the first promptInput that matches the result.input.end.prompt and set it's transitionCounter to the result.counter if not already set
-    setPromptInputs((prevPromptInputs) => {
-      const newPromptInputs = [...prevPromptInputs];
-      const promptInputIndex = newPromptInputs.findIndex(
-        (p) => p.prompt == result.input.end.prompt
+  const nowPlayingCallback = useCallback(
+    (result: InferenceResult, playerTime: number) => {
+      console.log(
+        "Now playing result ",
+        result.counter,
+        ", player time is ",
+        playerTime
       );
-      if (promptInputIndex >= 0) {
-        if (newPromptInputs[promptInputIndex].transitionCounter == null) {
-          newPromptInputs[promptInputIndex].transitionCounter = result.counter;
-        }
-      }
-      return newPromptInputs;
-    });
 
-    // set played state for the result to true
-    setInferenceResults((prevResults: InferenceResult[]) => {
-      return prevResults.map((r) => {
-        if (r.counter == result.counter) {
-          r.played = true;
+      setNowPlayingResult(result);
+
+      // find the first promptInput that matches the result.input.end.prompt and set it's transitionCounter to the result.counter if not already set
+      setPromptInputs((prevPromptInputs) => {
+        const newPromptInputs = [...prevPromptInputs];
+        const promptInputIndex = newPromptInputs.findIndex(
+          (p) => p.prompt == result.input.end.prompt
+        );
+        if (promptInputIndex >= 0) {
+          if (newPromptInputs[promptInputIndex].transitionCounter == null) {
+            newPromptInputs[promptInputIndex].transitionCounter =
+              result.counter;
+          }
         }
-        return r;
+        return newPromptInputs;
       });
-    });
-  };
+
+      // set played state for the result to true
+      setInferenceResults((prevResults: InferenceResult[]) => {
+        return prevResults.map((r) => {
+          if (r.counter == result.counter) {
+            r.played = true;
+          }
+          return r;
+        });
+      });
+
+      // Extend the timeout if we're transitioning
+      if (appState == AppState.TRANSITION) {
+        setTimeoutPlayerTime(playerTime + timeoutIncrement);
+      }
+
+      // If we've hit the timeout, pause and increment the timeout
+      if (playerTime > timeoutPlayerTime) {
+        setTimeoutPlayerTime(playerTime + timeoutIncrement);
+        setPaused(true);
+
+        setTimeout(() => {
+          if (confirm("Are you still riffing?")) {
+            setPaused(false);
+          }
+        }, 100);
+      }
+    },
+    [timeoutPlayerTime, appState]
+  );
 
   // Track from the audio player whether we're behind on having new inference results,
   // in order to display an alert.
@@ -330,10 +362,7 @@ export default function Home() {
           resetCallback={resetCallback}
         />
 
-        <Pause
-          paused={paused}
-          setPaused={setPaused}
-        />
+        <Pause paused={paused} setPaused={setPaused} />
 
         <Share
           inferenceResults={inferenceResults}
