@@ -474,7 +474,13 @@ export default function Home() {
             </a>
           </p>
           <h2 className="pt-10 pb-5 text-3xl font-bold">Samples</h2>
-          <p>Some of our favorite prompts and results.</p>
+          <p>
+            Some of our favorite prompts and results. Check out{" "}
+            <a href="http://reddit.com/r/riffusion" target="_blank">
+              /r/riffusion
+            </a>{" "}
+            for more.
+          </p>
           <CaptionedImage
             image_url={"/about/mambo_but_from_jamaica.png"}
             caption={"Mambo but from Jamaica"}
