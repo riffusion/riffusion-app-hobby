@@ -1,6 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment, useCallback, useState } from "react";
 import { FiShare } from "react-icons/fi";
+import { GrTwitter, GrReddit } from "react-icons/gr";
 import styled from "styled-components";
 
 import { InferenceResult } from "../types";
@@ -67,14 +68,16 @@ export default function Share({
     var numInferenceSteps;
     var alphaVelocity;
 
-    if (!nowPlayingResult) {
+    const result = nowPlayingResult ? nowPlayingResult : inferenceResults[0];
+
+    if (!result) {
       return window.location.href;
     } else {
       var selectedInput: InferenceResult["input"];
       if (secondsAgo == 0) {
-        selectedInput = nowPlayingResult.input;
+        selectedInput = result.input;
       } else {
-        var selectedCounter = nowPlayingResult.counter - secondsAgo / 5;
+        var selectedCounter = result.counter - secondsAgo / 5;
         selectedInput = inferenceResults.find(
           (result) => result.counter == selectedCounter
         )?.input;
@@ -90,12 +93,12 @@ export default function Share({
       seed = selectedInput.start.seed;
       denoising = selectedInput.start.denoising;
       maskImageId = selectedInput.mask_image_id;
-      seedImageId = nowPlayingResult.input.seed_image_id;
+      seedImageId = result.input.seed_image_id;
 
       // TODO, selectively add these based on whether we give user option to change them
-      // guidance = nowPlayingResult.input.guidance
-      // numInferenceSteps = nowPlayingResult.input.num_inference_steps
-      // alphaVelocity = nowPlayingResult.input.alpha_velocity
+      // guidance = result.input.guidance
+      // numInferenceSteps = result.input.num_inference_steps
+      // alphaVelocity = result.input.alpha_velocity
     }
 
     var baseUrl = window.location.origin + "/?";
@@ -159,6 +162,18 @@ export default function Share({
     return shareUrl;
   }
 
+  const getRedditLink = useCallback(() => {
+    if (inferenceResults.length == 0) {
+      return null;
+    }
+
+    const result = nowPlayingResult ? nowPlayingResult : inferenceResults[0];
+
+    const encodedPrompt = encodeURIComponent(result.input.start.prompt);
+    const encodedUrl = encodeURIComponent(generateLink(0));
+    return `https://www.reddit.com/r/riffusion/submit?title=Prompt:+${encodedPrompt}&url=${encodedUrl}`;
+  }, [nowPlayingResult, inferenceResults]);
+
   return (
     <>
       <button
@@ -209,7 +224,22 @@ export default function Share({
                     as="h1"
                     className="text-3xl font-medium leading-6 text-gray-900 pb-2"
                   >
-                    Share your riff
+                    <div className="flex">
+                      <span className="w-4/5">Share your riff</span>
+
+                      <GrTwitter
+                        className="ml-4 w-8 h-8 mb-1 text-[#1DA1F2]"
+                        onClick={() => {
+                          console.log("click");
+                        }}
+                      />
+                      <GrReddit
+                        className="ml-4 w-8 h-8 mb-1 text-[#FF4500]"
+                        onClick={() => {
+                          window.open(getRedditLink(), "_blank");
+                        }}
+                      />
+                    </div>
                   </Dialog.Title>
                   <div className="mt-4">
                     {!getActiveResult() && (
