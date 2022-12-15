@@ -21,6 +21,9 @@ export const samplePrompts = [
     "brazilian Forró dance",
     "bongos on a havana street",
     "copacabana beach",
+    "psychedelic nepalese trance",
+    "jazzy rapping from paris",
+    "ancient chinese hymn",
 ];
 
 export const rollTheDicePrompts = [
@@ -48,10 +51,7 @@ export const rollTheDicePrompts = [
     "new orleans blues",
     "clarinet with maracas",
     "sultry sinatra",
-    "ancient chinese hymn",
     "square dancing in wyoming",
-    "psychedelic nepalese trance",
-    "jazzy rapping from paris",
 ];
 
 export const initialSeedImageMap = {
