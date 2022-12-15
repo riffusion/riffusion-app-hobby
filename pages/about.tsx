@@ -410,22 +410,19 @@ export default function Home() {
             <li>
               Web app:{" "}
               <a href="https://github.com/hmartiro/riffusion-app">
-                https://github.com/hmartiro/
-                riffusion-app
+                https://github.com/hmartiro/ riffusion-app
               </a>
             </li>
             <li>
               Inference server:{" "}
               <a href="https://github.com/hmartiro/riffusion-inference">
-                https://github.com/hmartiro/
-                riffusion-inference
+                https://github.com/hmartiro/ riffusion-inference
               </a>
             </li>
             <li>
               Model checkpoint:{" "}
               <a href="https://huggingface.co/riffusion/riffusion-model-v1">
-                https://huggingface.co/
-                riffusion/riffusion-model-v1
+                https://huggingface.co/ riffusion/riffusion-model-v1
               </a>
             </li>
           </ul>
@@ -462,19 +459,17 @@ export default function Home() {
             image will result in poor, generic audio.
           </p>
           <p className="mb-2">
-            <b>Prompt Reweighting</b> - We have support for providing weights for tokens in
-            a prompt, to emphasize certain words more than others. An example syntax to boost
-            a word is (vocals:1.2), which applies a 1.2x multiplier. The shorthand (vocals) is
-            supported for a 1.1x boost or [vocals] for a 1.1x reduction.
+            <b>Prompt Reweighting</b> - We have support for providing weights
+            for tokens in a prompt, to emphasize certain words more than others.
+            An example syntax to boost a word is (vocals:1.2), which applies a
+            1.2x multiplier. The shorthand (vocals) is supported for a 1.1x
+            boost or [vocals] for a 1.1x reduction.
           </p>
           <p className="mb-2">
             Parameters can also be specified via URL, for example:
             <br />
-            <br />
             <a href="https://www.riffusion.com/?&prompt=rainy+day&denoising=0.85&seedImageId=og_beat">
-              https://www.riffusion.com/?
-              &prompt=rainy+day&
-              denoising=0.85&
+              https://www.riffusion.com/? &prompt=rainy+day& denoising=0.85&
               seedImageId=og_beat
             </a>
           </p>
@@ -519,7 +514,8 @@ export default function Home() {
             </audio>
           </div>
           <p className="mt-3">
-            <b>Cinematic New York City in a Dust Storm</b> to <b>Golden hour vibes</b>:
+            <b>Cinematic New York City in a Dust Storm</b> to{" "}
+            <b>Golden hour vibes</b>:
           </p>
           <div className="m-5 ml-16">
             <audio
@@ -554,6 +550,19 @@ export default function Home() {
               Your browser does not support audio.
             </audio>
           </div>
+
+          <h2 className="pt-10 pb-5 text-3xl font-bold">Citation</h2>
+          <p className="mt-3">
+            If you build on this work, please cite it as follows:
+          </p>
+          <pre className="text-sm ml-8 mt-3">
+            {`@software{Forsgren_Martiros_2022,
+  author = {Forsgren, Seth* and Martiros, Hayk*},
+  title = {{Riffusion - Stable diffusion for real-time music generation}},
+  url = {https://riffusion.com/about},
+  year = {2022}
+}`}
+          </pre>
         </div>
       </main>
     </>
