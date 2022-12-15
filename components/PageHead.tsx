@@ -29,9 +29,9 @@ export default function PageHead() {
       <meta name="twitter:card" content="summary" />
       <meta
         name="twitter:title"
-        content="Stable diffusion for real-time music generation"
+        content="Riffusion"
       />
-      <meta name="twitter:image" content="/public/pop_sample.jpg" />
+      <meta name="twitter:image" content="https://imgur.com/fywZpQ7" />
 
       <link rel="icon" href="/favicon.ico" />
     </Head>
