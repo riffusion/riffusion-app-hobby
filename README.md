@@ -55,3 +55,16 @@ NEXT_PUBLIC_RIFFUSION_USE_BASETEN=false
 RIFFUSION_BASETEN_URL=https://app.baseten.co/applications/XXX
 RIFFUSION_BASETEN_API_KEY=XXX
 ```
+
+## Citation
+
+If you build on this work, please cite it as follows:
+
+```
+@software{Forsgren_Martiros_2022,
+  author = {Forsgren, Seth* and Martiros, Hayk*},
+  title = {{Riffusion - Stable diffusion for real-time music generation}},
+  url = {https://riffusion.com/about},
+  year = {2022}
+}
+```
