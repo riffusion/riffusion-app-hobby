@@ -243,13 +243,13 @@ export default function Share({
                       <span className="w-4/5">Share your riff</span>
 
                       <GrTwitter
-                        className="ml-4 w-8 h-8 mb-1 text-[#1DA1F2]"
+                        className="ml-4 w-8 h-8 mb-1 text-[#1DA1F2] hover:text-[#31739d] cursor-pointer"
                         onClick={() => {
                           window.open(getTwitterLink(), "_blank");
                         }}
                       />
                       <GrReddit
-                        className="ml-4 w-8 h-8 mb-1 text-[#FF4500]"
+                        className="ml-4 w-8 h-8 mb-1 text-[#FF4500] hover:text-[#b76344] cursor-pointer"
                         onClick={() => {
                           window.open(getRedditLink(), "_blank");
                         }}

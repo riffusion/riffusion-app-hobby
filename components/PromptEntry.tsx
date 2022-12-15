@@ -34,9 +34,6 @@ export default function PromptEntry({
               <div className="tooltip text-left" data-tip="⏪ Jump to previous prompt?" onClick={() => { jumpToPrompt(prompt, inferenceResults, setPaused, nowPlayingResult) }} >
                 <p className={className}>{prompt}</p>
               </div>
-              // <div className="tooltip cursor-pointer" data-tip="hello">
-              //   <p className={className}>{prompt}</p>
-              // </div>
             );
           case 1:
             return (
