@@ -3,14 +3,12 @@ export const samplePrompts = [
     "lo-fi beat for the holidays",
     "techno DJ and a country singer",
     "classical italian tenor operatic pop",
-    "edm electropop indietronica metropopolis",
     "kygo tropical dance marvin gaye",
     "eminem style rap",
     "church bells",
     "funk bassline with a jazzy saxophone",
-    "a pianist playing a concerto",
+    "piano concerto in a minor",
     "rock and roll electric guitar solo",
-    "late romantic era in the style of Richard Wagner",
     "acoustic folk violin jam",
     "k-pop boy group",
     "typing",
@@ -45,7 +43,7 @@ export const rollTheDicePrompts = [
 ];
 
 export const initialSeedImageMap = {
-    "og_beat": [3, 738973, 674, 745234],
+    "og_beat": [3, 738973, 674, 745234, 808, 231, 3324, 323984, 123, 51209, 123, 51209, 6754, 8730],
     "agile": [808, 231, 3324, 323984],
     "marim": [123, 51209, 6754, 8730],
     "motorway": [8730, 323984, 745234],
@@ -54,8 +52,8 @@ export const initialSeedImageMap = {
   
 export const initialSeeds = [
     "og_beat",
-    "agile",
-    "marim",
+    // "agile",
+    // "marim",
     // "motorway",
     // "vibes"
   ]
