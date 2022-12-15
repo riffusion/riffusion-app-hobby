@@ -556,14 +556,28 @@ export default function Home() {
           <p className="mt-3">
             If you build on this work, please cite it as follows:
           </p>
-          <pre className="text-sm ml-8 mt-3">
+          <pre className="md:hidden text-sm ml-0 md:ml-8 mt-3">
             {`@software{Forsgren_Martiros_2022,
+  author = {Forsgren, Seth* 
+    and Martiros, Hayk*},
+  title = {{Riffusion - 
+    Stable diffusion for 
+    real-time music generation}},
+  url = {https://riffusion.com/about},
+  year = {2022}
+}`}
+          </pre>
+          <div className="hidden md:block">
+            <pre className="text-sm ml-0 md:ml-8 mt-3">
+              {`@software{Forsgren_Martiros_2022,
   author = {Forsgren, Seth* and Martiros, Hayk*},
   title = {{Riffusion - Stable diffusion for real-time music generation}},
   url = {https://riffusion.com/about},
   year = {2022}
 }`}
-          </pre>
+            </pre>
+          </div>
+
         </div>
       </main>
     </>
