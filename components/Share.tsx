@@ -58,109 +58,112 @@ export default function Share({
   }
 
   // function to generate a link to a the moment in the song based on the played clips, input variable is how many seconds ago
-  function generateLink(secondsAgo: number) {
-    var prompt;
-    var seed;
-    var denoising;
-    var maskImageId;
-    var seedImageId;
-    var guidance;
-    var numInferenceSteps;
-    var alphaVelocity;
+  const generateLink = useCallback(
+    (secondsAgo: number) => {
+      var prompt;
+      var seed;
+      var denoising;
+      var maskImageId;
+      var seedImageId;
+      var guidance;
+      var numInferenceSteps;
+      var alphaVelocity;
 
-    const result = nowPlayingResult ? nowPlayingResult : inferenceResults[0];
+      const result = nowPlayingResult ? nowPlayingResult : inferenceResults[0];
 
-    if (!result) {
-      return window.location.href;
-    } else {
-      var selectedInput: InferenceResult["input"];
-      if (secondsAgo == 0) {
-        selectedInput = result.input;
+      if (!result) {
+        return window.location.href;
       } else {
-        var selectedCounter = result.counter - secondsAgo / 5;
-        selectedInput = inferenceResults.find(
-          (result) => result.counter == selectedCounter
-        )?.input;
+        var selectedInput: InferenceResult["input"];
+        if (secondsAgo == 0) {
+          selectedInput = result.input;
+        } else {
+          var selectedCounter = result.counter - secondsAgo / 5;
+          selectedInput = inferenceResults.find(
+            (result) => result.counter == selectedCounter
+          )?.input;
 
-        if (!selectedInput) {
-          // TODO: ideally don't show the button in this case...
-          return window.location.href;
+          if (!selectedInput) {
+            // TODO: ideally don't show the button in this case...
+            return window.location.href;
+          }
         }
+
+        // TODO: Consider only including in the link the things that are different from the default values
+        prompt = selectedInput.start.prompt;
+        seed = selectedInput.start.seed;
+        denoising = selectedInput.start.denoising;
+        maskImageId = selectedInput.mask_image_id;
+        seedImageId = result.input.seed_image_id;
+
+        // TODO, selectively add these based on whether we give user option to change them
+        // guidance = result.input.guidance
+        // numInferenceSteps = result.input.num_inference_steps
+        // alphaVelocity = result.input.alpha_velocity
       }
 
-      // TODO: Consider only including in the link the things that are different from the default values
-      prompt = selectedInput.start.prompt;
-      seed = selectedInput.start.seed;
-      denoising = selectedInput.start.denoising;
-      maskImageId = selectedInput.mask_image_id;
-      seedImageId = result.input.seed_image_id;
+      var baseUrl = window.location.origin + "/?";
 
-      // TODO, selectively add these based on whether we give user option to change them
-      // guidance = result.input.guidance
-      // numInferenceSteps = result.input.num_inference_steps
-      // alphaVelocity = result.input.alpha_velocity
-    }
+      if (prompt != null) {
+        var promptString = "&prompt=" + prompt;
+      } else {
+        promptString = "";
+      }
+      if (seed != null) {
+        var seedString = "&seed=" + seed;
+      } else {
+        seedString = "";
+      }
+      if (denoising != null) {
+        var denoisingString = "&denoising=" + denoising;
+      } else {
+        denoisingString = "";
+      }
+      if (maskImageId != null) {
+        var maskImageIdString = "&maskImageId=" + maskImageId;
+      } else {
+        maskImageIdString = "";
+      }
+      if (seedImageId != null) {
+        var seedImageIdString = "&seedImageId=" + seedImageId;
+      } else {
+        seedImageIdString = "";
+      }
+      if (guidance != null) {
+        var guidanceString = "&guidance=" + guidance;
+      } else {
+        guidanceString = "";
+      }
+      if (numInferenceSteps != null) {
+        var numInferenceStepsString = "&numInferenceSteps=" + numInferenceSteps;
+      } else {
+        numInferenceStepsString = "";
+      }
+      if (alphaVelocity != null) {
+        var alphaVelocityString = "&alphaVelocity=" + alphaVelocity;
+      } else {
+        alphaVelocityString = "";
+      }
 
-    var baseUrl = window.location.origin + "/?";
+      // Format strings to have + in place of spaces for ease of sharing, note this is only necessary for prompts currently
+      promptString = promptString.replace(/ /g, "+");
 
-    if (prompt != null) {
-      var promptString = "&prompt=" + prompt;
-    } else {
-      promptString = "";
-    }
-    if (seed != null) {
-      var seedString = "&seed=" + seed;
-    } else {
-      seedString = "";
-    }
-    if (denoising != null) {
-      var denoisingString = "&denoising=" + denoising;
-    } else {
-      denoisingString = "";
-    }
-    if (maskImageId != null) {
-      var maskImageIdString = "&maskImageId=" + maskImageId;
-    } else {
-      maskImageIdString = "";
-    }
-    if (seedImageId != null) {
-      var seedImageIdString = "&seedImageId=" + seedImageId;
-    } else {
-      seedImageIdString = "";
-    }
-    if (guidance != null) {
-      var guidanceString = "&guidance=" + guidance;
-    } else {
-      guidanceString = "";
-    }
-    if (numInferenceSteps != null) {
-      var numInferenceStepsString = "&numInferenceSteps=" + numInferenceSteps;
-    } else {
-      numInferenceStepsString = "";
-    }
-    if (alphaVelocity != null) {
-      var alphaVelocityString = "&alphaVelocity=" + alphaVelocity;
-    } else {
-      alphaVelocityString = "";
-    }
+      // create url string with the variables above combined
+      var shareUrl =
+        baseUrl +
+        promptString +
+        seedString +
+        denoisingString +
+        maskImageIdString +
+        seedImageIdString +
+        guidanceString +
+        numInferenceStepsString +
+        alphaVelocityString;
 
-    // Format strings to have + in place of spaces for ease of sharing, note this is only necessary for prompts currently
-    promptString = promptString.replace(/ /g, "+");
-
-    // create url string with the variables above combined
-    var shareUrl =
-      baseUrl +
-      promptString +
-      seedString +
-      denoisingString +
-      maskImageIdString +
-      seedImageIdString +
-      guidanceString +
-      numInferenceStepsString +
-      alphaVelocityString;
-
-    return shareUrl;
-  }
+      return shareUrl;
+    },
+    [nowPlayingResult, inferenceResults]
+  );
 
   const getRedditLink = useCallback(() => {
     if (inferenceResults.length == 0) {
@@ -172,7 +175,7 @@ export default function Share({
     const encodedPrompt = encodeURIComponent(result.input.start.prompt);
     const encodedUrl = encodeURIComponent(generateLink(0));
     return `https://www.reddit.com/r/riffusion/submit?title=Prompt:+${encodedPrompt}&url=${encodedUrl}`;
-  }, [nowPlayingResult, inferenceResults]);
+  }, [nowPlayingResult, inferenceResults, generateLink]);
 
   const getTwitterLink = useCallback(() => {
     if (inferenceResults.length == 0) {
@@ -187,7 +190,7 @@ export default function Share({
     return `https://twitter.com/intent/tweet?&text=Check+out+this+prompt+on+%23riffusion:+${encodeURI(
       '"'
     )}${encodedPrompt}${encodeURI('"')}${encodeURI("\n\n")}${encodedUrl}`;
-  }, [nowPlayingResult, inferenceResults]);
+  }, [nowPlayingResult, inferenceResults, generateLink]);
 
   return (
     <>

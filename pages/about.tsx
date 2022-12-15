@@ -476,7 +476,7 @@ export default function Home() {
           <h2 className="pt-10 pb-5 text-3xl font-bold">Samples</h2>
           <p>
             Some of our favorite prompts and results. Check out{" "}
-            <a href="http://reddit.com/r/riffusion" target="_blank">
+            <a href="http://reddit.com/r/riffusion" target="_blank" rel="noreferrer">
               /r/riffusion
             </a>{" "}
             for more.
