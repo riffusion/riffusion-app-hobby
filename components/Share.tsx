@@ -174,6 +174,21 @@ export default function Share({
     return `https://www.reddit.com/r/riffusion/submit?title=Prompt:+${encodedPrompt}&url=${encodedUrl}`;
   }, [nowPlayingResult, inferenceResults]);
 
+  const getTwitterLink = useCallback(() => {
+    if (inferenceResults.length == 0) {
+      return null;
+    }
+
+    const result = nowPlayingResult ? nowPlayingResult : inferenceResults[0];
+
+    const encodedPrompt = encodeURIComponent(result.input.start.prompt);
+    const encodedUrl = encodeURIComponent(generateLink(0));
+
+    return `https://twitter.com/intent/tweet?&text=Check+out+this+prompt+on+%23riffusion:+${encodeURI(
+      '"'
+    )}${encodedPrompt}${encodeURI('"')}${encodeURI("\n\n")}${encodedUrl}`;
+  }, [nowPlayingResult, inferenceResults]);
+
   return (
     <>
       <button
@@ -230,7 +245,7 @@ export default function Share({
                       <GrTwitter
                         className="ml-4 w-8 h-8 mb-1 text-[#1DA1F2]"
                         onClick={() => {
-                          console.log("click");
+                          window.open(getTwitterLink(), "_blank");
                         }}
                       />
                       <GrReddit
