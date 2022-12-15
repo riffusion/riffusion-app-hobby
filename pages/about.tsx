@@ -473,28 +473,23 @@ export default function Home() {
               seedImageId=og_beat
             </a>
           </p>
-          <h2 className="pt-10 pb-5 text-3xl font-bold">Samples</h2>
+          <h2 className="pt-10 pb-5 text-3xl font-bold">Examples</h2>
           <p>
-            Some of our favorite prompts and results. Check out{" "}
-            <a href="http://reddit.com/r/riffusion" target="_blank" rel="noreferrer">
-              /r/riffusion
-            </a>{" "}
-            for more.
-          </p>
-          <CaptionedImage
-            image_url={"/about/mambo_but_from_jamaica.png"}
-            caption={"Mambo but from Jamaica"}
-            marginLeft={5}
-          />
-          <div className="m-5 ml-16">
-            <audio
-              controls
-              src="/about/mambo_but_from_jamaica.mp3"
-              className="w-1/2"
+            The app suggests some of our favorite prompts, and the share panel
+            allows grabbing the spectrogram, audio, or a shareable URL. We're
+            also posting some favorites at{" "}
+            <a
+              href="http://reddit.com/r/riffusion"
+              target="_blank"
+              rel="noreferrer"
             >
-              Your browser does not support audio.
-            </audio>
-          </div>
+              /r/riffusion
+            </a>
+            .
+          </p>
+          <p className="mt-3">
+            Here are some longer-form interpolations we like:
+          </p>
           <p className="mt-3">
             <b>Sunrise DJ Set</b> to <b>hard synth solo</b>:
           </p>
