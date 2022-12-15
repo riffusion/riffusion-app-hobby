@@ -1,3 +1,4 @@
+![human music](https://kairos.technorhetoric.net/23.1/topoi/zdenek/images/bakedin-rickandmorty.jpg)
 # Riffusion App
 
 Riffusion is an app for real-time music generation with stable diffusion.
