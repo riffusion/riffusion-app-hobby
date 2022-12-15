@@ -8,6 +8,7 @@ Read about it at https://www.riffusion.com/about and try it at https://www.riffu
 * Inference server: https://github.com/hmartiro/riffusion-inference
 * Model checkpoint: https://huggingface.co/riffusion/riffusion-model-v1
 * Google Colab notebook: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1FhH3HlN8Ps_Pr9OR6Qcfbfz7utDvICl0?usp=sharing)
+* Gradio Web Demo: [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/fffiloni/spectrogram-to-music)
 
 
 This repository contains the interactive web app that powers the website.
