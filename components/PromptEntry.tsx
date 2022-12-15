@@ -113,7 +113,7 @@ export default function PromptEntry({
             } else {
               return (
                 <div className="tooltip text-left" data-tip="🚀 Jump to upcoming prompt?" onClick={() => { jumpToPrompt(prompt, inferenceResults, setPaused, nowPlayingResult) }} >
-                  <p className={className}>UP NEXT: {prompt}</p>
+                  <p className={className}>{prompt}</p>
                 </div>
               )
             }
