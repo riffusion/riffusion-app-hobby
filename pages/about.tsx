@@ -478,7 +478,6 @@ export default function Home() {
               seedImageId=og_beat
             </a>
           </p>
-
           <h2 className="pt-10 pb-5 text-3xl font-bold">Samples</h2>
           <p>Some of our favorite prompts and results.</p>
           <CaptionedImage
@@ -490,6 +489,42 @@ export default function Home() {
             <audio
               controls
               src="/about/mambo_but_from_jamaica.mp3"
+              className="w-1/2"
+            >
+              Your browser does not support audio.
+            </audio>
+          </div>
+          <p className="mt-3">
+            <b>Sunrise DJ Set</b> to <b>hard synth solo</b>:
+          </p>
+          <div className="m-5 ml-16">
+            <audio
+              controls
+              src="/about/sunrise_dj_set_to_hard_synth.mp3"
+              className="w-1/2"
+            >
+              Your browser does not support audio.
+            </audio>
+          </div>
+          <p className="mt-3">
+            <b>Detroit Rap</b> to <b>Jazz</b>:
+          </p>
+          <div className="m-5 ml-16">
+            <audio
+              controls
+              src="/about/detroit_rap_to_jazz_denoising_0_6_seed_50.mp3"
+              className="w-1/2"
+            >
+              Your browser does not support audio.
+            </audio>
+          </div>
+          <p className="mt-3">
+            <b>Cenematic New York City in a Dust Storm</b> to <b>Golden hour vibes</b>:
+          </p>
+          <div className="m-5 ml-16">
+            <audio
+              controls
+              src="/about/newyourkduststorm_goldenhourmountain.mp3"
               className="w-1/2"
             >
               Your browser does not support audio.
