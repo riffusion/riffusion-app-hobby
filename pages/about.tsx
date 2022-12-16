@@ -468,10 +468,10 @@ export default function Home() {
           <p className="mb-2">
             Parameters can also be specified via URL, for example:
             <br />
-            <a href="/?&prompt=rainy+day&denoising=0.85&seedImageId=og_beat">
+            <Link href="/?&prompt=rainy+day&denoising=0.85&seedImageId=og_beat">
               https://www.riffusion.com/?&prompt=rainy+day&
               denoising=0.85&seedImageId=og_beat
-            </a>
+            </Link>
           </p>
           <h2 className="pt-10 pb-5 text-3xl font-bold">Examples</h2>
           <p>
