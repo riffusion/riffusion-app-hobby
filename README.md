@@ -7,6 +7,9 @@ Read about it at https://www.riffusion.com/about and try it at https://www.riffu
 * Web app: https://github.com/hmartiro/riffusion-app
 * Inference server: https://github.com/hmartiro/riffusion-inference
 * Model checkpoint: https://huggingface.co/riffusion/riffusion-model-v1
+* Google Colab notebook: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1FhH3HlN8Ps_Pr9OR6Qcfbfz7utDvICl0?usp=sharing)
+* Gradio Web Demo: [![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/fffiloni/spectrogram-to-music)
+
 
 This repository contains the interactive web app that powers the website.
 
@@ -46,7 +49,7 @@ To configure these backends, add a `.env.local` file:
 
 ```
 # URL to your flask instance
-RIFFUSION_FLASK_URL=http://localhost:3013/run_inference/
+RIFFUSION_FLASK_URL=http://127.0.0.1:3013/run_inference/
 
 # Whether to use baseten as the model backend
 NEXT_PUBLIC_RIFFUSION_USE_BASETEN=false
