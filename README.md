@@ -49,7 +49,7 @@ To configure these backends, add a `.env.local` file:
 
 ```
 # URL to your flask instance
-RIFFUSION_FLASK_URL=http://localhost:3013/run_inference/
+RIFFUSION_FLASK_URL=http://127.0.0.1:3013/run_inference/
 
 # Whether to use baseten as the model backend
 NEXT_PUBLIC_RIFFUSION_USE_BASETEN=false
