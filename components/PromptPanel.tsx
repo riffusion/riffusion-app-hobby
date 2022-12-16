@@ -2,8 +2,7 @@ import PromptEntry from "./PromptEntry";
 
 import { AppState, PlayingState, InferenceResult, PromptInput } from "../types";
 import { useRef } from "react";
-import { samplePrompts, rollTheDicePrompts } from "../prompts";
-
+import { samplePrompts, rollTheDicePrompts } from "../samplePrompts";
 
 interface PromptPanelProps {
   prompts: PromptInput[];
@@ -151,9 +150,9 @@ export default function PromptPanel({
     const prompts = [...samplePrompts, ...rollTheDicePrompts];
 
     const selectedPrompt = prompts[Math.floor(Math.random() * prompts.length)];
-  
+
     inputPrompt.current.value = selectedPrompt;
-  }
+  };
 
   return (
     <>
@@ -204,8 +203,15 @@ export default function PromptPanel({
             />
           </form>
           <div className="hidden md:block">
-            <div >
-              <button className="flex -ml-8 pt-2 h-12 w-12 text-xl text-white" onClick={() => { rollTheDice() }}>🎲</button>
+            <div>
+              <button
+                className="flex -ml-8 pt-2 h-12 w-12 text-xl text-white"
+                onClick={() => {
+                  rollTheDice();
+                }}
+              >
+                🎲
+              </button>
             </div>
           </div>
         </div>

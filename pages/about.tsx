@@ -449,7 +449,7 @@ export default function Home() {
           </p>
           <p className="mb-2">
             <b>Prompt</b> - When providing prompts, get creative! Try your
-            favorite artists, instruments like saxophone or violin, modifiers
+            favorite styles, instruments like saxophone or violin, modifiers
             like arabic or jamaican, genres like jazz or rock, sounds like
             church bells or rain, or any combination. Many words that are not
             present in the training data still work because the text encoder can
@@ -468,9 +468,9 @@ export default function Home() {
           <p className="mb-2">
             Parameters can also be specified via URL, for example:
             <br />
-            <a href="https://www.riffusion.com/?&prompt=rainy+day&denoising=0.85&seedImageId=og_beat">
-              https://www.riffusion.com/? &prompt=rainy+day& denoising=0.85&
-              seedImageId=og_beat
+            <a href="/?&prompt=rainy+day&denoising=0.85&seedImageId=og_beat">
+              https://www.riffusion.com/?&prompt=rainy+day&
+              denoising=0.85&seedImageId=og_beat
             </a>
           </p>
           <h2 className="pt-10 pb-5 text-3xl font-bold">Examples</h2>
@@ -558,10 +558,10 @@ export default function Home() {
           </p>
           <pre className="md:hidden text-sm ml-0 md:ml-8 mt-3">
             {`@software{Forsgren_Martiros_2022,
-  author = {Forsgren, Seth* 
+  author = {Forsgren, Seth*
     and Martiros, Hayk*},
-  title = {{Riffusion - 
-    Stable diffusion for 
+  title = {{Riffusion -
+    Stable diffusion for
     real-time music generation}},
   url = {https://riffusion.com/about},
   year = {2022}
@@ -577,7 +577,6 @@ export default function Home() {
 }`}
             </pre>
           </div>
-
         </div>
       </main>
     </>

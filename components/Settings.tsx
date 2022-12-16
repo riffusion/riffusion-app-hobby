@@ -103,7 +103,7 @@ export default function Settings({
                   <div className="mt-1">
                     <p className=" text-gray-700 text-sm">
                       Riffusion generates music from text prompts. Try your
-                      favorite artists, instruments like saxophone or violin,
+                      favorite styles, instruments like saxophone or violin,
                       modifiers like arabic or jamaican, genres like jazz or
                       gospel, sounds like church bells or rain, or any
                       combination. Play with the settings below to explore the

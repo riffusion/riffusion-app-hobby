@@ -13,7 +13,7 @@ import Pause from "../components/Pause";
 import PromptPanel from "../components/PromptPanel";
 import ThreeCanvas from "../components/ThreeCanvas";
 
-import { samplePrompts, initialSeeds, initialSeedImageMap } from "../prompts";
+import { samplePrompts, initialSeeds, initialSeedImageMap } from "../samplePrompts";
 
 import {
   AppState,
