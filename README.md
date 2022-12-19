@@ -56,7 +56,7 @@ RIFFUSION_FLASK_URL=http://127.0.0.1:3013/run_inference/
 If you build on this work, please cite it as follows:
 
 ```
-@software{Forsgren_Martiros_2022,
+@article{Forsgren_Martiros_2022,
   author = {Forsgren, Seth* and Martiros, Hayk*},
   title = {{Riffusion - Stable diffusion for real-time music generation}},
   url = {https://riffusion.com/about},
