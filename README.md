@@ -19,7 +19,9 @@ It is built with Next.js, React, Typescript, three.js, Tailwind, and Vercel.
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-Install:
+First, make sure you have Node v18 or greater installed using `node --version`.
+
+Install packages:
 
 ```bash
 npm install
