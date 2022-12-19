@@ -43,20 +43,10 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 
 To actually generate model outputs, we need a model backend that responds to inference requests via API. If you have a large GPU that can run stable diffusion in under five seconds, clone and run the instructions in the [inference server](https://github.com/hmartiro/riffusion-inference) to run the Flask app.
 
-This app also has a configuration to run with [Baseten](https://www.baseten.co/) for auto-scaling and load balancing. To use BaseTen, you need an API key.
-
-To configure these backends, add a `.env.local` file:
+You will need to add a `.env.local` file in the root of this repository specifying the URL of the inference server:
 
 ```
-# URL to your flask instance
 RIFFUSION_FLASK_URL=http://127.0.0.1:3013/run_inference/
-
-# Whether to use baseten as the model backend
-NEXT_PUBLIC_RIFFUSION_USE_BASETEN=false
-
-# If using BaseTen, the URL and API key
-RIFFUSION_BASETEN_URL=https://app.baseten.co/applications/XXX
-RIFFUSION_BASETEN_API_KEY=XXX
 ```
 
 ## Citation
