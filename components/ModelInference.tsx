@@ -117,7 +117,7 @@ export default function ModelInference({
       setNumRequestsMade((n) => n + 1);
 
       // Customize for baseten
-      const apiHandler = useBaseten ? "/api/baseten" : "/api/server";
+      const apiHandler = useBaseten ? process.env.NEXT_PUBLIC_RIFFUSION_BASETEN_BLUEPRINT_URL : "/api/server";
       const payload = useBaseten
         ? { worklet_input: inferenceInput }
         : inferenceInput;
@@ -132,17 +132,11 @@ export default function ModelInference({
       console.log(`Got result #${numResponsesReceived}`);
 
       if (useBaseten) {
-        if (data?.worklet_output?.model_output) {
+        console.log(data)
+        if (data?.output) {
           newResultCallback(
             inferenceInput,
-            JSON.parse(data.worklet_output.model_output)
-          );
-        }
-        // Note, data is currently wrapped in a data field
-        else if (data?.data?.worklet_output?.model_output) {
-          newResultCallback(
-            inferenceInput,
-            JSON.parse(data.data.worklet_output.model_output)
+            data.output
           );
         } else {
           console.error("Baseten call failed: ", data);
