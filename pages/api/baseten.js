@@ -5,6 +5,7 @@ export default async function handler(req, res) {
     "Authorization": `Api-Key ${process.env.RIFFUSION_BASETEN_API_KEY}`
   };
 
+  // This code is no longer active in favor of blueprint method
   const response = await fetch(process.env.RIFFUSION_BASETEN_URL, {
     method: "POST",
     headers: headers,
