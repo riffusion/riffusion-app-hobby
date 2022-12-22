@@ -117,7 +117,7 @@ export default function ModelInference({
       setNumRequestsMade((n) => n + 1);
 
       // Customize for baseten
-      const apiHandler = useBaseten ? process.env.NEXT_PUBLIC_RIFFUSION_BASETEN_BLUEPRINT_URL : "/api/server";
+      const apiHandler = useBaseten ? process.env.NEXT_PUBLIC_RIFFUSION_BASETEN_GC_URL : "/api/server";
       const payload = useBaseten
         ? { worklet_input: inferenceInput }
         : inferenceInput;
@@ -125,6 +125,7 @@ export default function ModelInference({
       const response = await fetch(apiHandler, {
         method: "POST",
         body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'application/json' }
       });
 
       const data = await response.json();
