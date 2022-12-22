@@ -355,7 +355,7 @@ export default function Home() {
             </audio>
           </div>
           <p className="mt-3">
-            The huggingface{" "}
+            The Hugging Face{" "}
             <a href="https://github.com/huggingface/diffusers">diffusers</a>{" "}
             library implements a wide range of pipelines including
             image-to-image and prompt interpolation, but we needed an
