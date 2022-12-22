@@ -132,7 +132,6 @@ export default function ModelInference({
       console.log(`Got result #${numResponsesReceived}`);
 
       if (useBaseten) {
-        console.log(data)
         if (data?.output) {
           newResultCallback(
             inferenceInput,
