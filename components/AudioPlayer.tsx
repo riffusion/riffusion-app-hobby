@@ -9,6 +9,7 @@ interface AudioPlayerProps {
   inferenceResults: InferenceResult[];
   nowPlayingCallback: (result: InferenceResult, playerTime: number) => void;
   playerIsBehindCallback: (isBehind: boolean) => void;
+  useCompressor: boolean;
 }
 
 /**
@@ -21,6 +22,7 @@ export default function AudioPlayer({
   inferenceResults,
   nowPlayingCallback,
   playerIsBehindCallback,
+  useCompressor,
 }: AudioPlayerProps) {
   const [tonePlayer, setTonePlayer] = useState<Tone.Player>(null);
 
@@ -57,8 +59,15 @@ export default function AudioPlayer({
 
       // Make further load callbacks do nothing.
       player.buffer.onload = () => {};
-    }).toDestination();
-  }, [tonePlayer, inferenceResults]);
+    });
+
+    if (useCompressor) {
+      const compressor = new Tone.Compressor(-30, 3).toDestination();
+      player.connect(compressor);
+    } else {
+      player.toDestination();
+    }
+  }, [tonePlayer, inferenceResults, useCompressor]);
 
   // On play/pause button, play/pause the audio with the tone transport
   useEffect(() => {

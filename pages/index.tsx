@@ -71,6 +71,8 @@ export default function Home() {
   const [nowPlayingResult, setNowPlayingResult] =
     useState<InferenceResult>(null);
 
+  const [useCompressor, setUseCompressor] = useState(false);
+
   // Set the initial seed from the URL if available
   const router = useRouter();
   useEffect(() => {
@@ -114,6 +116,10 @@ export default function Home() {
 
     if (router.query.seedImageId) {
       setSeedImageId(router.query.seedImageId as string);
+    }
+
+    if (router.query.useCompressor) {
+      setUseCompressor(router.query.useCompressor == "true");
     }
   }, [router.isReady, router.query]);
 
@@ -346,6 +352,7 @@ export default function Home() {
           inferenceResults={inferenceResults}
           nowPlayingCallback={nowPlayingCallback}
           playerIsBehindCallback={playerIsBehindCallback}
+          useCompressor={useCompressor}
         />
 
         <PromptPanel
