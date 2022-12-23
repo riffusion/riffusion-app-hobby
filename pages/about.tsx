@@ -102,6 +102,19 @@ export default function Home() {
             All the same web UIs and techniques like img2img, inpainting,
             negative prompts, and interpolation work out of the box.
           </p>
+
+          <p className="mt-3">
+            Code:{" "}
+            <a href="https://github.com/riffusion/riffusion">
+              https://github.com/riffusion/riffusion
+            </a>
+            <br />
+            Discord:{" "}
+            <a href="https://discord.gg/yu6SRwvX4v">
+              https://discord.gg/yu6SRwvX4v
+            </a>
+          </p>
+
           <h2 className="pt-10 pb-5 text-3xl font-bold">Spectrograms</h2>
           <p>
             An audio{" "}
@@ -175,7 +188,7 @@ export default function Home() {
             </a>
             , which has excellent modules for efficient audio processing on the
             GPU. Check out our audio processing code{" "}
-            <a href="https://github.com/hmartiro/riffusion-inference/blob/main/riffusion/audio.py">
+            <a href="https://github.com/riffusion/riffusion/blob/main/riffusion/audio.py">
               here
             </a>
             .
@@ -289,7 +302,7 @@ export default function Home() {
           <p className="mt-3">
             To address this, we smoothly interpolate between prompts and seeds
             <em> in the latent space of the model</em>. In diffusion models, the{" "}
-            <a href="https://github.com/hmartiro/riffusion-inference/blob/main/riffusion/audio.py">
+            <a href="https://github.com/riffusion/riffusion/blob/main/riffusion/audio.py">
               latent space
             </a>{" "}
             is a feature vector that embeds the entire possible space of what
@@ -355,14 +368,14 @@ export default function Home() {
             </audio>
           </div>
           <p className="mt-3">
-            The huggingface{" "}
+            The Hugging Face{" "}
             <a href="https://github.com/huggingface/diffusers">diffusers</a>{" "}
             library implements a wide range of pipelines including
             image-to-image and prompt interpolation, but we needed an
             implementation for interpolation combined with image-to-image
             conditioning. We implemented this pipeline, along with support for
             masking to limit generation to only parts of an image. Code{" "}
-            <a href="https://github.com/hmartiro/riffusion-inference/blob/main/riffusion/riffusion_pipeline.py">
+            <a href="https://github.com/riffusion/riffusion/blob/main/riffusion/riffusion_pipeline.py">
               here
             </a>
             .
@@ -409,20 +422,20 @@ export default function Home() {
           <ul className="mt-3 ml-10 list-disc">
             <li>
               Web app:{" "}
-              <a href="https://github.com/hmartiro/riffusion-app">
-                https://github.com/hmartiro/ riffusion-app
+              <a href="https://github.com/riffusion/riffusion-app">
+                https://github.com/riffusion/riffusion-app
               </a>
             </li>
             <li>
               Inference server:{" "}
-              <a href="https://github.com/hmartiro/riffusion-inference">
-                https://github.com/hmartiro/ riffusion-inference
+              <a href="https://github.com/riffusion/riffusion">
+                https://github.com/riffusion/riffusion
               </a>
             </li>
             <li>
               Model checkpoint:{" "}
               <a href="https://huggingface.co/riffusion/riffusion-model-v1">
-                https://huggingface.co/ riffusion/riffusion-model-v1
+                https://huggingface.co/riffusion/riffusion-model-v1
               </a>
             </li>
           </ul>
