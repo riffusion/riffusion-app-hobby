@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-  let headers = {
+  const headers = {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
   };

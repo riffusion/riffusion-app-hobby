@@ -117,15 +117,20 @@ export default function ModelInference({
       setNumRequestsMade((n) => n + 1);
 
       // Customize for baseten
-      const apiHandler = useBaseten ? process.env.NEXT_PUBLIC_RIFFUSION_BASETEN_GC_URL : "/api/server";
+      const apiHandler = useBaseten
+        ? process.env.NEXT_PUBLIC_RIFFUSION_BASETEN_GC_URL
+        : "/api/server";
       const payload = useBaseten
         ? { worklet_input: inferenceInput }
         : inferenceInput;
 
+      // NOTE(hayk): Clean this up with server.js, there's something fishy going on.
+      const headers = useBaseten ? { "Content-Type": "application/json" } : {};
+
       const response = await fetch(apiHandler, {
         method: "POST",
         body: JSON.stringify(payload),
-        headers: { 'Content-Type': 'application/json' }
+        headers: headers,
       });
 
       const data = await response.json();
@@ -134,10 +139,7 @@ export default function ModelInference({
 
       if (useBaseten) {
         if (data?.output) {
-          newResultCallback(
-            inferenceInput,
-            data.output
-          );
+          newResultCallback(inferenceInput, data.output);
         } else {
           console.error("Baseten call failed: ", data);
         }
