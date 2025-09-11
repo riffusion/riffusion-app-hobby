@@ -1,4 +1,4 @@
-export const vertexShader = `
+const vertexShader = `
 // Uniforms are data that are shared between shaders
 // The contain data that are uniform across the entire frame.
 // The heightmap and scaling constant for each point are uniforms in this respect.
@@ -35,7 +35,7 @@ void main()
 }
 `;
 
-export const fragmentShader = `
+const fragmentShader = `
 // A uniform for the terrain texture image
 uniform sampler2D terrainTexture;
 
@@ -67,3 +67,5 @@ void main()
 }
 
 `;
+
+module.exports = { vertexShader, fragmentShader };

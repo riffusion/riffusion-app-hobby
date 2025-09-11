@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+// Removed Next.js router dependency
 import { useCallback, useEffect, useState } from "react";
 
 import {
@@ -51,27 +51,10 @@ export default function ModelInference({
     console.log("Using baseten: ", useBaseten);
   }, [useBaseten]);
 
-  // Set initial params from URL query strings
-  const router = useRouter();
+  // Set initial params (removed router dependency)
   useEffect(() => {
-    if (router.query.guidance) {
-      setGuidance(parseFloat(router.query.guidance as string));
-    }
-
-    if (router.query.numInferenceSteps) {
-      setNumInferenceSteps(parseInt(router.query.numInferenceSteps as string));
-    }
-
-    if (router.query.maskImageId) {
-      if (router.query.maskImageId === "none") {
-        setMaskImageId("");
-      } else {
-        setMaskImageId(router.query.maskImageId as string);
-      }
-    }
-
     setInitializedUrlParams(true);
-  }, [router.query]);
+  }, []);
 
   // Memoized function to kick off an inference request
   const runInference = useCallback(
