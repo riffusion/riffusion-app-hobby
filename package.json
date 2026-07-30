@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "node --test \"tests/**/*.test.mjs\""
   },
   "dependencies": {
     "@headlessui/react": "^1.5.0",
