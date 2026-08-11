@@ -44,6 +44,19 @@ You will need to add a `.env.local` file in the root of this repository specifyi
 RIFFUSION_FLASK_URL=http://127.0.0.1:3013/run_inference/
 ```
 
+## MiniMax Music Generation
+
+Optionally, this app can also generate music through the MiniMax `music_generation` API instead of the Riffusion inference server. The `pages/api/minimax-music.js` route proxies requests to the global (`https://api.minimax.io/v1/music_generation`) or China (`https://api.minimaxi.com/v1/music_generation`) endpoint, supports the `music-3.0`, `music-2.6`, `music-3.0-free`, `music-2.6-free`, `music-cover`, and `music-cover-free` models, forwards the supported request fields (`prompt`, `lyrics`, `stream`, `output_format`, `audio_setting`, `lyrics_optimizer`, `is_instrumental`, `audio_url`, `audio_base64`, `cover_feature_id`), supports the `url`/`hex` output formats and `mp3`/`wav`/`pcm` audio formats, and parses the `base_resp.status_code` success code, `data.status` (`1` = in progress, `2` = completed) and `data.audio` fields from the response.
+
+Add the following to `.env.local`:
+
+```
+MINIMAX_API_KEY=your_minimax_api_key
+MINIMAX_REGION=global_en
+```
+
+`MINIMAX_REGION` can be set to `cn_zh` to use the China endpoint, which additionally accepts the `aigc_watermark` field. Unit tests live in `tests/` and can be run with `npm test`.
+
 ## Citation
 
 If you build on this work, please cite it as follows:
