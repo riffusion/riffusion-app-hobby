@@ -16,8 +16,15 @@ const ENDPOINTS = {
   cn_zh: "https://api.minimaxi.com/v1/music_generation",
 };
 
-// Current music-generation models.
-const MODELS = ["music-3.0", "music-2.6", "music-3.0-free", "music-2.6-free"];
+// Current music-generation and music-cover models.
+const MODELS = [
+  "music-3.0",
+  "music-2.6",
+  "music-3.0-free",
+  "music-2.6-free",
+  "music-cover",
+  "music-cover-free",
+];
 const DEFAULT_MODEL = "music-3.0";
 
 // Supported output and audio formats.

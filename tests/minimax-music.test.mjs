@@ -74,6 +74,41 @@ test("posts to the global endpoint and parses a completed response", async () =>
   assert.equal(sent.prompt, "funk guitar");
 });
 
+test("accepts cover models and forwards cover fields with bearer auth", async () => {
+  const originalFetch = globalThis.fetch;
+  const originalApiKey = process.env.MINIMAX_API_KEY;
+  process.env.MINIMAX_API_KEY = "test-api-key";
+  globalThis.fetch = async (endpoint, init) => {
+    lastFetch = { endpoint, init };
+    return { json: async () => ({ base_resp: { status_code: 0 }, data: { status: 2, audio: "cover-audio" } }) };
+  };
+
+  try {
+    for (const model of ["music-cover", "music-cover-free"]) {
+      const res = await callHandler({
+        body: {
+          model,
+          audio_url: "https://example.com/source.mp3",
+          cover_feature_id: "feature-123",
+        },
+      });
+      assert.equal(res.statusCode, 200);
+      assert.equal(lastFetch.init.headers.Authorization, "Bearer test-api-key");
+      const sent = JSON.parse(lastFetch.init.body);
+      assert.equal(sent.model, model);
+      assert.equal(sent.audio_url, "https://example.com/source.mp3");
+      assert.equal(sent.cover_feature_id, "feature-123");
+    }
+  } finally {
+    globalThis.fetch = originalFetch;
+    if (originalApiKey === undefined) {
+      delete process.env.MINIMAX_API_KEY;
+    } else {
+      process.env.MINIMAX_API_KEY = originalApiKey;
+    }
+  }
+});
+
 test("uses the China endpoint and forwards regional fields", async () => {
   process.env.MINIMAX_REGION = "cn_zh";
   const original = globalThis.fetch;
